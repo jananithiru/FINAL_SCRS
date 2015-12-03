@@ -18,125 +18,93 @@ public class TestAdminFunctionality {
 	// String description, String department)
 	//
 	@Test
-	public void TestAdminAddClass() {
+	public void TestAdminAddClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminAddClass(myToken, 8735, "Advanced Database", 3, "Mohamed", "Sep.01",
-						"Dec.20", "9:00am", "10:30am", "Tu,Th", "KHKH110", "campus", "No", "Databases", "CS"));
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminAddClass(tokenGenerator, 8735, "Advanced Database", 3, "Mohamed", "Sep.01",
+					"Dec.20", "9:00am", "10:30am", "Tu,Th", "KHKH110", "campus", "No", "Databases", "CS"));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
 		}
 	}
 
 	@Test
-	public void TestAdminDeleteClass() {
+	public void TestAdminDeleteClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminDeleteClass(myToken, 8735));
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 8735));
+
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
 		}
 	}
 
 	@Test
-	public void TestAdminEditClass() {
+	public void TestAdminEditClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminEditClass(myToken, 8735, "Advanced Database", 3, "Mohamed", "Sep.01",
-						"Dec.20", "9:00am", "10:30am", "Tu,Th", "KHKH110", "Unite", "No", "Database", "CS"));
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminEditClass(tokenGenerator, 8735, "Advanced Database", 3, "Mohamed",
+					"Sep.01", "Dec.20", "9:00am", "10:30am", "Tu,Th", "KHKH110", "Unite", "No", "Database", "CS"));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
 		}
 	}
 
 	@Test
-	public void TestAdminAddStudentToClass() {
+	public void TestAdminAddStudentToClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminAddStudentToClass(myToken, 5001, 8735, "A/F", "Fall"));
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminAddStudentToClass(tokenGenerator, 5001, 8735, "A/F", "Fall"));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
 		}
 	}
 
 	@Test
-	public void TestAdminEditStudentRegisteredClass() {
+	public void TestAdminEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
 				// where to judge the token type??? inside the function or in
 				// the test
-				assertEquals(true, testScrs.adminEditStudentRegisteredClass(myToken, 5001, 8735, "S/N", "Fall"));
+				assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 5001, 8735, "S/N", "Fall"));
 
 				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
 				// "A/F", "FALL");
@@ -145,25 +113,17 @@ public class TestAdminFunctionality {
 				// } else
 				// System.out.println("Adding class meet error.");
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		} 
 
 	@Test
-	public void TestAdminDropStudentRegisteredClass() {
+	public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
 				// where to judge the token type??? inside the function or in
 				// the test
-				assertEquals(true, testScrs.adminDropStudentRegisteredClass(myToken, 1, 5001));
+				assertEquals(true, testScrs.adminDropStudentRegisteredClass(tokenGenerator, 1, 5001));
 
 				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
 				// "A/F", "FALL");
@@ -172,13 +132,6 @@ public class TestAdminFunctionality {
 				// } else
 				// System.out.println("Adding class meet error.");
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		} 
 
 }

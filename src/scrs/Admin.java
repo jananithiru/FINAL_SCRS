@@ -19,9 +19,10 @@ public class Admin extends Person {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String sqlCmd = null;
-		sqlCmd = "INSERT INTO COURSE TABLE VALUES ID " + courseID + courseName + courseCredits + firstDay + lastDay
-				+ classBeginTime + classEndTime + weekDays + location + type + prerequisite + description + department
-				+ ")";
+		sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS, INSTRUCTOR, FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
+				+ "VALUES (" + courseID + "," + courseName + "," + courseCredits + "," + instructor + "," + firstDay
+				+ "," + lastDay + "," + classBeginTime + "," + classEndTime + "," + weekDays + "," + location + ","
+				+ type + "," + prerequisite + "," + department + ")";
 		ArrayList<String> dataList = null;
 
 		dataList.add(Integer.toString(courseID));
@@ -70,7 +71,7 @@ public class Admin extends Person {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String sqlCmd = null;
-		sqlCmd = "DELETE DATA FROM COURSE WHERE ID =" + courseID;
+		sqlCmd = "DELETE FROM COURSE WHERE ID =" + courseID;
 		ArrayList<String> dataList = null;
 		dataList.add(Integer.toString(courseID));
 
@@ -102,7 +103,7 @@ public class Admin extends Person {
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
-		sqlCmd = "UPDATE COURSETABLE SET" + "ID =" + courseID + "NAME =" + courseName + "CREDITS = " + courseCredits
+		sqlCmd = "UPDATE COURSE SET" + "ID =" + courseID + "NAME =" + courseName + "CREDITS = " + courseCredits
 				+ "FIRSTDAY = " + firstDay + "LASTDAY = " + lastDay + "CLASSBEGINTIME = " + classBeginTime
 				+ "CLASSENDTIME =" + classEndTime + "ROUTINES =" + weekDays + "LOCATION +" + location + "TYPE = " + type
 				+ "PREREQUISITE =" + prerequisite + "DESCRIPTION =" + description + "DEPARTMENT = " + department;
@@ -155,7 +156,7 @@ public class Admin extends Person {
 
 		String sqlCmd = null;
 
-		sqlCmd = "INSERT INTO STUDENTANDCOURSE VALUES (" + studentID + courseID + grading + courseTerm + ")";
+		sqlCmd = "INSERT INTO STUDENTANDCOURSE (STUDENTID, COURSEID, GRADING, COURSETERM) VALUES (" + studentID + courseID + grading + courseTerm + ")";
 		ArrayList<String> dataList = null;
 		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
@@ -218,7 +219,8 @@ public class Admin extends Person {
 		return true;
 
 	}
-	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID){
+
+	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID) {
 		if (token.type != Token.RoleType.ADMIN) {
 			return false;
 		}
@@ -226,7 +228,7 @@ public class Admin extends Person {
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
-		sqlCmd = "DELETE DATA FROM STUDENTANDCOURSE TABLE WHERE STUDENTID =" + studentID + "AND COURSEID = " + courseID;
+		sqlCmd = "DELETE FROM STUDENTANDCOURSE WHERE STUDENTID =" + studentID + " AND COURSEID = " + courseID;
 		ArrayList<String> dataList = null;
 		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
@@ -248,7 +250,6 @@ public class Admin extends Person {
 		}
 		return true;
 
-		
 	}
 
 }
