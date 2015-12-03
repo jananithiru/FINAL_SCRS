@@ -70,7 +70,7 @@ public class Admin extends Person {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String sqlCmd = null;
-		sqlCmd = "DELETE DATA FROM COURSETABLE WHERE ID =" + courseID;
+		sqlCmd = "DELETE DATA FROM COURSE WHERE ID =" + courseID;
 		ArrayList<String> dataList = null;
 		dataList.add(Integer.toString(courseID));
 
@@ -226,7 +226,7 @@ public class Admin extends Person {
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
-		sqlCmd = "DELETE DATA FROM STUDENTANDCOURSE TABLE WHERE STUDENTID =" + studentID + "COURSEID = " + courseID;
+		sqlCmd = "DELETE DATA FROM STUDENTANDCOURSE TABLE WHERE STUDENTID =" + studentID + "AND COURSEID = " + courseID;
 		ArrayList<String> dataList = null;
 		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
@@ -235,7 +235,7 @@ public class Admin extends Person {
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 		try {
-			dbcoordinator.updateData(sqlCmd, dataList, typeList);
+			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
