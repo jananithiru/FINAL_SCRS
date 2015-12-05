@@ -1,6 +1,5 @@
 package scrs;
 
-import dbbuilder.*;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
@@ -14,7 +13,7 @@ public class TestStudentFunctionality {
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob999", "mypassword");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 		try {
 			if (myToken != null && sbAuth.TokenAuth(myToken)) {
 				// where to judge the token type??? inside the function or in
@@ -41,7 +40,7 @@ public class TestStudentFunctionality {
 	public void TestStudentDropClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob999", "mypassword");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 		try {
 			if (myToken != null && sbAuth.TokenAuth(myToken)) {
 
@@ -68,7 +67,7 @@ public class TestStudentFunctionality {
 	public void testStudentEditClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("bob999", "mypassword");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 		try {
 			if (myToken != null && sbAuth.TokenAuth(myToken)) {
 

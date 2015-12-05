@@ -33,7 +33,7 @@ public class InsertQueries {
 		      stmt.executeUpdate(userNames33);
 		      
 	      String userNames = "INSERT INTO SHIBBOLETHAUTH (ID, X500ACCOUNT, X500PASSWORD, USERID, USERTYPE) " +
-                  "VALUES (null, 'alice001', 'mypassword', 1, 'STUDENT');"; 
+                  "VALUES (null, 'alice001', 'mypassword', 123, 'STUDENT');"; 
 	      stmt.executeUpdate(userNames);
 	
 	      String userNames2 = "INSERT INTO SHIBBOLETHAUTH (ID, X500ACCOUNT, X500PASSWORD, USERID, USERTYPE) " +
@@ -51,7 +51,7 @@ public class InsertQueries {
 	      
 	      //STUDENT
 	      String allValues = "INSERT INTO STUDENT (ID, FIRSTNAME, LASTNAME, DATEOFBIRTH,TYPE,GENDER,ADVISOR,PLAN,CREDITS,DEPARTMENT) " +
-	                   "VALUES (1, 'Alice1', 'Liddell',  2013-10-07 ,'MS', 'Female', 'Mad Hatter', 'Graduate Degree Plan', 10, 'Computer Science');"; 
+	                   "VALUES (123, 'Alice1', 'Liddell',  2013-10-07 ,'MS', 'Female', 'Mad Hatter', 'Graduate Degree Plan', 10, 'Computer Science');"; 
 	      stmt.executeUpdate(allValues);
 
 	      String reqdValues1 = "INSERT INTO STUDENT (ID,FIRSTNAME, LASTNAME, DATEOFBIRTH,TYPE,PLAN,CREDITS,DEPARTMENT) " +

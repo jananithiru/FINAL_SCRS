@@ -16,18 +16,22 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "insert into StudentAndCourse values(" + courseId + ",'" + grading + "','" + courseTerm + "')"; // id
-																												// is
-																												// autoincrement
-
+		int studentId = 123;
+		String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
+		courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
+		System.out.println("Here is the student add class and the string is generated");
+																												
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseId));
 		dataList.add(grading);
 		dataList.add(courseTerm);
+		dataList.add(Integer.toString(studentId));
+		
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<Constants.PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
+		typeList.add(PrimitiveDataType.INT);
 		try {
 			dbCoordinator.insertData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
