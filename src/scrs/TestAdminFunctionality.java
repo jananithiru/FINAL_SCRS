@@ -22,11 +22,26 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		System.out.println("READY FOR ADMIN");
+		System.out.println(tokenGenerator.type);
+
+		// if (tokenGenerator != null && tokenGenerator.type ==
+		// Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
+
 			// where to judge the token type??? inside the function or in
 			// the test
+			System.out.println("ADMIN ADD CLASS START");
+
 			assertEquals(true, testScrs.adminAddClass(tokenGenerator, 8735, "Advanced Database", 3, "Mohamed", "Sep.01",
-					"Dec.20", "9:00am", "10:30am", "Tu,Th", "KHKH110", "campus", "No", "Databases", "CS"));
+					"Dec.20", "9:00am", "10:30am", "TuTh", "KHKH110", "campus", "No", "Databases", "CS"));
+			// "INSERT INTO COURSE (ID, NAME, CREDITS, FIRSTDAY, LASTDAY,
+			// CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE,
+			// PREREQUISITE, DESCRIPTION, DEPARTMENT) "
+			// + "VALUES (10, '2011', 3, 2015-01-25, 2015-05-30, '0800', '0915',
+			// 'Tu, Th', 'KH2150', 'CAMPUS', 'NONE', '2011 Description',
+			// 'Computer Science')"
+			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
 
 			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
 			// "A/F", "FALL");
@@ -42,18 +57,25 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
+		System.out.println("usertype  " + tokenGenerator.type);
+
 		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+			if (tokenGenerator != null) {
 
-			// where to judge the token type??? inside the function or in
-			// the test
-			assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 8735));
+				// where to judge the token type??? inside the function or in
+				// the test
+				System.out.println("ADMIN PREPARE TO DELETE CLASS");
 
-			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-			// "A/F", "FALL");
-			// if (testResult == true) {
-			// System.out.println("Adding class is done!");
-			// } else
-			// System.out.println("Adding class meet error.");
+				assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));
+				System.out.println("ADMIN DELETE CLASS SUCCESSFUL");
+
+				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+				// "A/F", "FALL");
+				// if (testResult == true) {
+				// System.out.println("Adding class is done!");
+				// } else
+				// System.out.println("Adding class meet error.");
+			}
 		}
 	}
 
@@ -102,18 +124,18 @@ public class TestAdminFunctionality {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
 		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 5001, 8735, "S/N", "Fall"));
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 5001, 8735, "S/N", "Fall"));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} 
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
+		}
+	}
 
 	@Test
 	public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
@@ -121,17 +143,17 @@ public class TestAdminFunctionality {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
 		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.adminDropStudentRegisteredClass(tokenGenerator, 1, 5001));
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.adminDropStudentRegisteredClass(tokenGenerator, 1, 5001));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} 
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
+		}
+	}
 
 }
