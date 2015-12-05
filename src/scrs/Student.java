@@ -17,8 +17,9 @@ public class Student extends Person {
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
 		int studentId = 123;
-		String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
-		courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
+		String  sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
+		//String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
+		//courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
 		System.out.println("Here is the student add class and the string is generated");
 																												
 		ArrayList<String> dataList = new ArrayList<String>();
@@ -34,6 +35,7 @@ public class Student extends Person {
 		typeList.add(PrimitiveDataType.INT);
 		try {
 			dbCoordinator.insertData(sqlStr, dataList, typeList);
+			System.out.println("insert data done!!");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,7 +55,7 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "delete from StudentAndCourse where courseId=" + courseID;
+		String sqlStr = "delete from StudentAndCourse where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
@@ -81,7 +83,7 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "update StudentAndCourse set grading='" + grading + "' where courseId="+courseID;
+		String sqlStr = "update StudentAndCourse set grading=? where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(grading);
 		dataList.add(Integer.toString(courseID));
