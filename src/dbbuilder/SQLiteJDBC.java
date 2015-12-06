@@ -1,4 +1,4 @@
-package scrs;
+package dbbuilder;
 import java.sql.*;
 import java.text.ParseException;
 
