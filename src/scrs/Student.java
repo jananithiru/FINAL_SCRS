@@ -16,7 +16,7 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		int studentId = 123;
+		int studentId = 123; // will be token id 
 		String  sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
 		//String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
 		//courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
