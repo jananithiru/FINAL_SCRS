@@ -90,7 +90,7 @@ public class TestAdminFunctionality {
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
 		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
 			
-			assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 1, 5001, "S/N", "2015Fall"));
+			assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 1, 5001, "S/N", "Spring 2015"));
 
 			
 		}

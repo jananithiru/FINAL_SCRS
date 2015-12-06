@@ -222,6 +222,8 @@ public class Admin extends Person {
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 
+
+
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");

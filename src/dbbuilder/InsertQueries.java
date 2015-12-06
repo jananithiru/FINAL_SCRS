@@ -9,6 +9,7 @@ import scrs.ShibbolethAuth.Token;
 public class InsertQueries {
 	static String databaseName = "jdbc:sqlite:SCRSDataBase.db";
 
+
 	public static void insertStudentTable() {
 		Connection c = null;
 		Statement stmt = null;
@@ -182,6 +183,7 @@ public class InsertQueries {
 		}
 		System.out.println("Records created successfully");
 	}
+
 
 	public static void main(String args[]) {
 		insertStudentTable();
