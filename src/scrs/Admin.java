@@ -1,37 +1,42 @@
 package scrs;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token;
 
 public class Admin extends Person {
 
-
 	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			int capacity, String instructor, String firstDay, String lastDay, String classBeginTime,
+			int capacity, String term, String instructor, String firstDay, String lastDay, String classBeginTime,
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
-			String department) throws SQLException {
+			String department) throws SQLException, ClassNotFoundException {
 
-		 if (token.type != Token.RoleType.ADMIN) {
-		 System.out.println("THIS IS NOT ADMIN");
-		
-		 return false;
-		 }
+		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println("THIS IS NOT ADMIN");
+
+			return false;
+		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
-		sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS,CAPACITY,FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS,CAPACITY,TERM,FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		ArrayList<String> dataList = new ArrayList();
 		dataList.add(Integer.toString(courseID));
 		dataList.add(courseName);
 		dataList.add(Integer.toString(courseCredits));
 		dataList.add(Integer.toString(capacity));
+		dataList.add(term);
 		dataList.add(firstDay);
 		dataList.add(lastDay);
 		dataList.add(classBeginTime);
@@ -49,6 +54,7 @@ public class Admin extends Person {
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
+		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.DATE);
 		typeList.add(PrimitiveDataType.DATE);
 		// typeList.add(PrimitiveDataType.INT);
@@ -59,7 +65,7 @@ public class Admin extends Person {
 
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN ADD CLASS real SUCCESSFUL");
+			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,17 +73,43 @@ public class Admin extends Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-//		sqlCmd = null;
-//		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID)";
-//		dataList = new ArrayList();
-//		dataList.add(Integer.toString(courseID));
-//		
-//		typeList = new ArrayList();
-//		typeList.add(PrimitiveDataType.INT);
-//		
-//
+
+		sqlCmd = null;
+		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = ?";
+		dataList = new ArrayList<String>();
+		dataList.add(instructor);
+
+		typeList = new ArrayList<PrimitiveDataType>();
+		typeList.add(PrimitiveDataType.STRING);
+		System.out.println("WE WANT THE INSTRUCTOR ID FROM INSTRUCTOR TABLE");
+
+		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
+		System.out.println("THE OBJECT LIST SIZE IS " + objectList.size());
+		System.out.println("THE OBJEST LIST LIST SIZE IS " + objectList.get(0).size());
+
+		Integer instructorID = (Integer) objectList.get(0).get(2);
+
+		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
+
+		dataList = new ArrayList();
+		dataList.add(Integer.toString(courseID));
+		dataList.add(Integer.toString(instructorID));
+
+		typeList = new ArrayList();
+		typeList.add(PrimitiveDataType.INT);
+		typeList.add(PrimitiveDataType.INT);
+
+		try {
+			dbcoordinator.insertData(sqlCmd, dataList, typeList);
+			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return true;
 
 	}
@@ -108,7 +140,7 @@ public class Admin extends Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		sqlCmd = null;
 		sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
 		dataList = new ArrayList();
@@ -127,8 +159,6 @@ public class Admin extends Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 
 		return false;
 
@@ -162,7 +192,6 @@ public class Admin extends Person {
 		dataList.add(department);
 		dataList.add(Integer.toString(courseID));
 
-
 		ArrayList<PrimitiveDataType> typeList = new ArrayList();
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
@@ -171,7 +200,6 @@ public class Admin extends Person {
 
 		}
 		typeList.add(PrimitiveDataType.INT);
-
 
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
@@ -239,20 +267,18 @@ public class Admin extends Person {
 		String sqlCmd = null;
 		sqlCmd = "UPDATE STUDENTANDCOURSE SET GRADING = ?,  COURSETERM = ? WHERE COURSEID = ? AND STUDENTID = ?";
 		ArrayList<String> dataList = new ArrayList();
-		
+
 		dataList.add(grading);
 		dataList.add(courseTerm);
 		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
 
 		ArrayList<PrimitiveDataType> typeList = new ArrayList();
-		
+
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
-
-
 
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
