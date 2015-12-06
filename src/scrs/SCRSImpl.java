@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import scrs.ShibbolethAuth.Token;
+import scrs.ShibbolethAuth.Token.RoleType;
 
 public class SCRSImpl implements SCRS {
 
@@ -122,26 +123,109 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
+
+		//TODO how to check this?
+		if (instructorName != "") {
+			List<ArrayList<Object>> instrIDList = null;
+			
+			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
+	
+			try {
+				instrIDList = dbcoordinator.queryData(instrSQLStr);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			List<ArrayList<Object>> instrCourseList = null;		
+			
+			String instrCourseSQLStr = "select * FROM instructorcourse WHERE instructorid = " + instrIDList.get(0).get(0) + ";";
+		
+			try {
+				instrCourseList = dbcoordinator.queryData(instrCourseSQLStr);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
+				department, classType, instructorName);
+
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (objList == null || objList.isEmpty()) {
+			System.out.println(ErrorMessages.missingCourseData);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		
+		return result;
 	}
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (token.type != RoleType.ADMIN || token.id != studentID) {
+			//TODO create exception
+			//throw new Exception();
+		}
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
+
+		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
+
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (objList == null || objList.isEmpty()) {
+			System.out.println(ErrorMessages.missingStudentRegistrationData);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		
+		return result;
 	}
 
 	@Override
 
-	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, String instructor,
+	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, int capacity, String instructor,
 			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
 			String location, String type, String prerequisite, String description, String department) {
 		// TODO Auto-generated method stub
 
 		Admin admin = new Admin();
 		try {
-			admin.adminAddClass(token, courseID, courseName, courseCredits, instructor, firstDay, lastDay,
+			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, instructor, firstDay, lastDay,
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -205,11 +289,7 @@ public class SCRSImpl implements SCRS {
 		}
 		return true;
 	}
-//	boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID){
-//		Admin admin = new Admin();
-//		admin.adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID);
-//		return true;
-//	}
+
 
 
 	@Override
@@ -221,7 +301,9 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public boolean adminDropStudentRegisteredClass(Token token, int studentID, int courseID) {
 		// TODO Auto-generated method stub
-		return false;
+		Admin admin = new Admin();
+		admin.adminDropStudentRegisteredClass(token, studentID, courseID);
+		return true;
 	}
 
 	

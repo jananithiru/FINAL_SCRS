@@ -35,7 +35,7 @@ public class ShibbolethAuth {
 		
 		Token undefinedToken = new Token(-1,Token.RoleType.UNDEFINED, "");
 		if(res.size() != 1) return undefinedToken;
-		
+		System.out.println("NOW WE GET THE TOKEN" + res);
 		String userType = (String)res.get(0).get(4);
 		int userID = (int)res.get(0).get(3);
 		Token newToken = null;
