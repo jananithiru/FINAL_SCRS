@@ -78,7 +78,7 @@ public class Admin extends Person {
 //		typeList.add(PrimitiveDataType.INT);
 //		
 //
-//		return true;
+		return true;
 
 	}
 

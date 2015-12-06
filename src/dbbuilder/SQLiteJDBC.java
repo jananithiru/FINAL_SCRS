@@ -31,9 +31,9 @@ public class SQLiteJDBC
                    " DEPARTMENT     CHAR(50) NOT NULL CHECK (DEPARTMENT IN ('CS')))"; 
       stmt.executeUpdate(createStudentTableSql);
       
-      stmt = c.createStatement();
-      String deleteAdminTable = "DROP TABLE ADMINISTRATOR";
-      stmt.execute(deleteAdminTable);
+//      stmt = c.createStatement();
+//      String deleteAdminTable = "DROP TABLE ADMINISTRATOR";
+//      stmt.execute(deleteAdminTable);
       
       String createAdminTableSql = "CREATE TABLE ADMINISTRATOR " +
               "(ID INT PRIMARY KEY     NOT NULL," +
@@ -44,9 +44,9 @@ public class SQLiteJDBC
               " DEPARTMENT     CHAR(50) NOT NULL CHECK (DEPARTMENT IN ('CS')))"; 
       stmt.executeUpdate(createAdminTableSql);
       
-      stmt = c.createStatement();
-      String deleteInstructorTable = "DROP TABLE INSTRUCTOR";
-      stmt.execute(deleteInstructorTable);
+//      stmt = c.createStatement();
+//      String deleteInstructorTable = "DROP TABLE INSTRUCTOR";
+//      stmt.execute(deleteInstructorTable);
       
       String createInstructorTableSql = "CREATE TABLE INSTRUCTOR " +
               "(ID INT PRIMARY KEY     NOT NULL," +
@@ -59,9 +59,9 @@ public class SQLiteJDBC
               " DEPARTMENT     CHAR(50) NOT NULL CHECK (DEPARTMENT IN ('CS')))"; 
       stmt.executeUpdate(createInstructorTableSql);
       
-      stmt = c.createStatement();
-      String deleteCourseTable = "DROP TABLE COURSE";
-      stmt.execute(deleteCourseTable);
+//      stmt = c.createStatement();
+//      String deleteCourseTable = "DROP TABLE COURSE";
+//      stmt.execute(deleteCourseTable);
       
       String createCourseTableSql = "CREATE TABLE COURSE " +
               "(ID INT PRIMARY KEY     NOT NULL," +
@@ -82,9 +82,9 @@ public class SQLiteJDBC
       stmt.executeUpdate(createCourseTableSql);
 
       
-      stmt = c.createStatement();
-      String deleteSCTable = "DROP TABLE STUDENTANDCOURSE";
-      stmt.execute(deleteSCTable);
+//      stmt = c.createStatement();
+//      String deleteSCTable = "DROP TABLE STUDENTANDCOURSE";
+//      stmt.execute(deleteSCTable);
       
       String createStudentCourseTableSql = "CREATE TABLE STUDENTANDCOURSE " +
               "(ID INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL," +
@@ -94,9 +94,9 @@ public class SQLiteJDBC
               " STUDENTID INT REFERENCES STUDENT(ID) ON UPDATE CASCADE)";
       stmt.executeUpdate(createStudentCourseTableSql);
       
-      stmt = c.createStatement();
-      String deleteICTable = "DROP TABLE INSTRUCTORANDCOURSE";
-      stmt.execute(deleteICTable);
+//      stmt = c.createStatement();
+//      String deleteICTable = "DROP TABLE INSTRUCTORANDCOURSE";
+//      stmt.execute(deleteICTable);
       
       
       String createInstructorCourseTableSql = "CREATE TABLE INSTRUCTORANDCOURSE " +
@@ -105,9 +105,9 @@ public class SQLiteJDBC
               " INSTRUCTORID INT REFERENCES INSTRUCTOR(ID) ON UPDATE CASCADE)";
       stmt.executeUpdate(createInstructorCourseTableSql);
       
-      stmt = c.createStatement();
-      String deleteSTable = "DROP TABLE SHIBBOLETHAUTH";
-      stmt.execute(deleteSTable);
+//      stmt = c.createStatement();
+//      String deleteSTable = "DROP TABLE SHIBBOLETHAUTH";
+//      stmt.execute(deleteSTable);
       
       String createShibbolethAuthTableSql = "CREATE TABLE SHIBBOLETHAUTH " +
               "(ID INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL," +
