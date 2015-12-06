@@ -122,14 +122,61 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
+
+		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
+				department, classType, instructorName);
+
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (objList == null || objList.isEmpty()) {
+			System.out.println(ErrorMessages.missingCourseData);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		
+		return result;
 	}
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
+
+		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
+
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (objList == null || objList.isEmpty()) {
+			System.out.println(ErrorMessages.missingStudentRegistrationData);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		
+		return result;
 	}
 
 	@Override
