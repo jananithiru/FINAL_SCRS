@@ -125,9 +125,10 @@ public class SCRSImpl implements SCRS {
 			String department, String classType, String instructorName) {
 		
 		DBCoordinator dbcoordinator = new DBCoordinator();
+		String instrID = null;
 
 		//TODO how to check this?
-		if (instructorName != "") {
+		if (instructorName != null) {
 			List<ArrayList<Object>> instrIDList = null;
 			
 			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
@@ -142,23 +143,11 @@ public class SCRSImpl implements SCRS {
 				e.printStackTrace();
 			}
 			
-			List<ArrayList<Object>> instrCourseList = null;		
-			
-			String instrCourseSQLStr = "select * FROM instructorcourse WHERE instructorid = " + instrIDList.get(0).get(0) + ";";
-		
-			try {
-				instrCourseList = dbcoordinator.queryData(instrCourseSQLStr);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 		}
 
 		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
-				department, classType, instructorName);
+				department, classType, instrID);
 
 		List<ArrayList<Object>> objList = null;
 
