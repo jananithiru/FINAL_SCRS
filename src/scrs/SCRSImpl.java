@@ -150,6 +150,7 @@ public class SCRSImpl implements SCRS {
 				department, classType, instrID);
 
 		List<ArrayList<Object>> objList = null;
+		System.out.println(sqlStr);
 
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
