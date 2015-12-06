@@ -155,10 +155,11 @@ public interface SCRS {
 	 * @param description
 	 * @param department
 	 * @return Return true if the operation is successfully, false otherwise
+	 * @throws Exception 
 	 */
 	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int capacity,
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department);
+			String weekDays, String location, String type, String prerequisite, String description, String department) throws Exception;
 
 	/**
 	 * This interface should allow the admin to delete a class from the database

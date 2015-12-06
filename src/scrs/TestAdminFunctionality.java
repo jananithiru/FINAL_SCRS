@@ -11,7 +11,7 @@ import scrs.ShibbolethAuth.Token;
 public class TestAdminFunctionality {
 
 	@Test
-	public void TestAdminAddClass() throws ClassNotFoundException, SQLException {
+	public void TestAdminAddClass() throws Exception {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("bob111", "mypassword");
