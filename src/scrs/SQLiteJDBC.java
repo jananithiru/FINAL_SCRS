@@ -51,6 +51,7 @@ public class SQLiteJDBC
               " NAME      	   CHAR(50) NOT NULL, " + // Only contains alphabets
               " CREDITS        INT NOT NULL CHECK (CREDITS > 0 AND CREDITS <= 4), " + 
               " CAPACITY       INT NOT NULL CHECK (CAPACITY > 0 AND CAPACITY <= 30), " +
+              " TERM           CHAR(20) NOT NULL, " +
               " FIRSTDAY       DATE NOT NULL, " + // Format: mm/dd/yyyy
               " LASTDAY        DATE NOT NULL, " + // Format: mm/dd/yyyy
               " CLASSBEGINTIME CHAR(10) NOT NULL, " + // Format: "hh:mm"

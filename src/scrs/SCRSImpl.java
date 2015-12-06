@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import scrs.ShibbolethAuth.Token;
+import scrs.ShibbolethAuth.Token.RoleType;
 
 public class SCRSImpl implements SCRS {
 
@@ -125,6 +126,37 @@ public class SCRSImpl implements SCRS {
 		
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
+		//TODO how to check this?
+		if (instructorName != "") {
+			List<ArrayList<Object>> instrIDList = null;
+			
+			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
+	
+			try {
+				instrIDList = dbcoordinator.queryData(instrSQLStr);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			List<ArrayList<Object>> instrCourseList = null;		
+			
+			String instrCourseSQLStr = "select * FROM instructorcourse WHERE instructorid = " + instrIDList.get(0).get(0) + ";";
+		
+			try {
+				instrCourseList = dbcoordinator.queryData(instrCourseSQLStr);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
 				department, classType, instructorName);
 
@@ -152,6 +184,11 @@ public class SCRSImpl implements SCRS {
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
+		
+		if (token.type != RoleType.ADMIN || token.id != studentID) {
+			//TODO create exception
+			//throw new Exception();
+		}
 		
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
