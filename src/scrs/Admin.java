@@ -9,6 +9,7 @@ import scrs.ShibbolethAuth.Token;
 
 public class Admin extends Person {
 
+
 	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
 			String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
