@@ -64,6 +64,8 @@ public class Admin extends Person {
 
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
+			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
+
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (ParseException e1) {
@@ -74,9 +76,15 @@ public class Admin extends Person {
 		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
 
 		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
-		
-		System.out.println("THE OBJECT LIST SIZE IS " + objectList.size());
-		System.out.println("THE OBJEST LIST LIST SIZE IS " + objectList.get(0).size());
+		if (objectList.size() == 0) {
+			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
+		}
+		if (objectList.size() > 0) {
+			new scrsexception.SQLException("MULTIPLE PERSON WITH THE SAME NAME");
+		}
+		// System.out.println("THE OBJECT LIST SIZE IS " + objectList.size());
+		// System.out.println("THE OBJEST LIST LIST SIZE IS " +
+		// objectList.get(0).size());
 
 		Integer instructorID = (Integer) objectList.get(0).get(0);
 
@@ -93,10 +101,8 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -105,9 +111,12 @@ public class Admin extends Person {
 	}
 
 	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException {
-		// if (token.type != Token.RoleType.ADMIN) {
-		// return false;
-		// }
+		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println(
+					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+
+			return false;
+		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
@@ -124,10 +133,8 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -141,12 +148,10 @@ public class Admin extends Person {
 		try {
 
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN delete CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -160,6 +165,9 @@ public class Admin extends Person {
 					throws SQLException {
 
 		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println(
+					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+
 			return false;
 		}
 
@@ -195,10 +203,8 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -209,6 +215,9 @@ public class Admin extends Person {
 			String courseTerm) throws SQLException {
 
 		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println(
+					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+
 			return false;
 		}
 
@@ -235,10 +244,8 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -249,6 +256,9 @@ public class Admin extends Person {
 	public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
 			String grading, String courseTerm) throws SQLException {
 		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println(
+					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+
 			return false;
 		}
 
@@ -274,10 +284,8 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -287,16 +295,16 @@ public class Admin extends Person {
 
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID) {
 		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println("NOW WE ARE IN WRONGW WAY");
+			System.out.println(
+					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+
 			return false;
 		}
-		System.out.println("WE ARE ON THE RIGHT WAY");
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
 		sqlCmd = "DELETE FROM STUDENTANDCOURSE WHERE STUDENTID = ?  AND COURSEID = ?";
-		System.out.println(sqlCmd);
 
 		ArrayList<String> dataList = new ArrayList();
 		dataList.add(Integer.toString(studentID));
@@ -308,18 +316,14 @@ public class Admin extends Person {
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 		try {
-			System.out.println("HERE IS THE DATALIST" + dataList);
 
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN DROP STUDENT REGISTERED CLASS SUCCESSFUL");
+			System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
