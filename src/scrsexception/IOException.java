@@ -6,7 +6,7 @@ public class IOException extends Exception {
 	}
 
 	public IOException(String message) {
-		super(message);
+		super("IOException: " + message);
 	}
 
 	public IOException(Throwable cause) {
@@ -14,7 +14,7 @@ public class IOException extends Exception {
 	}
 
 	public IOException(String message, Throwable cause) {
-		super(message, cause);
+		super("IOException: " + message, cause);
 	}
 
 }

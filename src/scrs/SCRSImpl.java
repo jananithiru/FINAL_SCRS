@@ -218,14 +218,14 @@ public class SCRSImpl implements SCRS {
 
 	@Override
 
-	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, String instructor,
+	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, int capacity, String instructor,
 			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
 			String location, String type, String prerequisite, String description, String department) {
 		// TODO Auto-generated method stub
 
 		Admin admin = new Admin();
 		try {
-			admin.adminAddClass(token, courseID, courseName, courseCredits, instructor, firstDay, lastDay,
+			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, instructor, firstDay, lastDay,
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -289,11 +289,7 @@ public class SCRSImpl implements SCRS {
 		}
 		return true;
 	}
-//	boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID){
-//		Admin admin = new Admin();
-//		admin.adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID);
-//		return true;
-//	}
+
 
 
 	@Override
@@ -305,7 +301,9 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public boolean adminDropStudentRegisteredClass(Token token, int studentID, int courseID) {
 		// TODO Auto-generated method stub
-		return false;
+		Admin admin = new Admin();
+		admin.adminDropStudentRegisteredClass(token, studentID, courseID);
+		return true;
 	}
 
 	

@@ -114,7 +114,7 @@ public interface SCRS {
 	 * @param department
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
-	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, String instructor, String firstDay,
+	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int capacity, String instructor, String firstDay,
 			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
 			String prerequisite, String description, String department); 
 
