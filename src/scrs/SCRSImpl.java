@@ -166,26 +166,16 @@ public class SCRSImpl implements SCRS {
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
-<<<<<<< HEAD
 
-=======
->>>>>>> d32a4d3e279497893eb3bad9e7bf369ce562c66e
 		return result;
 	}
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
-<<<<<<< HEAD
 
-		if (token.type != RoleType.ADMIN || token.id != studentID) {
-			// TODO create exception
-			// throw new Exception();
-=======
-		
 		if (!(token != null && (token.type == RoleType.ADMIN || token.id == studentID))) {
 			System.out.println(ErrorMessages.accessNotAllowed);
-			//TODO custom exception
->>>>>>> d32a4d3e279497893eb3bad9e7bf369ce562c66e
+			// TODO custom exception
 		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
@@ -217,7 +207,8 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, int capacity,
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department) throws Exception {
+			String weekDays, String location, String type, String prerequisite, String description, String department)
+					throws Exception {
 		// TODO Auto-generated method stub
 
 		Admin admin = new Admin();
