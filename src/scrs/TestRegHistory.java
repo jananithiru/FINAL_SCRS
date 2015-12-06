@@ -55,8 +55,7 @@ public class TestRegHistory {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+			if (myToken != null) {
 				List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myToken, 111);
 				Iterator<ArrayList<String>> printIter = testResult.iterator();
 				while (printIter.hasNext()) {
@@ -66,12 +65,6 @@ public class TestRegHistory {
 					}
 				}
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 }

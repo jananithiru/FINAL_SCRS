@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import scrs.ShibbolethAuth.Token;
+
 public class TestQueryPersonalInformation {
 
 	@Test
