@@ -1,10 +1,6 @@
 package scrs;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +28,7 @@ public class Admin extends Person {
 		sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS,CAPACITY,TERM,FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-		ArrayList<String> dataList = new ArrayList();
+		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 		dataList.add(courseName);
 		dataList.add(Integer.toString(courseCredits));
@@ -49,7 +45,7 @@ public class Admin extends Person {
 		dataList.add(description);
 		dataList.add(department);
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
@@ -82,19 +78,16 @@ public class Admin extends Person {
 		if (objectList.size() > 0) {
 			new scrsexception.SQLException("MULTIPLE PERSON WITH THE SAME NAME");
 		}
-		// System.out.println("THE OBJECT LIST SIZE IS " + objectList.size());
-		// System.out.println("THE OBJEST LIST LIST SIZE IS " +
-		// objectList.get(0).size());
 
 		Integer instructorID = (Integer) objectList.get(0).get(0);
 
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
-		dataList = new ArrayList();
+		dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 		dataList.add(Integer.toString(instructorID));
 
-		typeList = new ArrayList();
+		typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 		try {
@@ -122,10 +115,10 @@ public class Admin extends Person {
 
 		String sqlCmd = null;
 		sqlCmd = "DELETE FROM COURSE WHERE ID = ?";
-		ArrayList<String> dataList = new ArrayList();
+		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		try {
 			System.out.println("WE HAVE SQLCMD DATALIST TYPELIST");
@@ -140,10 +133,10 @@ public class Admin extends Person {
 
 		sqlCmd = null;
 		sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
-		dataList = new ArrayList();
+		dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 
-		typeList = new ArrayList();
+		typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		try {
 
@@ -175,7 +168,7 @@ public class Admin extends Person {
 
 		String sqlCmd = null;
 		sqlCmd = "UPDATE COURSE SET NAME = ?, CREDITS = ?, FIRSTDAY = ?, LASTDAY = ?, CLASSBEGINTIME = ?, CLASSENDTIME = ?, ROUTINES = ?, LOCATION = ?, TYPE = ?, PREREQUISITE = ?, DESCRIPTION = ?, DEPARTMENT = ? WHERE ID = ?";
-		ArrayList<String> dataList = new ArrayList();
+		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(courseName);
 		dataList.add(Integer.toString(courseCredits));
 		dataList.add(firstDay);
@@ -190,7 +183,7 @@ public class Admin extends Person {
 		dataList.add(department);
 		dataList.add(Integer.toString(courseID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
 		for (int i = 0; i < 10; i++) {
@@ -227,14 +220,14 @@ public class Admin extends Person {
 		sqlCmd = "INSERT INTO STUDENTANDCOURSE (COURSEID, GRADING, COURSETERM, STUDENTID)" + " VALUES (?,?,?,?)";
 		System.out.println("WE HAVE THE SQL CMD " + sqlCmd);
 
-		ArrayList<String> dataList = new ArrayList();
+		ArrayList<String> dataList = new ArrayList<String>();
 
 		dataList.add(Integer.toString(courseID));
 		dataList.add(grading);
 		dataList.add(courseTerm);
 		dataList.add(Integer.toString(studentID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
@@ -266,15 +259,13 @@ public class Admin extends Person {
 
 		String sqlCmd = null;
 		sqlCmd = "UPDATE STUDENTANDCOURSE SET GRADING = ?,  COURSETERM = ? WHERE COURSEID = ? AND STUDENTID = ?";
-		ArrayList<String> dataList = new ArrayList();
-
+		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(grading);
 		dataList.add(courseTerm);
-		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
+		dataList.add(Integer.toString(studentID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
-
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
@@ -306,13 +297,11 @@ public class Admin extends Person {
 		String sqlCmd = null;
 		sqlCmd = "DELETE FROM STUDENTANDCOURSE WHERE STUDENTID = ?  AND COURSEID = ?";
 
-		ArrayList<String> dataList = new ArrayList();
+		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(studentID));
 		dataList.add(Integer.toString(courseID));
 
-		System.out.println(sqlCmd);
-
-		ArrayList<PrimitiveDataType> typeList = new ArrayList();
+		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 		try {
