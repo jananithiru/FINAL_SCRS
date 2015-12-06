@@ -15,11 +15,11 @@ public class Admin extends Person {
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
 			String department) throws SQLException {
 
-		// if (token.type != Token.RoleType.ADMIN) {
-		// System.out.println("THIS IS NOT ADMIN");
-		//
-		// return false;
-		// }
+		 if (token.type != Token.RoleType.ADMIN) {
+		 System.out.println("THIS IS NOT ADMIN");
+		
+		 return false;
+		 }
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
@@ -67,8 +67,18 @@ public class Admin extends Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return true;
+		
+		
+//		sqlCmd = null;
+//		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID)";
+//		dataList = new ArrayList();
+//		dataList.add(Integer.toString(courseID));
+//		
+//		typeList = new ArrayList();
+//		typeList.add(PrimitiveDataType.INT);
+//		
+//
+//		return true;
 
 	}
 
@@ -90,7 +100,7 @@ public class Admin extends Person {
 			System.out.println("WE HAVE SQLCMD DATALIST TYPELIST");
 
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN delete CLASS REAL SUCCESSFUL");
+			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,6 +108,27 @@ public class Admin extends Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		sqlCmd = null;
+		sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
+		dataList = new ArrayList();
+		dataList.add(Integer.toString(courseID));
+
+		typeList = new ArrayList();
+		typeList.add(PrimitiveDataType.INT);
+		try {
+
+			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
+			System.out.println("ADMIN delete CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 
 		return false;
 
@@ -166,19 +197,17 @@ public class Admin extends Person {
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlCmd = null;
-		sqlCmd = "INSERT INTO STUDENTANDCOURSE (ID, COURSEID, GRADING, COURSETERM, STUDENTID)" + " VALUES (?,?,?,?,?)";
+		sqlCmd = "INSERT INTO STUDENTANDCOURSE (COURSEID, GRADING, COURSETERM, STUDENTID)" + " VALUES (?,?,?,?)";
 		System.out.println("WE HAVE THE SQL CMD " + sqlCmd);
 
 		ArrayList<String> dataList = new ArrayList();
 
-		dataList.add(Integer.toString(courseID * studentID));
 		dataList.add(Integer.toString(courseID));
 		dataList.add(grading);
 		dataList.add(courseTerm);
 		dataList.add(Integer.toString(studentID));
 
 		ArrayList<PrimitiveDataType> typeList = new ArrayList();
-		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
