@@ -1,4 +1,4 @@
-package scrs;
+package scrs; 
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -67,27 +67,15 @@ public class DBCoordinator {
 		con = DriverManager.getConnection("jdbc:sqlite:SCRSDataBase.db");
 		con.setAutoCommit(false);
 		System.out.println("Opened database successfully");
-		System.out.println("HERE IS THE SQLCMD " + sqlCmd);
-		System.out.println("HERE IS THE DATALIST " + dataList + "THE 0TH ELEMENT" + dataList.get(0));
-		System.out.println("HERE IS THE TYPELIST " + typeList);
 
 		PreparedStatement prepStmt = con.prepareStatement(sqlCmd);
-		System.out.println("WE PREPARED THE STMT   " + sqlCmd);
-
 		for (int i = 0; i < dataList.size(); i++) {
-			System.out.println("WE WANT KNOW I AND DATA LIST" + i + dataList.size());
-
 			switch (typeList.get(i)) {
 			case STRING:
 				prepStmt.setString(i + 1, dataList.get(i));
 				break;
 			case INT:
-				
-				int s = Integer.parseInt(dataList.get(i));
-				System.out.println("WE HAVE THE i th datalist " + dataList.get(i) + "PARSE TO INTEGER S  " + s + "WITH THE PREPSTMT  " + prepStmt);
 				prepStmt.setInt(i + 1, Integer.parseInt(dataList.get(i)));
-				//System.out.println("WE HAVE THE PREPSTMT" + prepStmt);
-
 				break;
 			case DATE:
 				DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -95,8 +83,6 @@ public class DBCoordinator {
 				break;
 			}
 		}
-		System.out.println("WE NOW HAVE THE STMT");
-
 		prepStmt.execute();
 		con.commit();
 
@@ -117,14 +103,9 @@ public class DBCoordinator {
 		Class.forName("org.sqlite.JDBC");
 		con = DriverManager.getConnection("jdbc:sqlite:SCRSDataBase.db");
 		con.setAutoCommit(false);
-		System.out.println("Opened database successfully FOR INSERT");
-		System.out.println("HERE IS THE SQLCMD " + sqlCmd);
-		System.out.println("HERE IS THE DATALIST " + dataList);
-		System.out.println("HERE IS THE TYPELIST " + typeList);
+		System.out.println("Opened database successfully");
 
 		PreparedStatement prepStmt = con.prepareStatement(sqlCmd);
-		System.out.println("PREPAREd SQLCMD");
-
 		for (int i = 0; i < dataList.size(); i++) {
 			switch (typeList.get(i)) {
 			case STRING:
@@ -139,11 +120,7 @@ public class DBCoordinator {
 				break;
 			}
 		}
-		System.out.println("SQLCMD DONE");
-
 		prepStmt.execute();
-		System.out.println("SQLCMD EXECUATE DONE");
-
 		con.commit();
 
 		prepStmt.close();

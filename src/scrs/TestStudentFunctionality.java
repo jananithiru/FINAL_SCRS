@@ -3,7 +3,6 @@ package scrs;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
-
 import org.junit.Test;
 
 import scrs.ShibbolethAuth.Token;
@@ -14,25 +13,18 @@ public class TestStudentFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
-				// where to judge the token type??? inside the function or in
-				// the test
-				assertEquals(true, testScrs.studentAddClass(myToken, 8735, "A/F", "FALL"));
 
-				// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-				// "A/F", "FALL");
-				// if (testResult == true) {
-				// System.out.println("Adding class is done!");
-				// } else
-				// System.out.println("Adding class meet error.");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (myToken != null) {
+			// where to judge the token type??? inside the function or in
+			// the test
+			assertEquals(true, testScrs.studentAddClass(myToken, 8735, "A/F", "FALL"));
+
+			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
+			// "A/F", "FALL");
+			// if (testResult == true) {
+			// System.out.println("Adding class is done!");
+			// } else
+			// System.out.println("Adding class meet error.");
 		}
 	}
 
@@ -41,25 +33,16 @@ public class TestStudentFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+		if (myToken != null) {
 
-				assertEquals(true, testScrs.studentDropClass(myToken, 8735));
+			assertEquals(true, testScrs.studentDropClass(myToken, 8735));
 
-				// boolean testResult = testScrs.studentDropClass(myToken,
-				// 8735);
-				// if (testResult == true) {
-				// System.out.println("Dropping class is done!");
-				// } else
-				// System.out.println("Dropping class meet error.");
-
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// boolean testResult = testScrs.studentDropClass(myToken,
+			// 8735);
+			// if (testResult == true) {
+			// System.out.println("Dropping class is done!");
+			// } else
+			// System.out.println("Dropping class meet error.");
 		}
 	}
 
@@ -68,25 +51,17 @@ public class TestStudentFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+		if (myToken != null) {
 
-				// boolean result = true;
-				assertEquals(true, testScrs.studentEditClass(myToken, 8735, "S/N", "Fall"));
-				// boolean testResult = testScrs.studentEditClass(myToken, 8735,
-				// "S/N", "Fall");
-				// if (testResult == true) {
-				// System.out.println("Dropping class is done!");
-				// } else
-				// System.out.println("Dropping class meet error.");
+			// boolean result = true;
+			assertEquals(true, testScrs.studentEditClass(myToken, 8735, "S/N", "Fall"));
+			// boolean testResult = testScrs.studentEditClass(myToken, 8735,
+			// "S/N", "Fall");
+			// if (testResult == true) {
+			// System.out.println("Dropping class is done!");
+			// } else
+			// System.out.println("Dropping class meet error.");
 
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

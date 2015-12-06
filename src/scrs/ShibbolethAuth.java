@@ -35,7 +35,7 @@ public class ShibbolethAuth {
 		
 		Token undefinedToken = new Token(-1,Token.RoleType.UNDEFINED, "");
 		if(res.size() != 1) return undefinedToken;
-		System.out.println("NOW WE GET THE TOKEN" + res);
+		
 		String userType = (String)res.get(0).get(4);
 		int userID = (int)res.get(0).get(3);
 		Token newToken = null;
@@ -66,11 +66,11 @@ public class ShibbolethAuth {
 			tmp = dbCoordinator.queryData("SELECT * FROM ADMINISTRATOR WHERE ID=\"" + token.id + "\"");
 			if(tmp.size() == 0) return false;
 		}else if(token.type == Token.RoleType.BOTH){
-			boolean isValid = false;
+			boolean isValid = true;
 			tmp = dbCoordinator.queryData("SELECT * FROM ADMINISTRATOR WHERE ID=\"" + token.id + "\"");
-			if(tmp.size() == 0) isValid |= false;
+			if(tmp.size() == 0) isValid &= false;
 			tmp = dbCoordinator.queryData("SELECT * FROM STUDENT WHERE ID=\"" + token.id + "\"");
-			if(tmp.size() == 0) isValid |= false;
+			if(tmp.size() == 0) isValid &= false;
 			if(!isValid) return false;
 		}
 		

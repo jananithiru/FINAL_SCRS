@@ -1,4 +1,5 @@
 package scrs;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,9 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import scrs.SCRS;
-import scrs.SCRSImpl;
-import scrs.ShibbolethAuth;
 import scrs.ShibbolethAuth.Token;
 
 public class TestQueryClass {
@@ -23,8 +21,7 @@ public class TestQueryClass {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+			if (myToken != null) {
 				List<ArrayList<String>> testResult = testScrs.queryClass(20, "2011", "KH2150", "Spring2015", "CS", "CAMPUS", "");
 				Iterator<ArrayList<String>> printIter = testResult.iterator();
 				while (printIter.hasNext()) {
@@ -34,13 +31,7 @@ public class TestQueryClass {
 					}
 				}
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 
 	@Test
@@ -53,8 +44,7 @@ public class TestQueryClass {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
-		try {
-			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+			if (myToken != null) {
 				List<ArrayList<String>> testResult = testScrs.queryClass(20, "2010", "KH2150", "Spring 2015", "Computer Science", "CAMPUS", "");
 				Iterator<ArrayList<String>> printIter = testResult.iterator();
 				while (printIter.hasNext()) {
@@ -64,12 +54,5 @@ public class TestQueryClass {
 					}
 				}
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

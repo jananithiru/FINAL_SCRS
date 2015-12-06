@@ -1,5 +1,6 @@
-package scrs;
+package scrs; 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public interface SCRS {
@@ -46,11 +47,10 @@ public interface SCRS {
 	/**
 	 * This interface is used for querying admin basic information.
 	 * @param token Only Admin can invoke this function
-	 * @param id 
 	 * @return Admin ID, Admin Name, Admin Department, etc.
 	 * Empty list will be returned if the query is failed.
 	 */
-	List<ArrayList<String>> queryAdminPersonalData(ShibbolethAuth.Token token, int id);
+	List<ArrayList<String>> queryAdminPersonalData(ShibbolethAuth.Token token);
 	
 	/**
 	 * This interface is used for querying instructors basic personal information
@@ -114,7 +114,7 @@ public interface SCRS {
 	 * @param department
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
-	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int capacity, String instructor, String firstDay,
+	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, String instructor, String firstDay,
 			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
 			String prerequisite, String description, String department); 
 
