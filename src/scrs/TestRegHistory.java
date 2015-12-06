@@ -1,4 +1,6 @@
 package scrs;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -7,9 +9,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import scrs.SCRS;
+import scrs.SCRSImpl;
+import scrs.ShibbolethAuth;
 import scrs.ShibbolethAuth.Token;
 
-public class TestQueryClass {
+public class TestRegHistory {
 
 	@Test
 	public void generateData() {
@@ -41,7 +46,7 @@ public class TestQueryClass {
 	}
 	
 	@Test
-	public void testQueryClass() {
+	public void testQueryRegHistory() {
 
 		// INITIALIZATION
 		SCRS testScrs = new SCRSImpl();
@@ -50,8 +55,9 @@ public class TestQueryClass {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
-			if (myToken != null) {
-				List<ArrayList<String>> testResult = testScrs.queryClass(20, "2011", "KH2150", "Spring2015", "CS", "CAMPUS", "");
+		try {
+			if (myToken != null && sbAuth.TokenAuth(myToken)) {
+				List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myToken, 111);
 				Iterator<ArrayList<String>> printIter = testResult.iterator();
 				while (printIter.hasNext()) {
 					Iterator<String> printInnerIter = printIter.next().iterator();
@@ -60,28 +66,12 @@ public class TestQueryClass {
 					}
 				}
 			}
-	
-	}
-
-	@Test
-	public void testQueryNonExistentClass() {
-
-		// INITIALIZATION
-		SCRS testScrs = new SCRSImpl();
-
-		// LOGIN
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
-
-			if (myToken != null) {
-				List<ArrayList<String>> testResult = testScrs.queryClass(20, "2010", "KH2150", "Spring 2015", "Computer Science", "CAMPUS", "");
-				Iterator<ArrayList<String>> printIter = testResult.iterator();
-				while (printIter.hasNext()) {
-					Iterator<String> printInnerIter = printIter.next().iterator();
-					while (printInnerIter.hasNext()) {
-						System.out.print(printInnerIter.next() + "\t");
-					}
-				}
-			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

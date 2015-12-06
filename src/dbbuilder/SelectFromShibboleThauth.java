@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class SelectDataFromStuentANDCourse {
+public class SelectFromShibboleThauth {
 	public static void main(String args[]) {
 		String databaseName = "jdbc:sqlite:SCRSDataBase.db";
 		Connection c = null;
@@ -17,18 +17,18 @@ public class SelectDataFromStuentANDCourse {
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM STUDENTANDCOURSE;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SHIBBOLETHAUTH;");
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				int courseID = rs.getInt("COURSEID");
-				String grading = rs.getString("GRADING");
-				String courseTerm = rs.getString("COURSETERM");
-				int studentID = rs.getInt("STUDENTID");
+				String account = rs.getString("X500ACCOUNT");
+				String password = rs.getString("X500PASSWORD");
+				int userId = rs.getInt("USERID");
+				String userType = rs.getString("USERTYPE");
 				System.out.println("ID = " + id);
-				System.out.println("COURSEID = " + courseID);
-				System.out.println("grading = " + grading);
-				System.out.println("courseTerm = " + courseTerm);
-				System.out.println("studentID = " + studentID);
+				System.out.println("account = " + account);
+				System.out.println("password = " + password);
+				System.out.println("userId = " + userId);
+				System.out.println("userType = " + userType);
 				System.out.println();
 			}
 			rs.close();
