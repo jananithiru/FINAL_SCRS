@@ -150,7 +150,6 @@ public class SCRSImpl implements SCRS {
 				department, classType, instrID);
 
 		List<ArrayList<Object>> objList = null;
-		System.out.println(sqlStr);
 
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
@@ -168,16 +167,15 @@ public class SCRSImpl implements SCRS {
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
-		
 		return result;
 	}
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
 		
-		if (token.type != RoleType.ADMIN || token.id != studentID) {
-			//TODO create exception
-			//throw new Exception();
+		if (!(token != null && (token.type == RoleType.ADMIN || token.id == studentID))) {
+			System.out.println(ErrorMessages.accessNotAllowed);
+			//TODO custom exception
 		}
 		
 		DBCoordinator dbcoordinator = new DBCoordinator();
