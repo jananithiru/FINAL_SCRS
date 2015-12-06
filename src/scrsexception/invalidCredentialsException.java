@@ -6,7 +6,7 @@ public class invalidCredentialsException extends Exception {
 	}
 
 	public invalidCredentialsException(String message) {
-		super("IOException: " + scrs.ErrorMessages.invalidCredentials + message);
+		super("invalidCredentialsException: " + scrs.ErrorMessages.invalidCredentials + message);
 	}
 
 	public invalidCredentialsException(Throwable cause) {
@@ -14,7 +14,7 @@ public class invalidCredentialsException extends Exception {
 	}
 
 	public invalidCredentialsException(String message, Throwable cause) {
-		super("IOException: " + message, cause);
+		super("invalidCredentialsException: " + message, cause);
 	}
 
 }
