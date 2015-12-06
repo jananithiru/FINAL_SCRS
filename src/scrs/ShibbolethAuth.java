@@ -57,7 +57,7 @@ public class ShibbolethAuth {
 		else return undefinedToken;
 	}
 	
-	boolean TokenAuth(Token token) throws ClassNotFoundException, SQLException {
+	private boolean TokenAuth(Token token) throws ClassNotFoundException, SQLException {
 		List<ArrayList<Object>> tmp;
 		if(token.type == Token.RoleType.STUDENT) {
 			tmp = dbCoordinator.queryData("SELECT * FROM STUDENT WHERE ID=\"" + token.id + "\"");
