@@ -1,19 +1,21 @@
 package dbbuilder;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import scrs.ShibbolethAuth.Token;
+
 public class InsertQueries {
 	static String databaseName = "jdbc:sqlite:SCRSDataBase.db";
-	public static void insertStudentTable()
-	  {
-	    Connection c = null;
-	    Statement stmt = null;
-	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection(databaseName);
-	      c.setAutoCommit(false); //TODO: Fix this ? 
-	      System.out.println("Opened database successfully");
+	public static void insertStudentTable() {
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection(databaseName);
+			c.setAutoCommit(false); // TODO: Fix this ?
+			System.out.println("Opened database successfully");
 
 	      stmt = c.createStatement();
 	      
@@ -191,7 +193,7 @@ public class InsertQueries {
 	
 	public static void main(String args[]) {
 		insertStudentTable();
-	//	insertAdminTable();
+		// insertAdminTable();
 	}
 
 }

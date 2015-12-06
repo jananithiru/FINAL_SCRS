@@ -16,20 +16,26 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "insert into StudentAndCourse values(" + courseId + ",'" + grading + "','" + courseTerm + "')"; // id
-																												// is
-																												// autoincrement
-
+		int studentId = 123; // will be token id 
+		String  sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
+		//String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
+		//courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
+		System.out.println("Here is the student add class and the string is generated");
+																												
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseId));
 		dataList.add(grading);
 		dataList.add(courseTerm);
+		dataList.add(Integer.toString(studentId));
+		
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<Constants.PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
+		typeList.add(PrimitiveDataType.INT);
 		try {
 			dbCoordinator.insertData(sqlStr, dataList, typeList);
+			System.out.println("insert data done!!");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +55,7 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "delete from StudentAndCourse where courseId=" + courseID;
+		String sqlStr = "delete from StudentAndCourse where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
@@ -77,7 +83,7 @@ public class Student extends Person {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "update StudentAndCourse set grading='" + grading + "' where courseId="+courseID;
+		String sqlStr = "update StudentAndCourse set grading=? where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(grading);
 		dataList.add(Integer.toString(courseID));
