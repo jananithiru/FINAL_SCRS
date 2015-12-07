@@ -10,6 +10,14 @@ import scrs.ShibbolethAuth.Token.RoleType;
 
 public class Student extends Person {
 
+	/**
+	 * This method is used when a student chooses to register for a class.
+	 * @param token contains the Token object of the logged in student.
+	 * @param courseId
+	 * @param grading 'A-F', 'S/N', or 'AUD'
+	 * @param courseTerm e.g. 'Spring2015'
+	 * @return True if the student was successfully added to the class.  Else, false.
+	 */
 	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) {
 		
 		if (token.type == RoleType.ADMIN) {
@@ -48,6 +56,12 @@ public class Student extends Person {
 
 	}
 
+	/**
+	 * This method is used when a student wishes to drop a class.
+	 * @param token contains the Token object of the student.
+	 * @param courseID
+	 * @return True if the drop was successful.  Else, false.
+	 */
 	boolean studentDropClass(ShibbolethAuth.Token token, int courseID) {
 		if (token.type == RoleType.ADMIN) {
 			return false;
@@ -75,6 +89,15 @@ public class Student extends Person {
 		return true;
 	}
 	
+	/**
+	 * This method is used when a student wishes to change the grading basis of 
+	 * a course she is enrolled in.
+	 * @param token contains the Token object of the student.
+	 * @param courseID 
+	 * @param grading grade basis the student wishes to change the course to.
+	 * @param courseTerm
+	 * @return
+	 */
 	// why we need the parameter courseTerm
 	boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm){
 		if (token.type == RoleType.ADMIN) {

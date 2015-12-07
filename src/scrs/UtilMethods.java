@@ -6,7 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 
 public class UtilMethods { //TODO: Rename this class after checking with people 
-	
+	/**
+	 * This method is used to convert a list of ArrayLists of Objects to a list 
+	 * of ArrayLists of Strings. 
+	 * @param objList
+	 * @return A list of ArrayList of Strings.
+	 */
 	public static List<ArrayList<String>> convertObjListToStringList(List<ArrayList<Object>> objList) {
 		List<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 
@@ -22,6 +27,14 @@ public class UtilMethods { //TODO: Rename this class after checking with people
 		return result;
 	}
 	
+	/**
+	 * This method is used to determine if some date is within the registration 
+	 * time frame for some specific course.
+	 * @param currentDate contains the date of registration.
+	 * @param courseTerm contains the course term (e.g. "Spring2015") of the 
+	 * course you wish to check the time frame of.
+	 * @return a boolean value.  True if it is within time frame, else false.
+	 */
 	@SuppressWarnings("deprecation")
 	public static boolean isInTimeFrame(Date currentDate, String courseTerm) {
 		int startYear, endYear;
