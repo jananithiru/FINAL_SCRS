@@ -12,7 +12,11 @@ public class TestStudentFunctionality {
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");		
+
+		// Search Class
+
+		// Add Class
+		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");		
 		
 		// Search Class 
 		testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
