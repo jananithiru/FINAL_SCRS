@@ -1,4 +1,6 @@
 *.class
 *.html
 *.db
-/bin/
+bin/
+doc/
+index-files/
