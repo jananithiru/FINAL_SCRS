@@ -34,9 +34,10 @@ public class TestQueryClass {
 		stmt = c.createStatement();
 		
 		String sqlStr = "INSERT INTO SHIBBOLETHAUTH (ID, X500ACCOUNT, X500PASSWORD, USERID, USERTYPE) "
-				+ "VALUES (null, 'alice001', 'mypassword', 111, 'STUDENT')";
+				+ "VALUES (null, 'alice001', 'mypassword', 111, 'ADMIN')";
 		stmt.executeUpdate(sqlStr);
-
+		
+		
 		sqlStr = "INSERT INTO COURSE (ID, NAME,  CREDITS,CAPACITY, TERM, FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
 				+ "VALUES (777, '2011', 3, 30, 'Spring2015', 02/01/2015, 05/30/2015, '08:00', '09:15', 'Tu, Th', 'KH2150', 'Lecture', 'NONE', '2011 Description', 'CS')";
 		stmt.executeUpdate(sqlStr);

@@ -253,7 +253,7 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
 
-		if (!(token != null && (token.type == RoleType.ADMIN || token.id == studentID))) {
+		if ((token == null || !(token.type == RoleType.ADMIN || token.id == studentID))) {
 			System.out.println(ErrorMessages.accessNotAllowed);
 			// TODO custom exception
 		}
