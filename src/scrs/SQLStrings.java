@@ -21,8 +21,11 @@ public class SQLStrings {
 		if (instructorID != null) {
 			sqlStr += " JOIN instructorandcourse ic on c.ID = ic.courseID";
 		}
-			sqlStr += " WHERE c.id = " + courseID + " AND c.department = '" + department + "'" + 
+			sqlStr += " WHERE c.id = " + courseID + 
 				" AND c.location = '" + location + "'" + " AND c.term = '" + term + "'";
+		if (department != null) {
+			sqlStr += " AND c.department = '" + department + "'";
+		}
 		if (courseName != null) {
 			sqlStr += " AND c.name = '" + courseName + "'";
 		}
@@ -37,7 +40,7 @@ public class SQLStrings {
 	}
 
 	public static String selectHistoryFromStudentAndCourse(int studentID) {
-		String sqlStr = "select * FROM studentcourse WHERE id = " + studentID + ";";
+		String sqlStr = "select * FROM studentandcourse WHERE studentid = " + studentID + ";";
 		return sqlStr;
 	}
 }
