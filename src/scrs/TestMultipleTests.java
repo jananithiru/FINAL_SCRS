@@ -38,7 +38,7 @@ public class TestMultipleTests {
 
 		}
 
-		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");
+		myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
 			// Search Class
