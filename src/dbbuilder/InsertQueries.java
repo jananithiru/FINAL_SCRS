@@ -1,8 +1,4 @@
 package dbbuilder;
-<<<<<<< HEAD
-=======
-
->>>>>>> c551eb00f95eeba62b6d8b6bd1836917eb7fb710
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
