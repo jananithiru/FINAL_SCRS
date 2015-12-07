@@ -12,12 +12,15 @@ public class TestStudentFunctionality {
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
-
+		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");		
+		
+		// Search Class 
+		
+		// Add Class	
 		if (myToken != null) {
 			// where to judge the token type??? inside the function or in
 			// the test
-			assertEquals(true, testScrs.studentAddClass(myToken, 8735, "A/F", "FALL"));
+			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A/F", "FALL"));
 
 			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
 			// "A/F", "FALL");
