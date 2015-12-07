@@ -23,7 +23,7 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN ADD CLASS START");
 
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 666, "Advanced Database", 1, 30, "2015Fall", "Mohamed",
+					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Mohamed",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 

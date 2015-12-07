@@ -41,7 +41,7 @@ public class SelectFromCourse {
 				System.out.println("name = " + name);
 				System.out.println("lastName = " + credits);
 				System.out.println("dateOfBirth = " + capacity);
-				System.out.println("gender = " + term);
+				System.out.println("term = " + term);
 				System.out.println("title = " + firstDay);
 				System.out.println("salary = " + lastDay);
 				System.out.println("classBeginTime = " + classBeginTime);
