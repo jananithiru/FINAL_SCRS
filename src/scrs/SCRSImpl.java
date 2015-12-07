@@ -112,7 +112,6 @@ public class SCRSImpl implements SCRS {
 				instrID);
 
 		List<ArrayList<Object>> objList = null;
-		System.out.println(sqlStr);
 
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
@@ -169,15 +168,9 @@ public class SCRSImpl implements SCRS {
 	}
 
 	@Override
-	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, String instructor,
-			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
-			String location, String type, String prerequisite, String description, String department) {
 
 		Admin admin = new Admin();
 		try {
-			int capacity = 10;
-			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, instructor, firstDay, lastDay,
-					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
