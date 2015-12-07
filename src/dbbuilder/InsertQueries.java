@@ -3,8 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import scrs.ShibbolethAuth.Token;
-
 public class InsertQueries {
 	static String databaseName = "jdbc:sqlite:SCRSDataBase.db";
 
