@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import scrs.ShibbolethAuth.Token;
+import scrsexception.SCRSException;
 
 public class TestMultipleTests {
 
@@ -19,7 +20,15 @@ public class TestMultipleTests {
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
 			// Search Class
-			testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+			try {
+				testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+			} catch (SCRSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			// Add Class
 			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
@@ -33,7 +42,15 @@ public class TestMultipleTests {
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
 			// Search Class
-			testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+			try {
+				testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+			} catch (SCRSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			// Add Class
 			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));

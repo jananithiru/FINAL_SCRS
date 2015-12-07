@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import scrs.ShibbolethAuth.Token;
+import scrsexception.SCRSException;
 
 public class TestStudentFunctionality {
 	@Test
@@ -19,7 +20,15 @@ public class TestStudentFunctionality {
 		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");		
 		
 		// Search Class 
-		testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+		try {
+			testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Add Class	
 		if (myToken != null) {

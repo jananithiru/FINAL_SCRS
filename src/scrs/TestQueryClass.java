@@ -17,6 +17,7 @@ import scrs.SCRS;
 import scrs.SCRSImpl;
 import scrs.ShibbolethAuth;
 import scrs.ShibbolethAuth.Token;
+import scrsexception.SCRSException;
 
 public class TestQueryClass {
 
@@ -66,17 +67,32 @@ public class TestQueryClass {
 		// LOGIN
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
-		if (myToken != null) {
-			List<ArrayList<String>> testResult = testScrs.queryClass(777, "2011", "KH2150", "Spring2015", "CS",
-					"Lecture", null);
-			Iterator<ArrayList<String>> printIter = testResult.iterator();
-			while (printIter.hasNext()) {
-				Iterator<String> printInnerIter = printIter.next().iterator();
-				while (printInnerIter.hasNext()) {
-					System.out.print(printInnerIter.next() + "\t");
+		if (myToken != null)
+			try {
+				{
+					List<ArrayList<String>> testResult = null;
+					try {
+						testResult = testScrs.queryClass(777, "2011", "KH2150", "Spring2015", "CS",
+								"Lecture", null);
+					} catch (SCRSException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Iterator<ArrayList<String>> printIter = testResult.iterator();
+					while (printIter.hasNext()) {
+						Iterator<String> printInnerIter = printIter.next().iterator();
+						while (printInnerIter.hasNext()) {
+							System.out.print(printInnerIter.next() + "\t");
+						}
+					}
 				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
 	}
 
 	@Test
@@ -90,8 +106,16 @@ public class TestQueryClass {
 		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
 
 		if (myToken != null) {
-			List<ArrayList<String>> testResult;
-			testResult = testScrs.queryClass(777, "2010", "KH2150", "Spring2015", "CS", "Lecture", null);
+			List<ArrayList<String>> testResult = null;
+			try {
+				testResult = testScrs.queryClass(777, "2010", "KH2150", "Spring2015", "CS", "Lecture", null);
+			} catch (SCRSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			assert (testResult == null);
 		}
 		System.out.println("test");
