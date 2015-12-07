@@ -12,7 +12,7 @@ public class TestStudentFunctionality {
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");		
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");		
 		
 		// Search Class 
 		testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
@@ -21,7 +21,7 @@ public class TestStudentFunctionality {
 		if (myToken != null) {
 			// where to judge the token type??? inside the function or in
 			// the test
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
+			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "Fall2015"));
 
 			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
 			// "A/F", "FALL");
@@ -36,10 +36,10 @@ public class TestStudentFunctionality {
 	public void TestStudentDropClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
 
-			assertEquals(true, testScrs.studentDropClass(myToken, 8735));
+			assertEquals(true, testScrs.studentDropClass(myToken, 666));
 
 			// boolean testResult = testScrs.studentDropClass(myToken,
 			// 8735);

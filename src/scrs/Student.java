@@ -1,9 +1,13 @@
 package scrs;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.List;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
@@ -18,11 +22,21 @@ public class Student extends Person {
 	 * @param courseTerm e.g. 'Spring2015'
 	 * @return True if the student was successfully added to the class.  Else, false.
 	 */
+	@SuppressWarnings("deprecation")
 	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) {
 		
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
+	
+	    //get current date time with Date()
+	    java.util.Date utilDate = new java.util.Date();
+	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+    
+		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
+			return false;
+		}
+		
 		DBCoordinator dbCoordinator = new DBCoordinator();
 		int studentId = token.id; // will be token id 
 		String  sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
@@ -62,11 +76,37 @@ public class Student extends Person {
 	 * @param courseID
 	 * @return True if the drop was successful.  Else, false.
 	 */
+	@SuppressWarnings("deprecation")
 	boolean studentDropClass(ShibbolethAuth.Token token, int courseID) {
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
+	
 		DBCoordinator dbCoordinator = new DBCoordinator();
+		
+		//get current date time with Date()
+	    java.util.Date utilDate = new java.util.Date();
+	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+	    
+	    String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID + ";";
+	    List<ArrayList<Object>> termList = null;
+		try {
+			termList = dbCoordinator.queryData(sqlCmd);
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    if (termList == null || termList.size() == 0) {
+	    	System.out.println("test");
+	    	return false;
+	    }
+	    String courseTerm = (String)termList.get(0).get(0);
+	    
+	    
+		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
+			return false;
+		}
+		
 		String sqlStr = "delete from StudentAndCourse where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
