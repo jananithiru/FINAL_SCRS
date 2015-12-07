@@ -18,7 +18,7 @@ public class TestQueryPersonalInformation {
 
 		// LOGIN
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 
 			if (myToken != null) {
 				List<ArrayList<String>> testResult = testScrs.queryStudentPersonalData(myToken, myToken.id);
@@ -33,7 +33,7 @@ public class TestQueryPersonalInformation {
 
 	}
 
-	@Test
+	//@Test
 	public void testDisplayInvalidAdminDetails() {
 
 		// INITIALIZATION
@@ -58,7 +58,7 @@ public class TestQueryPersonalInformation {
 			}
 	}
 
-	@Test
+//	/@Test
 	public void testDisplayValidAdminDetails() {
 
 		SCRS testScrs = new SCRSImpl();

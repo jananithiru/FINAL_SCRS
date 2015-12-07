@@ -27,15 +27,6 @@ public class TestMultipleTests {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		
 		Token myToken = ((SCRSImpl) testScrs).userLogin("John193", "password");
-
-		
-		
-		
-		
-		if (myToken == null) {
-			// Catch exception and print useful message
-		}
-
 		
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
