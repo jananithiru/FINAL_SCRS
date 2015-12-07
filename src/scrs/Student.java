@@ -11,6 +11,7 @@ import java.util.List;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
+import scrsexception.SCRSException;
 
 public class Student extends Person {
 
@@ -27,8 +28,18 @@ public class Student extends Person {
 	 * @return True if the student was successfully added to the class. Else,
 	 *         false.
 	 */
+	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm){
+		boolean result = false;
+		try {
+			result = studentAddClass2(token, courseId,  grading,  courseTerm);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		return result;
+	} 
 	@SuppressWarnings("deprecation")
-	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) {
+	boolean studentAddClass2(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) throws SCRSException {
 
 		if (token.type == RoleType.ADMIN) {
 			return false;
@@ -39,7 +50,7 @@ public class Student extends Person {
 	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
     
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
-			return false;
+			throw new SCRSException(ErrorMessages.outTimeFrame);
 		}
 		
 		DBCoordinator dbCoordinator = new DBCoordinator();
@@ -63,13 +74,13 @@ public class Student extends Person {
 			System.out.println("insert data done!!");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.ParseDataError);
 		}
 		return true;
 
