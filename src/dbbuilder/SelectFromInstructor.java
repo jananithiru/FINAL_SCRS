@@ -7,7 +7,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class SelectFromInstructor {
+	
 	public static void main(String args[]) {
+		selectAll();
+	}
+	
+	public static void selectAll() {
 		String databaseName = "jdbc:sqlite:SCRSDataBase.db";
 		Connection c = null;
 		Statement stmt = null;
