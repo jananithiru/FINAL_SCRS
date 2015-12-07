@@ -10,19 +10,7 @@ public class TestMultipleTests {
 
 	@Test
 	public void testCompleteStudentSuite() {
-
-		// do
-		// token = shibboleth.tokengenerator()
-		// while token.type != shibboleth.token.roletype.undefine
-		//
-		// Invoke other scrs functions with the token.
-		// }
-
-		// Add 4 classes
-		// Modify one class grade basis
-		// Drop one class
-		// Try updting
-
+		fail("Not yet implemented");
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		
@@ -41,7 +29,7 @@ public class TestMultipleTests {
 
 		}
 
-		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");
+		myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
 			// Search Class

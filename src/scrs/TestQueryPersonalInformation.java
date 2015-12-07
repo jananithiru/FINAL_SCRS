@@ -1,4 +1,5 @@
 package scrs;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,16 +21,16 @@ public class TestQueryPersonalInformation {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 
-			if (myToken != null) {
-				List<ArrayList<String>> testResult = testScrs.queryStudentPersonalData(myToken, myToken.id);
-				Iterator<ArrayList<String>> printIter = testResult.iterator();
-				while (printIter.hasNext()) {
-					Iterator<String> printInnerIter = printIter.next().iterator();
-					while (printInnerIter.hasNext()) {
-						System.out.print(printInnerIter.next() + "\t");
-					}
+		if (myToken != null) {
+			List<ArrayList<String>> testResult = testScrs.queryStudentPersonalData(myToken, myToken.id);
+			Iterator<ArrayList<String>> printIter = testResult.iterator();
+			while (printIter.hasNext()) {
+				Iterator<String> printInnerIter = printIter.next().iterator();
+				while (printInnerIter.hasNext()) {
+					System.out.print(printInnerIter.next() + "\t");
 				}
 			}
+		}
 
 	}
 
@@ -43,19 +44,19 @@ public class TestQueryPersonalInformation {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("bob999", "mypassword");
 
-			if (myToken != null) //
-			{
-				List<ArrayList<String>> testResult = testScrs.queryStudentPersonalData(myToken, myToken.id);
+		if (myToken != null) //
+		{
+			List<ArrayList<String>> testResult = testScrs.queryStudentPersonalData(myToken, myToken.id);
 
-				Iterator<ArrayList<String>> printIter = testResult.iterator();
-				while (printIter.hasNext()) {
-					Iterator<String> printInnerIter = printIter.next().iterator();
-					while (printInnerIter.hasNext()) {
-						// metaRes.add(innerIter.next().toString());
-						System.out.print(printInnerIter.next() + "\t");
-					}
+			Iterator<ArrayList<String>> printIter = testResult.iterator();
+			while (printIter.hasNext()) {
+				Iterator<String> printInnerIter = printIter.next().iterator();
+				while (printInnerIter.hasNext()) {
+					// metaRes.add(innerIter.next().toString());
+					System.out.print(printInnerIter.next() + "\t");
 				}
 			}
+		}
 	}
 
 //	/@Test
@@ -66,16 +67,16 @@ public class TestQueryPersonalInformation {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("bob111", "mypassword");
 
-			if (myToken != null) //
-			{
-				List<ArrayList<String>> testResult = testScrs.queryAdminPersonalData(myToken);
-				Iterator<ArrayList<String>> printIter = testResult.iterator();
-				while (printIter.hasNext()) {
-					Iterator<String> printInnerIter = printIter.next().iterator();
-					while (printInnerIter.hasNext()) {
-						System.out.print(printInnerIter.next() + "\t");
-					}
+		if (myToken != null) //
+		{
+			List<ArrayList<String>> testResult = testScrs.queryAdminPersonalData(myToken);
+			Iterator<ArrayList<String>> printIter = testResult.iterator();
+			while (printIter.hasNext()) {
+				Iterator<String> printInnerIter = printIter.next().iterator();
+				while (printInnerIter.hasNext()) {
+					System.out.print(printInnerIter.next() + "\t");
 				}
 			}
+		}
 	}
 }

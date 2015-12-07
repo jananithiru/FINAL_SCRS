@@ -1,40 +1,49 @@
 package scrs;
 
 public class SQLStrings {
-	
+
 	/**
-	 * Method used to generate sql string for selecting data from the student table.
+	 * Method used to generate sql string for selecting data from the student
+	 * table.
+	 * 
 	 * @param studentID
 	 * @return
 	 */
-	public static String selectAllFromStudent(int studentID){
+	public static String selectAllFromStudent(int studentID) {
 		// TODO: Come up with this string escaped corrected
 		String sqlStr = "select * from student where id=" + studentID;
 		return sqlStr;
 	}
-	
+
 	/**
-	 * Method used to generate sql string for selecting data from the admin table.
+	 * Method used to generate sql string for selecting data from the admin
+	 * table.
+	 * 
 	 * @param adminID
 	 * @return
 	 */
-	public static String selectAllFromAdmin(int adminID){
+	public static String selectAllFromAdmin(int adminID) {
 		// TODO: Come up with this string escaped corrected
 		String sqlStr = "select * from administrator where id=" + adminID;
 		return sqlStr;
 	}
 
 	/**
-	 * Method used to generate sql string for selecting data from the course table.
-	 * Required fields are courseID, location, and term.  The rest of the fields 
-	 * are optional.  If an optional field is not to be queried for, the value 
-	 * should be inputted as null.
+	 * Method used to generate sql string for selecting data from the course
+	 * table. Required fields are courseID, location, and term. The rest of the
+	 * fields are optional. If an optional field is not to be queried for, the
+	 * value should be inputted as null.
+	 * 
 	 * @param courseID
 	 * @param courseName
-	 * @param location contains location of the course (e.g. 'East Bank KH3-301')
-	 * @param term term the course is offered (e.g. 'Spring2015')
-	 * @param department e.g. 'CS'
-	 * @param classType Lecture or Seminar
+	 * @param location
+	 *            contains location of the course (e.g. 'East Bank KH3-301')
+	 * @param term
+	 *            term the course is offered (e.g. 'Spring2015')
+	 * @param department
+	 *            e.g. 'CS'
+	 * @param classType
+	 *            Lecture or Seminar
 	 * @param instructorID
 	 * @return
 	 */
@@ -44,8 +53,7 @@ public class SQLStrings {
 		if (instructorID != null) {
 			sqlStr += " JOIN instructorandcourse ic on c.ID = ic.courseID";
 		}
-			sqlStr += " WHERE c.id = " + courseID + 
-				" AND c.location = '" + location + "'" + " AND c.term = '" + term + "'";
+		sqlStr += " WHERE c.id = " + courseID + " AND c.location = '" + location + "'" + " AND c.term = '" + term + "'";
 		if (department != null) {
 			sqlStr += " AND c.department = '" + department + "'";
 		}
@@ -61,10 +69,11 @@ public class SQLStrings {
 		sqlStr += ";";
 		return sqlStr;
 	}
-	
+
 	/**
-	 * Method used to generate sql string for querying for a students 
+	 * Method used to generate sql string for querying for a students
 	 * registration history.
+	 * 
 	 * @param studentID
 	 * @return
 	 */
