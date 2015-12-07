@@ -1,4 +1,5 @@
 package dbbuilder;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -27,22 +28,22 @@ public class InsertQueries {
 
 			// STUDENT
 			String allValues = "INSERT INTO STUDENT (ID, FIRSTNAME, LASTNAME, DATEOFBIRTH,TYPE,GENDER,ADVISOR,CREDITS,DEPARTMENT) "
-					+ "VALUES (888, 'Alice1', 'Liddell',  2000-10-03 ,'Master', 'Female', 'Mad Hatter', 1, 'CS');";
+					+ "VALUES (888, 'Alice1', 'Liddell',  09/01/2014 ,'Master', 'Female', 'Mad Hatter', 1, 'CS');";
 			stmt.executeUpdate(allValues);
 
 			// ADMIN
 			String admin1 = "INSERT INTO ADMINISTRATOR (ID, FIRSTNAME, LASTNAME, DATEOFBIRTH, GENDER, DEPARTMENT) "
-					+ "VALUES (111, 'bob111', 'Johnson',  12/01/1900, 'Male', 'CS');";
+					+ "VALUES (111, 'AdminAlice1', 'Johnson',  09/01/2014, 'Female', 'CS');";
 			stmt.executeUpdate(admin1);
 
 			// INSTRUCTOR
 			String instructor1 = "INSERT INTO INSTRUCTOR (ID, FIRSTNAME, LASTNAME, DATEOFBIRTH, GENDER,TITLE, DEPARTMENT) "
-					+ "VALUES (111, 'Mokbel', 'Mohamed',  12/01/1900, 'Male', 'Professor', 'CS');";
+					+ "VALUES (111, 'Mokbel', 'Mohamed',  09/01/2014, 'Male', 'Professor', 'CS');";
 			stmt.executeUpdate(instructor1);
 
 			// COURSE
 			String course1 = "INSERT INTO COURSE (ID, NAME,  CREDITS,CAPACITY,TERM, FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
-					+ "VALUES (777, '2011', 3, 30, '2014Spring', 01/25/2015, 05/30/2015, '08:00', '09:15', 'Tu, Th', 'KH2150', 'Lecture', 'NONE', '2011 Description', 'CS')";
+					+ "VALUES (777, '2011', 3, 30, '2014Spring', 09/01/2014, 09/01/2015, '08:00', '09:15', 'Tu, Th', 'KH2150', 'Lecture', 'NONE', '2011 Description', 'CS')";
 
 			stmt.executeUpdate(course1);
 
