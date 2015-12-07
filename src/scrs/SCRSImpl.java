@@ -362,6 +362,9 @@ public class SCRSImpl implements SCRS {
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+
+			return false;
+
 		}
 		return true;
 	}
@@ -370,7 +373,6 @@ public class SCRSImpl implements SCRS {
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SCRSException {
-		validateCredentials(token);
 		Admin admin = new Admin();
 		try {
 			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,

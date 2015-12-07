@@ -47,11 +47,14 @@ public class Admin extends Person {
 			String department) throws SQLException, Exception {
 
 		if (token.type != Token.RoleType.ADMIN) {
+			System.out.println("THIS IS NOT ADMIN");
+
 			System.out.println(
 					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
-
 			return false;
+
 		}
+		System.out.println("THIS IS ADMIN");
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
@@ -142,7 +145,7 @@ public class Admin extends Person {
 	 * @param courseID
 	 * @return
 	 * @throws SQLException
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException, Exception {
 		if (token.type != Token.RoleType.ADMIN) {

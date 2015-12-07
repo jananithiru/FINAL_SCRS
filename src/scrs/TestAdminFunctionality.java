@@ -28,6 +28,7 @@ public class TestAdminFunctionality {
 					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 1, 25, "Fall2015", "Mohamed",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
+
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
 
 		}
@@ -40,7 +41,7 @@ public class TestAdminFunctionality {
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
 		System.out.println("usertype  " + tokenGenerator.type);
 
-		if (tokenGenerator != null ) {
+		if (tokenGenerator != null) {
 			if (tokenGenerator != null) {
 
 				assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));
@@ -86,7 +87,8 @@ public class TestAdminFunctionality {
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
 		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
 
-			assertEquals(true, testScrs.adminEditStudentRegisteredClass(tokenGenerator, 1006, 888, "S/N", "Spring 2015"));
+			assertEquals(true,
+					testScrs.adminEditStudentRegisteredClass(tokenGenerator, 1006, 888, "S/N", "Spring 2015"));
 
 		}
 	}
