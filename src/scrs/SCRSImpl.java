@@ -400,7 +400,7 @@ public class SCRSImpl implements SCRS {
 		return true;
 	}
 
-	public boolean adminDeleteClass1(Token token, int courseID) throws SCRSException {
+	public boolean adminDeleteClass1(Token token, int courseID) throws Exception {
 		Admin admin = new Admin();
 		validateCredentials(token);
 		try {

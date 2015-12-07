@@ -15,10 +15,8 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
-		System.out.println("READY FOR ADMIN");
-		System.out.println(tokenGenerator.type);
 
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
 
 			System.out.println("ADMIN ADD CLASS START");
 
@@ -42,7 +40,7 @@ public class TestAdminFunctionality {
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
 		System.out.println("usertype  " + tokenGenerator.type);
 
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null ) {
 			if (tokenGenerator != null) {
 
 				assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));

@@ -142,8 +142,9 @@ public class Admin extends Person {
 	 * @param courseID
 	 * @return
 	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException {
+	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException, Exception {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
 					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
@@ -167,7 +168,7 @@ public class Admin extends Person {
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
