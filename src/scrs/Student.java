@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.internal.Throwables;
+
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
 import scrsexception.SCRSException;
@@ -28,31 +30,33 @@ public class Student extends Person {
 	 * @return True if the student was successfully added to the class. Else,
 	 *         false.
 	 */
-	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm){
+	boolean studentAddClass(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) {
 		boolean result = false;
 		try {
-			result = studentAddClass2(token, courseId,  grading,  courseTerm);
+			result = studentAddClass2(token, courseId, grading, courseTerm);
 		} catch (SCRSException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 		return result;
-	} 
+	}
+
 	@SuppressWarnings("deprecation")
-	boolean studentAddClass2(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm) throws SCRSException {
+	boolean studentAddClass2(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm)
+			throws SCRSException {
 
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
-	
-	    //get current date time with Date()
-	    java.util.Date utilDate = new java.util.Date();
-	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
-    
+
+		// get current date time with Date()
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
 			throw new SCRSException(ErrorMessages.outTimeFrame);
 		}
-		
+
 		DBCoordinator dbCoordinator = new DBCoordinator();
 		int studentId = token.id; // will be token id
 		String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
@@ -94,37 +98,56 @@ public class Student extends Person {
 	 * @param courseID
 	 * @return True if the drop was successful. Else, false.
 	 */
-	@SuppressWarnings("deprecation")
 	boolean studentDropClass(ShibbolethAuth.Token token, int courseID) {
+		boolean result = false;
+
+		try {
+			result = studentDropClass2(token, courseID);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+
+		return result;
+
+	}
+
+	@SuppressWarnings("deprecation")
+	boolean studentDropClass2(ShibbolethAuth.Token token, int courseID) throws SCRSException {
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
-	
+
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		
-		//get current date time with Date()
-	    java.util.Date utilDate = new java.util.Date();
-	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
-	    
-	    String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID + ";";
-	    List<ArrayList<Object>> termList = null;
+
+		// get current date time with Date()
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+
+		String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID + ";";
+		List<ArrayList<Object>> termList = null;
+
 		try {
 			termList = dbCoordinator.queryData(sqlCmd);
-		} catch (ClassNotFoundException | SQLException e1) {
+		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
-	    if (termList == null || termList.size() == 0) {
-	    	System.out.println("test");
-	    	return false;
-	    }
-	    String courseTerm = (String)termList.get(0).get(0);
-	    
-	    
+
+		if (termList == null || termList.size() == 0) {
+
+			throw new SCRSException(ErrorMessages.NoRecordReturnFromDB);
+
+		}
+		String courseTerm = (String) termList.get(0).get(0);
+
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
-			return false;
+			throw new SCRSException(ErrorMessages.outTimeFrame);
 		}
-		
+
 		String sqlStr = "delete from StudentAndCourse where courseId=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
@@ -135,13 +158,13 @@ public class Student extends Person {
 			dbCoordinator.deleteData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.ParseDataError);
 		}
 
 		return true;

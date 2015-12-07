@@ -14,4 +14,5 @@ public class ErrorMessages {
 	public static final String sqlException = "SqlException";
 	public static final String outTimeFrame = "Today is out of Time Frame";
 	public static final String ParseDataError = "The data could not be parsed";
+	public static final String NoRecordReturnFromDB = "There is no such record in database";
 }
