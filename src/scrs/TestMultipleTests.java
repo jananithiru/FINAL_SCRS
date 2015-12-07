@@ -9,18 +9,18 @@ public class TestMultipleTests {
 	@Test
 	public void testCompleteStudentSuite() {
 		fail("Not yet implemented");
-		//		 do
-		//		        token = shibboleth.tokengenerator()
-		//		    while token.type != shibboleth.token.roletype.undefine
+		// do
+		// token = shibboleth.tokengenerator()
+		// while token.type != shibboleth.token.roletype.undefine
 		//
-		//		    Invoke other scrs functions with the token.
-		//		}
+		// Invoke other scrs functions with the token.
+		// }
 
-		// Add 4 classes 
+		// Add 4 classes
 		// Modify one class grade basis
-		// Drop one class 
-		// Try updting 
-	
+		// Drop one class
+		// Try updting
+
 	}
 
 }

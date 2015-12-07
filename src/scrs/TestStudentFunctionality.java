@@ -12,11 +12,11 @@ public class TestStudentFunctionality {
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");		
-		
-		// Search Class 
-		
-		// Add Class	
+		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
+
+		// Search Class
+
+		// Add Class
 		if (myToken != null) {
 			// where to judge the token type??? inside the function or in
 			// the test
