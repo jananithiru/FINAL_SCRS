@@ -67,7 +67,7 @@ public class InsertIntoStudent {
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.STRING);
+		typeList.add(PrimitiveDataType.DATE);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
@@ -92,7 +92,7 @@ public class InsertIntoStudent {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		insertStudent(1001,"YUWEI","WANG","08/02/1991","Master","Female","Jake",3,"CS");
+		insertStudent(1005,"YUWEI","WANG","08/02/1991","Master","Female","Jake",3,"CS");
 
 	}
 
