@@ -59,6 +59,43 @@ public class SCRSImpl implements SCRS {
 	}
 
 	@Override
+	public List<ArrayList<String>> queryAdminPersonalData(Token token, int adminID) {
+
+		if (token.type == Token.RoleType.UNDEFINED) {
+			System.out.print(ErrorMessages.invalidCredentials);
+			return null; // CUSTOM EXCEPTION
+		} else if (token.type == Token.RoleType.STUDENT) {
+			System.out.print(ErrorMessages.incorrectTypeOfAccount);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		DBCoordinator dbcoordinator = new DBCoordinator();
+
+		String sqlStr = SQLStrings.selectAllFromAdmin(adminID);
+
+		List<ArrayList<Object>> objList = null;
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (objList == null || objList.isEmpty()) {
+			System.out.println(ErrorMessages.missingPersonalDataForUser);
+			return null; // CUSTOM EXCEPTION
+		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+
+		return result;
+
+	}
+
+	@Override
 	public boolean studentAddClass(Token token, int courseID, String grading, String courseTerm) {
 		// TODO Auto-generated method stub
 		Student student = new Student();
@@ -136,9 +173,6 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
 
-		if (token.type != RoleType.ADMIN || token.id != studentID) {
-			// TODO create exception
-			// throw new Exception();
 		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
@@ -245,41 +279,6 @@ public class SCRSImpl implements SCRS {
 		Admin admin = new Admin();
 		admin.adminDropStudentRegisteredClass(token, studentID, courseID);
 		return true;
-	}
-
-	@Override
-	public List<ArrayList<String>> queryAdminPersonalData(Token token) {
-		if (token.type == Token.RoleType.UNDEFINED) {
-			System.out.print(ErrorMessages.invalidCredentials);
-			return null; // CUSTOM EXCEPTION
-		} else if (token.type == Token.RoleType.STUDENT) {
-			System.out.print(ErrorMessages.incorrectTypeOfAccount);
-			return null; // CUSTOM EXCEPTION
-		}
-
-		DBCoordinator dbcoordinator = new DBCoordinator();
-
-		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
-
-		List<ArrayList<Object>> objList = null;
-		try {
-			objList = dbcoordinator.queryData(sqlStr);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingPersonalDataForUser);
-			return null; // CUSTOM EXCEPTION
-		}
-
-		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
-
-		return result;
 	}
 
 }
