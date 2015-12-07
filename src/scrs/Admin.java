@@ -186,7 +186,9 @@ public class Admin extends Person {
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
-		for (int i = 0; i < 10; i++) {
+		typeList.add(PrimitiveDataType.DATE);
+		typeList.add(PrimitiveDataType.DATE);
+		for (int i = 0; i < 8; i++) {
 			typeList.add(PrimitiveDataType.STRING);
 
 		}
