@@ -93,9 +93,10 @@ public class SCRSImpl implements SCRS {
 		} else if (token.type == Token.RoleType.ADMIN) {
 			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
 		}
-
-		DBCoordinator dbcoordinator = new DBCoordinator();
+		
 		String sqlStr = SQLStrings.selectAllFromStudent(studentID);
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
 		List<ArrayList<Object>> objList = null;
 
 		try {
@@ -105,6 +106,7 @@ public class SCRSImpl implements SCRS {
 		} catch (SQLException e) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
+
 
 		if (objList == null || objList.isEmpty()) {
 			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
@@ -120,9 +122,10 @@ public class SCRSImpl implements SCRS {
 	 *            Only Admin can invoke this function
 	 * @return Admin ID, Admin Name, Admin Department, etc. Empty list will be
 	 *         returned if the query is failed.
+	 * @throws SCRSException 
 	 */
 	@Override
-	public List<ArrayList<String>> queryAdminPersonalData(Token token) {
+	public List<ArrayList<String>> queryAdminPersonalData(Token token){
 
 		if (token.type == Token.RoleType.UNDEFINED) {
 			System.out.print(ErrorMessages.invalidCredentials);
@@ -132,12 +135,18 @@ public class SCRSImpl implements SCRS {
 			return null; // CUSTOM EXCEPTION
 		}
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
-
 		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
 
+		DBCoordinator dbcoordinator = new DBCoordinator();
 		List<ArrayList<Object>> objList = null;
-		objList = queryDataFromDB(dbcoordinator, sqlStr, objList);
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (SQLException e) {
+			throw new SCRSException(ErrorMessages.sqlException);
+		}
 
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingPersonalDataForUser);
@@ -236,7 +245,13 @@ public class SCRSImpl implements SCRS {
 
 			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
 
-			instrIDList = queryDataFromDB(dbcoordinator, instrSQLStr, instrIDList);
+			try {
+				instrIDList = dbcoordinator.queryData(instrSQLStr);
+			} catch (ClassNotFoundException e) {
+				throw new SCRSException(ErrorMessages.classNotFound);
+			} catch (SQLException e) {
+				throw new SCRSException(ErrorMessages.sqlException);
+			}
 
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 		}
@@ -246,7 +261,13 @@ public class SCRSImpl implements SCRS {
 
 		List<ArrayList<Object>> objList = null;
 
-		objList = queryDataFromDB(dbcoordinator, sqlStr, objList);
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (SQLException e) {
+			throw new SCRSException(ErrorMessages.sqlException);
+		}
 
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingCourseData);
@@ -280,7 +301,7 @@ public class SCRSImpl implements SCRS {
 
 		List<ArrayList<Object>> objList = null;
 
-		objList = queryDataFromDB(dbcoordinator, sqlStr, objList);
+
 
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingStudentRegistrationData);
