@@ -3,8 +3,7 @@ package scrs;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
@@ -27,8 +26,6 @@ public class Student extends Person {
 		DBCoordinator dbCoordinator = new DBCoordinator();
 		int studentId = token.id; // will be token id 
 		String  sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM,STUDENTID) VALUES(?,?,?,?)";
-		//String sqlStr = "INSERT INTO STUDENTANDCOURSE(COURSEID,GRADING,COURSETERM，STUDENTID) VALUES(" +
-		//courseId + ",'" + grading + "'," + "'" + courseTerm + "'," + studentId + ")";
 		System.out.println("Here is the student add class and the string is generated");
 																												
 		ArrayList<String> dataList = new ArrayList<String>();

@@ -1,4 +1,4 @@
-package scrs; 
+package scrs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,6 +18,14 @@ public class DBCoordinator {
 
 	// The query results will be store in List<ArrayList<Object>>, you need to
 	// do the type casting in your code
+	/**
+	 * dbcoordinator query data from database
+	 * 
+	 * @param sqlCmd
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public List<ArrayList<Object>> queryData(String sqlCmd) throws ClassNotFoundException, SQLException {
 		List<ArrayList<Object>> res = new ArrayList<ArrayList<Object>>();
 		String originStr = sqlCmd;
@@ -54,6 +62,16 @@ public class DBCoordinator {
 		return res;
 	}
 
+	/**
+	 * delete data from database
+	 * 
+	 * @param sqlCmd
+	 * @param dataList
+	 * @param typeList
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void deleteData(String sqlCmd, ArrayList<String> dataList, ArrayList<Constants.PrimitiveDataType> typeList)
 			throws ClassNotFoundException, SQLException, ParseException {
 		sqlCmd = sqlCmd.toUpperCase();
@@ -92,6 +110,16 @@ public class DBCoordinator {
 		System.out.println("Operation done successfully");
 	}
 
+	/**
+	 * insert data into database
+	 * 
+	 * @param sqlCmd
+	 * @param dataList
+	 * @param typeList
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void insertData(String sqlCmd, ArrayList<String> dataList, ArrayList<Constants.PrimitiveDataType> typeList)
 			throws ClassNotFoundException, SQLException, ParseException {
 		sqlCmd = sqlCmd.toUpperCase();
@@ -129,6 +157,16 @@ public class DBCoordinator {
 		System.out.println("Records created successfully");
 	}
 
+	/**
+	 * update data into database
+	 * 
+	 * @param sqlCmd
+	 * @param dataList
+	 * @param typeList
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void updateData(String sqlCmd, ArrayList<String> dataList, ArrayList<Constants.PrimitiveDataType> typeList)
 			throws ClassNotFoundException, SQLException, ParseException {
 		sqlCmd = sqlCmd.toUpperCase();

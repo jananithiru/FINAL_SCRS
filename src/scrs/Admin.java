@@ -8,8 +8,38 @@ import java.util.List;
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token;
 
+/**
+ * admin functions
+ * 
+ * @author Bruce
+ *
+ */
 public class Admin extends Person {
-
+	/**
+	 * admin add class method, create new class into course table and
+	 * instructorandcourse table
+	 * 
+	 * @param token
+	 * @param courseID
+	 * @param courseName
+	 * @param courseCredits
+	 * @param capacity
+	 * @param term
+	 * @param instructor
+	 * @param firstDay
+	 * @param lastDay
+	 * @param classBeginTime
+	 * @param classEndTime
+	 * @param weekDays
+	 * @param location
+	 * @param type
+	 * @param prerequisite
+	 * @param description
+	 * @param department
+	 * @return
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
 			int capacity, String term, String instructor, String firstDay, String lastDay, String classBeginTime,
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
@@ -103,6 +133,15 @@ public class Admin extends Person {
 
 	}
 
+	/**
+	 * admin delete method, this will delete class from course table and
+	 * instructorandcourse table
+	 * 
+	 * @param token
+	 * @param courseID
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
@@ -152,6 +191,28 @@ public class Admin extends Person {
 
 	}
 
+	/**
+	 * admin edit class, this will allow admin to edit classinformation in
+	 * course table
+	 * 
+	 * @param token
+	 * @param courseID
+	 * @param courseName
+	 * @param courseCredits
+	 * @param instructor
+	 * @param firstDay
+	 * @param lastDay
+	 * @param classBeginTime
+	 * @param classEndTime
+	 * @param weekDays
+	 * @param location
+	 * @param type
+	 * @param prerequisite
+	 * @param description
+	 * @param department
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
 			String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
@@ -206,6 +267,18 @@ public class Admin extends Person {
 		return true;
 	}
 
+	/**
+	 * admin add student to specific class, create new one in studentandcourse
+	 * table
+	 * 
+	 * @param token
+	 * @param studentID
+	 * @param courseID
+	 * @param grading
+	 * @param courseTerm
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean adminAddStudentToClass(ShibbolethAuth.Token token, int studentID, int courseID, String grading,
 			String courseTerm) throws SQLException {
 
@@ -248,6 +321,17 @@ public class Admin extends Person {
 
 	}
 
+	/**
+	 * admin edit student class information in studentandcourse table
+	 * 
+	 * @param token
+	 * @param studentID
+	 * @param courseID
+	 * @param grading
+	 * @param courseTerm
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
 			String grading, String courseTerm) throws SQLException {
 		if (token.type != Token.RoleType.ADMIN) {
@@ -286,6 +370,14 @@ public class Admin extends Person {
 
 	}
 
+	/**
+	 * admin drop student from studentandcourse table
+	 * 
+	 * @param token
+	 * @param studentID
+	 * @param courseID
+	 * @return
+	 */
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID) {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
