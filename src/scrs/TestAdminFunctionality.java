@@ -58,7 +58,7 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN EDIT CLASS START");
 
 			assertEquals(true,
-					testScrs.adminEditClass(tokenGenerator, 777, "Advanced Database", 3, "Mokbel", "09/01/2014",
+					testScrs.adminEditClass(tokenGenerator, 666, "Advanced Database", 3, "Mokbel", "09/01/2014",
 							"09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
 
 		}

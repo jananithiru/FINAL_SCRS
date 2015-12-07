@@ -25,7 +25,7 @@ public class InsertQueries {
 
 			// STUDENT
 			String allValues = "INSERT INTO STUDENT (ID, FIRSTNAME, LASTNAME, DATEOFBIRTH,TYPE,GENDER,ADVISOR,CREDITS,DEPARTMENT) "
-					+ "VALUES (888, 'Alice1', 'Liddell',  09/01/2014 ,'Master', 'Female', 'Mad Hatter', 1, 'CS');";
+					+ "VALUES (888, 'Alice1', 'Liddell',  '09/01/2014' ,'Master', 'Female', 'Mad Hatter', 1, 'CS');";
 			stmt.executeUpdate(allValues);
 
 			// ADMIN
