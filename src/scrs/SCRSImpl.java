@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import scrs.ShibbolethAuth.Token;
 import scrs.ShibbolethAuth.Token.RoleType;
+import scrsexception.SCRSClassNotFoundException;
+import scrsexception.SCRSException;
+import scrsexception.SCRSSQLException;
 
 public class SCRSImpl implements SCRS {
 	/**
@@ -15,21 +18,49 @@ public class SCRSImpl implements SCRS {
 	 * @param password
 	 * @return
 	 */
+
 	public Token userLogin(String x500, String password) {
+
+		Token retToken = null;
+
+		try {
+			retToken = userLogin2(x500, password);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			System.out.print(e.getMessage());
+			return emptyToken();
+		}
+
+		return retToken;
+
+	}
+
+	private Token userLogin2(String x500, String password) throws SCRSException {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		if (x500 == null || password == null)
-			return null; // TODO: Check if we need to throw exceptions
+
+		if (x500 == null || password == null) {
+			throw new SCRSException(ErrorMessages.nullCredentials);
+		}
+
+		if (!UtilMethods.isAlphaNumeric(x500) && !UtilMethods.isAlphaNumeric(password)) {
+			throw new SCRSException(ErrorMessages.notAlphaNumberic);
+		}
+
 		Token myToken = null;
+
 		try {
 			myToken = sbAuth.tokenGenerator(x500, password);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
+
 		return myToken;
+	}
+
+	private Token emptyToken() {
+		return new Token(-1, Token.RoleType.UNDEFINED, "");
 	}
 
 	/**
@@ -43,34 +74,45 @@ public class SCRSImpl implements SCRS {
 	 */
 	@Override
 	public List<ArrayList<String>> queryStudentPersonalData(Token token, int studentID) {
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = queryStudentPersonalData1(token, studentID);
+		} catch (SCRSException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		return result;
+	}
+
+	private List<ArrayList<Object>> queryStudentPersonalData1(Token token, int studentID) throws SCRSException {
 
 		if (token.type == Token.RoleType.UNDEFINED) {
-			System.out.print(ErrorMessages.invalidCredentials);
-			return null; // CUSTOM EXCEPTION
+			throw new SCRSException(ErrorMessages.invalidCredentials);
 		} else if (token.type == Token.RoleType.ADMIN) {
-			System.out.print(ErrorMessages.incorrectTypeOfAccount);
-			return null; // CUSTOM EXCEPTION
+			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
 		}
-
-		DBCoordinator dbcoordinator = new DBCoordinator();
+		
 		String sqlStr = SQLStrings.selectAllFromStudent(studentID);
+		
+		DBCoordinator dbcoordinator = new DBCoordinator();
 		List<ArrayList<Object>> objList = null;
+
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
-		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingPersonalDataForUser);
-			return null; // CUSTOM EXCEPTION
-		}
-		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
 
-		return result;
+
+		if (objList == null || objList.isEmpty()) {
+			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
+		}
+
+		return objList;
 	}
 
 	/**
@@ -80,42 +122,58 @@ public class SCRSImpl implements SCRS {
 	 *            Only Admin can invoke this function
 	 * @return Admin ID, Admin Name, Admin Department, etc. Empty list will be
 	 *         returned if the query is failed.
+	 * @throws SCRSException 
 	 */
 	@Override
-	public List<ArrayList<String>> queryAdminPersonalData(Token token) {
+	public List<ArrayList<String>> queryAdminPersonalData(Token token){
 
-		if (token.type == Token.RoleType.UNDEFINED) {
-			System.out.print(ErrorMessages.invalidCredentials);
-			return null; // CUSTOM EXCEPTION
-		} else if (token.type == Token.RoleType.STUDENT) {
-			System.out.print(ErrorMessages.incorrectTypeOfAccount);
-			return null; // CUSTOM EXCEPTION
-		}
-
-		DBCoordinator dbcoordinator = new DBCoordinator();
-
-		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
-
-		List<ArrayList<Object>> objList = null;
+		
+		List<ArrayList<Object>>  objList= null; 
+		
 		try {
-			objList = dbcoordinator.queryData(sqlStr);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingPersonalDataForUser);
-			return null; // CUSTOM EXCEPTION
+			objList = queryAdminPersonalData2(token) ;
+		} catch (SCRSException e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
 
 		return result;
 
+	}
+	
+	private List<ArrayList<Object>> queryAdminPersonalData2(Token token) throws SCRSException{
+
+		validateCredentials(token);
+
+		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
+
+		DBCoordinator dbcoordinator = new DBCoordinator();
+		
+		List<ArrayList<Object>> objList = null;
+
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (SQLException e) {
+			throw new SCRSException(ErrorMessages.sqlException);
+		}
+
+		if (objList == null || objList.isEmpty()) {
+			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
+		}
+
+		return objList;
+	}
+
+	private void validateCredentials(Token token) throws SCRSException {
+		if (token.type == Token.RoleType.UNDEFINED) {
+			throw new SCRSException(ErrorMessages.invalidCredentials);
+		} else if (token.type == Token.RoleType.STUDENT) {
+			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
+		}
 	}
 
 	/**
@@ -207,11 +265,9 @@ public class SCRSImpl implements SCRS {
 			try {
 				instrIDList = dbcoordinator.queryData(instrSQLStr);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new SCRSException(ErrorMessages.classNotFound);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new SCRSException(ErrorMessages.sqlException);
 			}
 
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
@@ -225,11 +281,9 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		if (objList == null || objList.isEmpty()) {
@@ -264,15 +318,7 @@ public class SCRSImpl implements SCRS {
 
 		List<ArrayList<Object>> objList = null;
 
-		try {
-			objList = dbcoordinator.queryData(sqlStr);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingStudentRegistrationData);

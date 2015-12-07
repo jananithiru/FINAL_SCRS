@@ -67,4 +67,9 @@ public class UtilMethods { // TODO: Rename this class after checking with people
 		return (currentDate.after(startDate) && currentDate.before(endDate));
 	}
 
+	public static boolean isAlphaNumeric(String s) {
+		String pattern = "^[a-zA-Z0-9]*$";
+		return (s.matches(pattern));
+	}
+
 }
