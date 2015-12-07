@@ -93,9 +93,9 @@ public class SCRSImpl implements SCRS {
 		} else if (token.type == Token.RoleType.ADMIN) {
 			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
 		}
-		
+
 		String sqlStr = SQLStrings.selectAllFromStudent(studentID);
-		
+
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		List<ArrayList<Object>> objList = null;
 
@@ -106,7 +106,6 @@ public class SCRSImpl implements SCRS {
 		} catch (SQLException e) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-
 
 		if (objList == null || objList.isEmpty()) {
 			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
@@ -122,16 +121,15 @@ public class SCRSImpl implements SCRS {
 	 *            Only Admin can invoke this function
 	 * @return Admin ID, Admin Name, Admin Department, etc. Empty list will be
 	 *         returned if the query is failed.
-	 * @throws SCRSException 
+	 * @throws SCRSException
 	 */
 	@Override
-	public List<ArrayList<String>> queryAdminPersonalData(Token token){
+	public List<ArrayList<String>> queryAdminPersonalData(Token token) {
 
-		
-		List<ArrayList<Object>>  objList= null; 
-		
+		List<ArrayList<Object>> objList = null;
+
 		try {
-			objList = queryAdminPersonalData2(token) ;
+			objList = queryAdminPersonalData2(token);
 		} catch (SCRSException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -142,15 +140,15 @@ public class SCRSImpl implements SCRS {
 		return result;
 
 	}
-	
-	private List<ArrayList<Object>> queryAdminPersonalData2(Token token) throws SCRSException{
+
+	private List<ArrayList<Object>> queryAdminPersonalData2(Token token) throws SCRSException {
 
 		validateCredentials(token);
 
 		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
-		
+
 		List<ArrayList<Object>> objList = null;
 
 		try {
@@ -248,6 +246,7 @@ public class SCRSImpl implements SCRS {
 	 *         ArrayList, it should stores the value in this order, which is ID,
 	 *         Name, Credits, etc. Empty list will be returned if the query is
 	 *         failed.
+	 * @throws SCRSException
 	 */
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
@@ -317,8 +316,6 @@ public class SCRSImpl implements SCRS {
 		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
 
 		List<ArrayList<Object>> objList = null;
-
-
 
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingStudentRegistrationData);

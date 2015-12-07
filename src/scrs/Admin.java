@@ -7,6 +7,7 @@ import java.util.List;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token;
+import scrsexception.SCRSException;
 
 /**
  * admin functions
@@ -106,7 +107,7 @@ public class Admin extends Person {
 			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
 		}
 		if (objectList.size() > 0) {
-			new scrsexception.SQLException("MULTIPLE PERSON WITH THE SAME NAME");
+			new SCRSException("MULTIPLE PERSON WITH THE SAME NAME");
 		}
 
 		Integer instructorID = (Integer) objectList.get(0).get(0);

@@ -3,6 +3,8 @@ package scrs;
 import java.util.ArrayList;
 import java.util.List;
 
+import scrsexception.SCRSException;
+
 public interface SCRS {
 	/*
 	 * Common Interfaces
@@ -26,9 +28,11 @@ public interface SCRS {
 	 *         ArrayList, it should stores the value in this order, which is ID,
 	 *         Name, Credits, etc. Empty list will be returned if the query is
 	 *         failed.
+	 * @throws SCRSException 
+	 * @throws Exception 
 	 */
 	List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term, String department,
-			String classType, String instructorName);
+			String classType, String instructorName) throws SCRSException, Exception;
 
 	/**
 	 * This interface is used for querying student personal data.
