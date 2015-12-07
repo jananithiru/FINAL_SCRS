@@ -127,17 +127,30 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryAdminPersonalData(Token token){
 
-		if (token.type == Token.RoleType.UNDEFINED) {
-			System.out.print(ErrorMessages.invalidCredentials);
-			return null; // CUSTOM EXCEPTION
-		} else if (token.type == Token.RoleType.STUDENT) {
-			System.out.print(ErrorMessages.incorrectTypeOfAccount);
-			return null; // CUSTOM EXCEPTION
+		
+		List<ArrayList<Object>>  objList= null; 
+		
+		try {
+			objList = queryAdminPersonalData2(token) ;
+		} catch (SCRSException e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
+
+		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+
+		return result;
+
+	}
+	
+	private List<ArrayList<Object>> queryAdminPersonalData2(Token token) throws SCRSException{
+
+		validateCredentials(token);
 
 		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
+		
 		List<ArrayList<Object>> objList = null;
 
 		try {
@@ -149,14 +162,18 @@ public class SCRSImpl implements SCRS {
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingPersonalDataForUser);
-			return null; // CUSTOM EXCEPTION
+			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
 		}
 
-		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
+		return objList;
+	}
 
-		return result;
-
+	private void validateCredentials(Token token) throws SCRSException {
+		if (token.type == Token.RoleType.UNDEFINED) {
+			throw new SCRSException(ErrorMessages.invalidCredentials);
+		} else if (token.type == Token.RoleType.STUDENT) {
+			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
+		}
 	}
 
 	/**
