@@ -59,7 +59,7 @@ public class SCRSImpl implements SCRS {
 	}
 
 	@Override
-	public List<ArrayList<String>> queryAdminPersonalData(Token token, int adminID) {
+	public List<ArrayList<String>> queryAdminPersonalData(Token token) {
 
 		if (token.type == Token.RoleType.UNDEFINED) {
 			System.out.print(ErrorMessages.invalidCredentials);
@@ -71,7 +71,7 @@ public class SCRSImpl implements SCRS {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlStr = SQLStrings.selectAllFromAdmin(adminID);
+		String sqlStr = SQLStrings.selectAllFromAdmin(token.id);
 
 		List<ArrayList<Object>> objList = null;
 		try {
@@ -95,7 +95,8 @@ public class SCRSImpl implements SCRS {
 
 	}
 
-	@Override
+
+@Override
 	public boolean studentAddClass(Token token, int courseID, String grading, String courseTerm) {
 		// TODO Auto-generated method stub
 		Student student = new Student();
@@ -118,20 +119,20 @@ public class SCRSImpl implements SCRS {
 		Student student = new Student();
 		return student.studentEditClass(token, courseID, grading, courseTerm);
 	}
-
+ 
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) {
-
+		
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String instrID = null;
 
-		// TODO how to check this?
+		//TODO how to check this?
 		if (instructorName != null) {
 			List<ArrayList<Object>> instrIDList = null;
-
+			
 			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
-
+	
 			try {
 				instrIDList = dbcoordinator.queryData(instrSQLStr);
 			} catch (ClassNotFoundException e) {
@@ -141,12 +142,12 @@ public class SCRSImpl implements SCRS {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 		}
 
-		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, department, classType,
-				instrID);
+		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
+				department, classType, instrID);
 
 		List<ArrayList<Object>> objList = null;
 
@@ -159,22 +160,24 @@ public class SCRSImpl implements SCRS {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingCourseData);
 			return null; // CUSTOM EXCEPTION
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
-
 		return result;
 	}
 
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
-
+		
+		if (!(token != null && (token.type == RoleType.ADMIN || token.id == studentID))) {
+			System.out.println(ErrorMessages.accessNotAllowed);
+			//TODO custom exception
 		}
-
+		
 		DBCoordinator dbcoordinator = new DBCoordinator();
 
 		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
@@ -190,22 +193,28 @@ public class SCRSImpl implements SCRS {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		if (objList == null || objList.isEmpty()) {
 			System.out.println(ErrorMessages.missingStudentRegistrationData);
 			return null; // CUSTOM EXCEPTION
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
-
+		
 		return result;
 	}
 
 	@Override
+	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, int capacity, String term, String instructor,
+			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
+			String location, String type, String prerequisite, String description, String department) {
+		// TODO Auto-generated method stub
 
 		Admin admin = new Admin();
 		try {
-		} catch (SQLException e) {
+			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay, lastDay,
+					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -223,6 +232,7 @@ public class SCRSImpl implements SCRS {
 		}
 		return true;
 	}
+
 
 	@Override
 
@@ -267,6 +277,8 @@ public class SCRSImpl implements SCRS {
 		return true;
 	}
 
+
+
 	@Override
 	public List<ArrayList<String>> queryInstructor(Token token, int instructorID) {
 		// TODO Auto-generated method stub
@@ -281,4 +293,5 @@ public class SCRSImpl implements SCRS {
 		return true;
 	}
 
+	
 }
