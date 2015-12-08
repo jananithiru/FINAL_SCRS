@@ -289,9 +289,9 @@ public class SCRSImpl implements SCRS {
 			}
 
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
-			
 
-			String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID + ";";
+			String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID
+					+ ";";
 			List<ArrayList<Object>> instrCoursesList = null;
 			try {
 				instrCoursesList = dbcoordinator.queryData(instrCoursesSQLStr);
@@ -404,13 +404,15 @@ public class SCRSImpl implements SCRS {
 	 * @return
 	 */
 	@Override
-	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int courseCapacity, String term, int instructorID, String firstDay,
-			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
-			String prerequisite, String description, String department) {
+	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+			int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
+			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
+			String department) {
+
 		try {
-			return adminAddClass1(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
-					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
-					department);
+			return adminAddClass1(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID,
+					firstDay, lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite,
+					description, department);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 
@@ -423,10 +425,15 @@ public class SCRSImpl implements SCRS {
 			String term, int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SQLException, Exception {
+
+		if (!UtilMethods.isString(courseName)) {
+			throw new SCRSException(ErrorMessages.notString);
+		}
 		Admin admin = new Admin();
 
-		return admin.adminAddClass(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
-				lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+		return admin.adminAddClass(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID,
+				firstDay, lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
+				department);
 
 	}
 
@@ -489,9 +496,9 @@ public class SCRSImpl implements SCRS {
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
 	@Override
-	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int instructorID, String firstDay,
-			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
-			String prerequisite, String description, String department) {
+	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
+			String weekDays, String location, String type, String prerequisite, String description, String department) {
 		try {
 			adminEditClass1(token, courseID, courseName, courseCredits, instructorID, firstDay, lastDay, classBeginTime,
 					classEndTime, weekDays, location, type, prerequisite, description, department);
