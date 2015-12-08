@@ -45,7 +45,6 @@ public class Admin extends Person {
 			int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
 			String department) throws SQLException, Exception {
-		System.out.println("TEST" + token.type);
 
 		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
 			System.out.println("THIS IS NOT ADMIN");
