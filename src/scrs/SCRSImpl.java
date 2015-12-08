@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import scrs.ShibbolethAuth.Token;
 import scrs.ShibbolethAuth.Token.RoleType;
+import scrsexception.IOException;
+import scrsexception.ParseException;
 import scrsexception.SCRSClassNotFoundException;
 import scrsexception.SCRSException;
 import scrsexception.SCRSSQLException;
@@ -251,11 +253,29 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) {
+		
+		List<ArrayList<String>> result = null;
+		try {
+			result = queryClass2(courseID, courseName, location, term, department,
+					classType, instructorName);
+		} catch (SCRSException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		return result;
+	}
+
+	public List<ArrayList<String>> queryClass2(int courseID, String courseName, String location, String term,
+			String department, String classType, String instructorName) throws SCRSException {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String instrID = null;
+		
+		if(courseID <= 0 || location == null || term == null) {
+			throw new SCRSException(ErrorMessages.missingRequiredFields);
+		}
 
-		// TODO how to check this?
+		// if instructor name is given, need her ID
 		if (instructorName != null) {
 			List<ArrayList<Object>> instrIDList = null;
 
@@ -263,14 +283,16 @@ public class SCRSImpl implements SCRS {
 
 			try {
 				instrIDList = dbcoordinator.queryData(instrSQLStr);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new SCRSException(ErrorMessages.sqlException);
+			} catch (ClassNotFoundException e) {
+				throw new SCRSException(ErrorMessages.classNotFound);
 			}
-
+			
+			if (instrIDList.isEmpty()) {
+				throw new SCRSException(ErrorMessages.missingInstructor);
+			}
+			
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 		}
 
@@ -282,16 +304,13 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingCourseData);
-			return null; // CUSTOM EXCEPTION
+			throw new SCRSException(ErrorMessages.missingCourseData);
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
@@ -310,9 +329,22 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
 
+		List<ArrayList<String>> result = null;
+		try {
+			result = queryStudentRegistrationHistory2(token, studentID);
+		} catch (SCRSException e) {
+			System.out.println(e.getMessage());
+			return null;
+		};
+
+		return result;
+	}
+
+	public List<ArrayList<String>> queryStudentRegistrationHistory2(Token token, int studentID) 
+	throws SCRSException {
+
 		if ((token == null || !(token.type == RoleType.ADMIN || token.id == studentID))) {
-			System.out.println(ErrorMessages.accessNotAllowed);
-			// TODO custom exception
+			throw new SCRSException(ErrorMessages.accessNotAllowed);
 		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
@@ -320,10 +352,17 @@ public class SCRSImpl implements SCRS {
 		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
 
 		List<ArrayList<Object>> objList = null;
+		
+		try {
+			objList = dbcoordinator.queryData(sqlStr);
+		} catch (ClassNotFoundException e) {
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (SQLException e) {
+			throw new SCRSException(ErrorMessages.sqlException);
+		}
 
 		if (objList == null || objList.isEmpty()) {
-			System.out.println(ErrorMessages.missingStudentRegistrationData);
-			return null; // CUSTOM EXCEPTION
+			throw new SCRSException(ErrorMessages.missingStudentRegistrationData);
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
