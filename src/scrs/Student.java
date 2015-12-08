@@ -11,8 +11,6 @@ import java.util.List;
 
 import javax.print.attribute.standard.RequestingUserName;
 
-import org.junit.internal.Throwables;
-
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
 import scrsexception.SCRSException;
@@ -114,6 +112,7 @@ public class Student extends Person {
 		} catch (SCRSException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
+			return false;
 		}
 
 		return result;
@@ -211,11 +210,13 @@ public class Student extends Person {
 		} catch (SCRSException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
+			return false;
 		}
 		return result;
 	}
 	boolean studentEditClass2(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) throws SCRSException{
-		if (token.type == RoleType.ADMIN) {
+		if (token.type != RoleType.STUDENT) {
+			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
