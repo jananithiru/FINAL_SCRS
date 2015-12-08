@@ -42,7 +42,7 @@ public class TestStudentFunctionality {
 		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
-			assertEquals(true, testScrs.studentDropClass(myToken, 888)); // why course 888 is not in the course table
+			assertEquals(true, testScrs.studentDropClass(myToken, 888)); 
 			//thrown.expect(scrsexception.incorrectTypeOfAccountException.class);
 			//thrown.expect(SCRSException.class);
 			//thrown.expectMessage("SCRSException:There is no such record in database");
