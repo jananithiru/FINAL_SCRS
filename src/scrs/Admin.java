@@ -95,7 +95,7 @@ public class Admin extends Person {
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
@@ -113,9 +113,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -155,9 +155,9 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
 		} catch (SCRSException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = null;
@@ -173,7 +173,7 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return false;
@@ -249,7 +249,7 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
@@ -267,9 +267,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -321,9 +321,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -371,9 +371,9 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -416,9 +416,9 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 		return true;
 

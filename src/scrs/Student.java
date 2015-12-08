@@ -46,12 +46,12 @@ public class Student extends Person {
 			throws SCRSException {
 
 		if (token.type != RoleType.STUDENT) {
-			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
+			System.out.println(new SCRSException(ErrorMessages.STUDENTACCOUNT_FAILURE));
 			return false;
 		}
 		
 		if(grading == null | courseTerm == null){
-			System.out.println(new SCRSException(ErrorMessages.missingRequiredField));
+			System.out.println(new SCRSException(ErrorMessages.MISSING_REQUIRED_FIELD));
 			return false;
 		}
 
@@ -60,7 +60,7 @@ public class Student extends Person {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
 
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
-			throw new SCRSException(ErrorMessages.outTimeFrame);
+			throw new SCRSException(ErrorMessages.OUT_TIME_FRAME);
 		}
 
 		DBCoordinator dbCoordinator = new DBCoordinator();
@@ -84,13 +84,13 @@ public class Student extends Person {
 			System.out.println("insert data done!!");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.ParseDataError);
+			throw new SCRSException(ErrorMessages.PARASE_DATA_ERROR);
 		}
 		return true;
 
@@ -122,7 +122,7 @@ public class Student extends Person {
 	@SuppressWarnings("deprecation")
 	boolean studentDropClass2(ShibbolethAuth.Token token, int courseID) throws SCRSException {
 		if (token.type != RoleType.STUDENT) {
-			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
+			System.out.println(new SCRSException(ErrorMessages.STUDENTACCOUNT_FAILURE));
 			return false;
 		}
 		// how to judge courseId is not given, since the type is int not Integer??
@@ -144,24 +144,24 @@ public class Student extends Person {
 			
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		if (termList == null || termList.size() == 0  ) {
 
-			throw new SCRSException(ErrorMessages.NoRecordReturnFromDB);
+			throw new SCRSException(ErrorMessages.NO_RECORD_RETURN_FROM_DB);
 
 		}
 		if(rs == null || rs.size() == 0){
-			throw new SCRSException(ErrorMessages.NoRecordReturnFromDB);
+			throw new SCRSException(ErrorMessages.NO_RECORD_RETURN_FROM_DB);
 		}
 		String courseTerm = (String) termList.get(0).get(0);
 
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
-			throw new SCRSException(ErrorMessages.outTimeFrame);
+			throw new SCRSException(ErrorMessages.OUT_TIME_FRAME);
 			
 			
 		}
@@ -178,13 +178,13 @@ public class Student extends Person {
 			dbCoordinator.deleteData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.ParseDataError);
+			throw new SCRSException(ErrorMessages.PARASE_DATA_ERROR);
 		}
 
 		return true;
@@ -216,7 +216,7 @@ public class Student extends Person {
 	}
 	boolean studentEditClass2(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) throws SCRSException{
 		if (token.type != RoleType.STUDENT) {
-			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
+			System.out.println(new SCRSException(ErrorMessages.STUDENTACCOUNT_FAILURE));
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
@@ -234,7 +234,7 @@ public class Student extends Person {
 			dbCoordinator.updateData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
