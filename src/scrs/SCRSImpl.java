@@ -95,7 +95,6 @@ public class SCRSImpl implements SCRS {
 		} else if (token.type == Token.RoleType.ADMIN) {
 			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
 		}
-
 		String sqlStr = SQLStrings.selectAllFromStudent(studentID);
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
@@ -272,7 +271,7 @@ public class SCRSImpl implements SCRS {
 		String instrID = null;
 		
 		if(courseID <= 0 || location == null || term == null) {
-			throw new SCRSException(ErrorMessages.missingRequiredFields);
+			throw new SCRSException(ErrorMessages.missingRequiredField);
 		}
 
 		// if instructor name is given, need her ID
@@ -397,30 +396,26 @@ public class SCRSImpl implements SCRS {
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department) {
 		try {
-			adminAddClass1(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay, lastDay,
-					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+			return adminAddClass1(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
+					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
+					department);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 
 			return false;
 
 		}
-		return true;
 	}
 
 	public boolean adminAddClass1(Token token, int courseID, String courseName, int courseCredits, int capacity,
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
-					throws SCRSException {
+					throws SQLException, Exception {
 		Admin admin = new Admin();
-		try {
-			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
-					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
-					department);
-		} catch (Exception e) {
-			throw new SCRSException(ErrorMessages.sqlException);
-		}
-		return true;
+
+		return admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
+				lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+
 	}
 
 	/**
@@ -446,9 +441,12 @@ public class SCRSImpl implements SCRS {
 		validateCredentials(token);
 		try {
 			admin.adminDeleteClass(token, courseID);
-		} catch (SQLException e) {
+		} catch (SCRSException e) {
+			throw new SCRSException(ErrorMessages.classNotFound);
+		} catch (Exception e) {
 			throw new SCRSException(ErrorMessages.classNotFound);
 		}
+
 		return true;
 	}
 

@@ -49,8 +49,6 @@ public class Admin extends Person {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println("THIS IS NOT ADMIN");
 
-			System.out.println(
-					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 			return false;
 
 		}
@@ -91,21 +89,22 @@ public class Admin extends Person {
 			typeList.add(PrimitiveDataType.STRING);
 
 		}
-
+		// insert into course table based on given attributes
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
 		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		sqlCmd = null;
 		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
 
 		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
+
 		if (objectList.size() == 0) {
 			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
 		}
@@ -124,13 +123,15 @@ public class Admin extends Person {
 		typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
+		// insert into instructorandcourse table(need instructor already in
+		// database)
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		return true;
@@ -147,7 +148,7 @@ public class Admin extends Person {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException, Exception {
+	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
 					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
@@ -164,15 +165,15 @@ public class Admin extends Person {
 
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
-		try {
-			System.out.println("WE HAVE SQLCMD DATALIST TYPELIST");
 
+		// delete class from course table
+		try {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		sqlCmd = null;
@@ -182,14 +183,15 @@ public class Admin extends Person {
 
 		typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
-		try {
 
+		// delete course from instructorandcourse table
+		try {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		return false;
@@ -259,7 +261,7 @@ public class Admin extends Person {
 
 		}
 		typeList.add(PrimitiveDataType.INT);
-
+		// edit class in course table
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS SUCCESSFUL");
@@ -312,7 +314,7 @@ public class Admin extends Person {
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.STRING);
 		typeList.add(PrimitiveDataType.INT);
-
+		// add student into class
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");

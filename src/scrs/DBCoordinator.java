@@ -148,6 +148,7 @@ public class DBCoordinator {
 				break;
 			}
 		}
+
 		prepStmt.execute();
 		con.commit();
 

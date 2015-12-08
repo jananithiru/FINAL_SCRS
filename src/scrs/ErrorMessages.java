@@ -16,5 +16,6 @@ public class ErrorMessages {
 	public static final String ParseDataError = "The data could not be parsed";
 	public static final String NoRecordReturnFromDB = "There is no such record in database";
 	public static final String missingInstructor = "Instructor is missing";
-	public static final String missingRequiredFields = "Missing required search fields";
+	public static final String missingRequiredField = "Missing required search fields";
+	public static final String StudentAcoountTypeFailure = "This is not a student account";
 }

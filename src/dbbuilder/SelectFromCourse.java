@@ -46,8 +46,8 @@ public class SelectFromCourse {
 				System.out.println("credits = " + credits);
 				System.out.println("capacity = " + capacity);
 				System.out.println("term = " + term);
-				System.out.println("firstday = " + firstDay);
-				System.out.println("lastday = " + lastDay);
+				System.out.println("firstDay = " + firstDay);
+				System.out.println("lastDay = " + lastDay);
 				System.out.println("classBeginTime = " + classBeginTime);
 				System.out.println("classEndTime = " + classEndTime);
 				System.out.println("routines = " + routines);
