@@ -252,11 +252,10 @@ public class SCRSImpl implements SCRS {
 	@Override
 	public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) {
-		
+
 		List<ArrayList<String>> result = null;
 		try {
-			result = queryClass2(courseID, courseName, location, term, department,
-					classType, instructorName);
+			result = queryClass2(courseID, courseName, location, term, department, classType, instructorName);
 		} catch (SCRSException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -269,8 +268,8 @@ public class SCRSImpl implements SCRS {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		String instrID = null;
-		
-		if(courseID <= 0 || location == null || term == null) {
+
+		if (courseID <= 0 || location == null || term == null) {
 			throw new SCRSException(ErrorMessages.missingRequiredField);
 		}
 
@@ -287,11 +286,11 @@ public class SCRSImpl implements SCRS {
 			} catch (ClassNotFoundException e) {
 				throw new SCRSException(ErrorMessages.classNotFound);
 			}
-			
+
 			if (instrIDList.isEmpty()) {
 				throw new SCRSException(ErrorMessages.missingInstructor);
 			}
-			
+
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 		}
 
@@ -334,13 +333,13 @@ public class SCRSImpl implements SCRS {
 		} catch (SCRSException e) {
 			System.out.println(e.getMessage());
 			return null;
-		};
+		}
+		;
 
 		return result;
 	}
 
-	public List<ArrayList<String>> queryStudentRegistrationHistory2(Token token, int studentID) 
-	throws SCRSException {
+	public List<ArrayList<String>> queryStudentRegistrationHistory2(Token token, int studentID) throws SCRSException {
 
 		if ((token == null || !(token.type == RoleType.ADMIN || token.id == studentID))) {
 			throw new SCRSException(ErrorMessages.accessNotAllowed);
@@ -351,7 +350,7 @@ public class SCRSImpl implements SCRS {
 		String sqlStr = SQLStrings.selectHistoryFromStudentAndCourse(studentID);
 
 		List<ArrayList<Object>> objList = null;
-		
+
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
@@ -443,8 +442,6 @@ public class SCRSImpl implements SCRS {
 			admin.adminDeleteClass(token, courseID);
 		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.classNotFound);
-		} catch (Exception e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
 		}
 
 		return true;
@@ -493,15 +490,14 @@ public class SCRSImpl implements SCRS {
 
 	public boolean adminEditClass1(Token token, int courseID, String courseName, int courseCredits, String instructor,
 			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
-			String location, String type, String prerequisite, String description, String department)
-					throws SCRSException {
+			String location, String type, String prerequisite, String description, String department) throws Exception {
 
 		Admin admin = new Admin();
 		validateCredentials(token);
 		try {
 			admin.adminEditClass(token, courseID, courseName, courseCredits, instructor, firstDay, lastDay,
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
-		} catch (Exception e) {
+		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.classNotFound);
 		}
 		return true;
@@ -529,12 +525,12 @@ public class SCRSImpl implements SCRS {
 	}
 
 	public boolean adminAddStudentToClass1(Token token, int studentID, int courseID, String grading, String courseTerm)
-			throws SCRSException {
+			throws Exception {
 		Admin admin = new Admin();
 		validateCredentials(token);
 		try {
 			admin.adminAddStudentToClass(token, studentID, courseID, grading, courseTerm);
-		} catch (SQLException e) {
+		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.classNotFound);
 		}
 		return true;
@@ -563,13 +559,13 @@ public class SCRSImpl implements SCRS {
 	}
 
 	public boolean adminEditStudentRegisteredClass1(Token token, int studentID, int courseID, String grading,
-			String courseTerm) throws SCRSException {
+			String courseTerm) throws Exception {
 		// TODO Auto-generated method stub
 		Admin admin = new Admin();
 		validateCredentials(token);
 		try {
 			admin.adminEditStudentRegisteredClass(token, studentID, courseID, grading, courseTerm);
-		} catch (SQLException e) {
+		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
 		return true;
@@ -611,13 +607,13 @@ public class SCRSImpl implements SCRS {
 		return true;
 	}
 
-	public boolean adminDropStudentRegisteredClass1(Token token, int studentID, int courseID) throws SCRSException {
+	public boolean adminDropStudentRegisteredClass1(Token token, int studentID, int courseID) throws Exception {
 		Admin admin = new Admin();
 		validateCredentials(token);
 
 		try {
 			admin.adminDropStudentRegisteredClass(token, studentID, courseID);
-		} catch (Exception e) {
+		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
 		return true;
