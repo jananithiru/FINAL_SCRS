@@ -40,8 +40,7 @@ public class TestRegHistory {
 			List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myToken, 1005);
 			
 			assertNotNull(testResult);
-			assertEquals(1, testResult.size());
-			assertEquals(4, testResult.get(0).size());
+			assertEquals(5, testResult.get(0).size());
 			
 			Iterator<ArrayList<String>> printIter = testResult.iterator();
 			while (printIter.hasNext()) {
