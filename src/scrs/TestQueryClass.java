@@ -32,13 +32,13 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
+			boolean t = testScrs.adminAddClass(myToken, 777, "Programming", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			
 			List<ArrayList<String>> testResult = null;
 			try {
-				testResult = testScrs.queryClass(777, "2011", "KH2150", "Spring2015", "CS",
+				testResult = testScrs.queryClass(777, "Programming", "KH2150", "Spring2015", "CS",
 						"Lecture", null);
 			} catch (Exception e) {
 				System.out.println("Unexpected error");
@@ -50,7 +50,7 @@ public class TestQueryClass {
 			
 			List<String> answers = new ArrayList<>();
 			answers.add("777");
-			answers.add("2011");
+			answers.add("Programming");
 			answers.add("4");
 			answers.add("30");
 			answers.add("Spring2015");
@@ -94,7 +94,7 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
+			boolean t = testScrs.adminAddClass(myToken, 777, "Programming", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			
@@ -112,7 +112,7 @@ public class TestQueryClass {
 			
 			List<String> answers = new ArrayList<>();
 			answers.add("777");
-			answers.add("2011");
+			answers.add("Programming");
 			answers.add("4");
 			answers.add("30");
 			answers.add("Spring2015");
@@ -156,14 +156,14 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
+			boolean t = testScrs.adminAddClass(myToken, 777, "Programming", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			
 			List<ArrayList<String>> testResult = null;
 			try {
-				testResult = testScrs.queryClass(777, "2011", "KH2150", "Spring2015", null,
-						null, "Bruce2");
+				testResult = testScrs.queryClass(777, "Programming", "KH2150", "Spring2015", null,
+						null, "Bruce");
 			} catch (Exception e) {
 				System.out.println("Unexpected error");
 				assertEquals(0, 1);
@@ -174,7 +174,7 @@ public class TestQueryClass {
 			
 			List<String> answers = new ArrayList<>();
 			answers.add("777");
-			answers.add("2011");
+			answers.add("Programming");
 			answers.add("4");
 			answers.add("30");
 			answers.add("Spring2015");
@@ -218,7 +218,7 @@ public class TestQueryClass {
 		if (myToken != null) {
 			List<ArrayList<String>> testResult = null;
 			try {
-				testResult = testScrs.queryClass(777, "2010", "KH2150", "Spring2015", "CS", "Lecture", null);
+				testResult = testScrs.queryClass(777, "Fake Class", "KH2150", "Spring2015", "CS", "Lecture", null);
 			} catch (Exception e) {
 				System.out.println("Unexpected error");
 				assertEquals(0, 1);

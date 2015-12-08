@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import scrs.ShibbolethAuth.Token;
 import scrs.ShibbolethAuth.Token.RoleType;
 import scrsexception.SCRSException;
@@ -261,6 +263,27 @@ public class SCRSImpl implements SCRS {
 
 	public List<ArrayList<String>> queryClass2(int courseID, String courseName, String location, String term,
 			String department, String classType, String instructorName) throws SCRSException {
+		
+		if (courseID <= 0 ||
+				location == null ||
+				term == null) {
+			throw new SCRSException(ErrorMessages.missingRequiredField);
+		}
+		if (courseName != null && (courseName.length() > 50 || !(courseName.matches("[A-Za-z]+")))) {
+			throw new SCRSException(ErrorMessages.invalidData);
+		}
+		if (location != null && location.length() > 100) {
+			throw new SCRSException(ErrorMessages.invalidData);
+		}
+		if (department != null && department != "CS") {
+			throw new SCRSException(ErrorMessages.invalidData);
+		}
+		if (classType != null && !(classType == "Lecture" || classType == "Seminar")) {
+			throw new SCRSException(ErrorMessages.invalidData);
+		}
+		if (instructorName != null && !(instructorName.matches("[A-Za-z]+"))) {
+			throw new SCRSException(ErrorMessages.invalidData);
+		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
 		List<String> instrCoursesListStr = null;
@@ -356,6 +379,10 @@ public class SCRSImpl implements SCRS {
 
 		if ((token == null || !(token.type == RoleType.ADMIN || token.id == studentID))) {
 			throw new SCRSException(ErrorMessages.accessNotAllowed);
+		}
+		
+		if(studentID <= 0) {
+			throw new SCRSException(ErrorMessages.invalidData);
 		}
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
