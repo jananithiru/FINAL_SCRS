@@ -12,11 +12,12 @@ public class TestAdminFunctionality {
 	// test admin add class into course and instructorandcourse table
 	@Test
 	public void TestAdminAddClass() throws Exception {
-		
+
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+		System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
 
 		if (tokenGenerator != null) {
 
@@ -31,14 +32,33 @@ public class TestAdminFunctionality {
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(false,
-					testScrs.adminAddClass(myTokenStu, 666, "Advanced Database1", 2, 25, "Fall2015", 206,
-							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
-							"Databases", "CS"));
-			assertEquals(false,
-					testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database1", -1, 25, "Fall2015", 206,
-							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
-							"Databases", "CS"));
+					testScrs.adminAddClass(myTokenStu, 666, "Advanced Database1", 2, 25, "Fall2015", 206, "09/01/2014",
+							"12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
+
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
+
+		}
+	}
+
+	@Test
+	public void TestBOTHAddClass() throws Exception {
+
+		SCRS testScrs = new SCRSImpl();
+		ShibbolethAuth sbAuth = new ShibbolethAuth();
+
+		Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2000", "password");
+		System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
+
+		if (tokenGenerator != null) {
+
+			System.out.println("BOTH ADD CLASS START");
+
+			assertEquals(true,
+					testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database0", 3, 25, "Fall2015", 206,
+							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
+							"Databases", "CS"));
+
+			System.out.println("BOTH ADD CLASS SUCCESSFUL");
 
 		}
 	}
@@ -68,9 +88,8 @@ public class TestAdminFunctionality {
 
 			System.out.println("ADMIN EDIT CLASS START");
 
-			assertEquals(true,
-					testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, 206, "09/01/2014",
-							"09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
+			assertEquals(true, testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, 206, "09/01/2014",
+					"09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
 
 		}
 	}
