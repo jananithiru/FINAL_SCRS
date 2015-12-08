@@ -95,9 +95,9 @@ public class Admin extends Person {
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
 		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		sqlCmd = null;
@@ -128,10 +128,10 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		return true;
@@ -148,7 +148,7 @@ public class Admin extends Person {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SQLException, Exception {
+	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
 					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
@@ -168,14 +168,12 @@ public class Admin extends Person {
 
 		// delete class from course table
 		try {
-			System.out.println("WE HAVE SQLCMD DATALIST TYPELIST");
-
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		sqlCmd = null;
@@ -190,10 +188,10 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
 		return false;

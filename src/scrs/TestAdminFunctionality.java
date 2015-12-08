@@ -15,6 +15,7 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 
 		if (tokenGenerator != null) {
 
@@ -26,6 +27,14 @@ public class TestAdminFunctionality {
 							"Databases", "CS"));
 			assertEquals(true,
 					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
+							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
+							"Databases", "CS"));
+			assertEquals(false,
+					testScrs.adminAddClass(myTokenStu, 666, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
+							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
+							"Databases", "CS"));
+			assertEquals(false,
+					testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database1", -1, 25, "Fall2015", "Bruce",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
@@ -42,11 +51,9 @@ public class TestAdminFunctionality {
 		System.out.println("usertype  " + tokenGenerator.type);
 
 		if (tokenGenerator != null) {
-			if (tokenGenerator != null) {
 
-				assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));
+			assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));
 
-			}
 		}
 	}
 
@@ -56,12 +63,12 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
 
 			System.out.println("ADMIN EDIT CLASS START");
 
 			assertEquals(true,
-					testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, "Mokbel", "09/01/2014",
+					testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, "Bruce", "09/01/2014",
 							"09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
 
 		}
@@ -73,7 +80,7 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
 
 			System.out.println("ADMIN ADD STDUENTCLASS START");
 
@@ -88,7 +95,7 @@ public class TestAdminFunctionality {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
 
 			assertEquals(true,
 					testScrs.adminEditStudentRegisteredClass(tokenGenerator, 1006, 888, "S/N", "Spring 2015"));
@@ -103,7 +110,7 @@ public class TestAdminFunctionality {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
 		System.out.println(tokenGenerator.type);
-		if (tokenGenerator != null && tokenGenerator.type == Token.RoleType.ADMIN) {
+		if (tokenGenerator != null) {
 
 			assertEquals(true, testScrs.adminDropStudentRegisteredClass(tokenGenerator, 1006, 888));
 
