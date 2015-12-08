@@ -15,7 +15,7 @@ public class TestAdminFunctionality {
 		
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 
 		if (tokenGenerator != null) {
@@ -48,7 +48,7 @@ public class TestAdminFunctionality {
 	public void TestAdminDeleteClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		System.out.println("usertype  " + tokenGenerator.type);
 
 		if (tokenGenerator != null) {
@@ -63,7 +63,7 @@ public class TestAdminFunctionality {
 	public void TestAdminEditClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		if (tokenGenerator != null) {
 
 			System.out.println("ADMIN EDIT CLASS START");
@@ -80,7 +80,7 @@ public class TestAdminFunctionality {
 	public void TestAdminAddStudentToClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		if (tokenGenerator != null) {
 
 			System.out.println("ADMIN ADD STDUENTCLASS START");
@@ -95,7 +95,7 @@ public class TestAdminFunctionality {
 	public void TestAdminEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		if (tokenGenerator != null) {
 
 			assertEquals(true,
@@ -109,7 +109,7 @@ public class TestAdminFunctionality {
 	public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");
+		Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
 		System.out.println(tokenGenerator.type);
 		if (tokenGenerator != null) {
 

@@ -18,7 +18,7 @@ public class TestStudentFunctionality {
 		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 
 		// Add Class
-		Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John!196", "password");	
+		Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");	
 		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		
 		// Add Class	

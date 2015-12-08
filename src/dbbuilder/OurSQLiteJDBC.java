@@ -3,7 +3,7 @@ package dbbuilder;
 import java.sql.*;
 import java.text.ParseException;
 
-public class SQLiteJDBC {
+public class OurSQLiteJDBC {
 	public static void main(String args[]) throws ParseException {
 		Connection c = null;
 		Statement stmt = null;

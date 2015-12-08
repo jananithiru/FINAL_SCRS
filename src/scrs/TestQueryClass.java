@@ -28,7 +28,7 @@ public class TestQueryClass {
 		SCRS testScrs = new SCRSImpl();
 
 		// LOGIN
-		Token myToken = ((SCRSImpl) testScrs).userLogin("John!196", "password");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
 
 		if (myToken != null) {
 			
@@ -91,7 +91,7 @@ public class TestQueryClass {
 		SCRS testScrs = new SCRSImpl();
 
 		// LOGIN
-		Token myToken = ((SCRSImpl) testScrs).userLogin("John!196", "password");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
 
 		if (myToken != null) {
 			
@@ -153,7 +153,7 @@ public class TestQueryClass {
 		SCRS testScrs = new SCRSImpl();
 
 		// LOGIN
-		Token myToken = ((SCRSImpl) testScrs).userLogin("John!196", "password");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
 
 		if (myToken != null) {
 			
@@ -214,7 +214,7 @@ public class TestQueryClass {
 		SCRS testScrs = new SCRSImpl();
 
 		// LOGIN
-		Token myToken = ((SCRSImpl) testScrs).userLogin("John!196", "password");
+		Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
 
 		if (myToken != null) {
 			List<ArrayList<String>> testResult = null;
