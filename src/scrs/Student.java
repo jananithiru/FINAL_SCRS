@@ -48,7 +48,7 @@ public class Student extends Person {
 			throws SCRSException {
 
 		if (token.type != RoleType.STUDENT) {
-			System.out.println(new scrsexception.incorrectTypeOfAccountException(ErrorMessages.StudentAcoountTypeFailure));
+			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
 			return false;
 		}
 		
@@ -123,7 +123,7 @@ public class Student extends Person {
 	@SuppressWarnings("deprecation")
 	boolean studentDropClass2(ShibbolethAuth.Token token, int courseID) throws SCRSException {
 		if (token.type != RoleType.STUDENT) {
-			System.out.println(new scrsexception.incorrectTypeOfAccountException(ErrorMessages.StudentAcoountTypeFailure));
+			System.out.println(new SCRSException(ErrorMessages.StudentAcoountTypeFailure));
 			return false;
 		}
 		// how to judge courseId is not given, since the type is int not Integer??

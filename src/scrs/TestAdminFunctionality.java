@@ -12,6 +12,7 @@ public class TestAdminFunctionality {
 	// test admin add class into course and instructorandcourse table
 	@Test
 	public void TestAdminAddClass() throws Exception {
+		
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token tokenGenerator = sbAuth.tokenGenerator("John!196", "password");

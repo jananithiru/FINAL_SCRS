@@ -113,7 +113,7 @@ public class InsertIntoInstructor {
 	public static void main(String args[]) {
 		DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		int userId = 196;
-		addInstructorIntoLoginTables(userId, "Gu", "Bruce", "09/01/1994", "Male", "Professor", "CS");
+		addInstructorIntoLoginTables(userId, "Gu2", "Bruce2", "09/01/1994", "Male", "Professor", "CS");
 		SelectFromAdministrator.selectAll();
 	}
 

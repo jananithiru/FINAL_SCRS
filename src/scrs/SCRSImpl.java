@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import scrs.ShibbolethAuth.Token;
 import scrs.ShibbolethAuth.Token.RoleType;
-import scrsexception.IOException;
-import scrsexception.ParseException;
-import scrsexception.SCRSClassNotFoundException;
 import scrsexception.SCRSException;
-import scrsexception.SCRSSQLException;
 
 public class SCRSImpl implements SCRS {
 	/**

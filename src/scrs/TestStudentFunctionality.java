@@ -42,6 +42,7 @@ public class TestStudentFunctionality {
 		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
+			
 			assertEquals(true, testScrs.studentDropClass(myToken, 888)); // why course 888 is not in the course table
 			//thrown.expect(scrsexception.incorrectTypeOfAccountException.class);
 			//thrown.expect(SCRSException.class);
@@ -51,6 +52,18 @@ public class TestStudentFunctionality {
 			
 		}
 	}
+	
+	
+	@Test (expected = SCRSException.class)
+	public void throwsExceptionWhenIncorrectID() {
+		SCRS testScrs = new SCRSImpl();
+		//ShibbolethAuth sbAuth = new ShibbolethAuth();
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+		if (myToken != null) {	
+			testScrs.studentDropClass(myToken, 1888);
+		}
+	}
+	
 
 	@Test
 	public void testStudentEditClass() {
