@@ -130,7 +130,7 @@ public class InsertIntoAdminstrator {
 	public static void main(String args[]) {
 		DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		int userId = 196;
-		addAdminIntoLoginTables(userId, "John!", "Mollberg", "08/24/1994", "Male", "CS");	
+		addAdminIntoLoginTables(userId, "John", "Mollberg", "08/24/1994", "Male", "CS");	
 		SelectFromAdministrator.selectAll();
 	}
 
