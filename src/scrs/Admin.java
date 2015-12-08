@@ -46,7 +46,7 @@ public class Admin extends Person {
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
 			String department) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
 			System.out.println("THIS IS NOT ADMIN");
 
 			return false;
@@ -95,7 +95,7 @@ public class Admin extends Person {
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
@@ -113,9 +113,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -133,9 +133,8 @@ public class Admin extends Person {
 	 * @throws Exception
 	 */
 	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -155,9 +154,9 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
 		} catch (SCRSException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = null;
@@ -173,7 +172,7 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return false;
@@ -208,9 +207,8 @@ public class Admin extends Person {
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SCRSException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -249,7 +247,7 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
@@ -267,9 +265,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -291,9 +289,8 @@ public class Admin extends Person {
 	public boolean adminAddStudentToClass(ShibbolethAuth.Token token, int studentID, int courseID, String grading,
 			String courseTerm) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -321,9 +318,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -344,9 +341,8 @@ public class Admin extends Person {
 	 */
 	public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
 			String grading, String courseTerm) throws SQLException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -371,9 +367,9 @@ public class Admin extends Person {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return true;
@@ -392,9 +388,8 @@ public class Admin extends Person {
 	 */
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
 			throws SCRSException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -416,9 +411,9 @@ public class Admin extends Person {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 		return true;
 

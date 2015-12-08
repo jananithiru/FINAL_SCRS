@@ -39,11 +39,11 @@ public class SCRSImpl implements SCRS {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 
 		if (x500 == null || password == null) {
-			throw new SCRSException(ErrorMessages.nullCredentials);
+			throw new SCRSException(ErrorMessages.NULL_CREDENTIALS);
 		}
 
 		if (!UtilMethods.isAlphaNumeric(x500) && !UtilMethods.isAlphaNumeric(password)) {
-			throw new SCRSException(ErrorMessages.notAlphaNumberic);
+			throw new SCRSException(ErrorMessages.NOT_ALPHANUMBERIC);
 		}
 
 		Token myToken = null;
@@ -51,9 +51,9 @@ public class SCRSImpl implements SCRS {
 		try {
 			myToken = sbAuth.tokenGenerator(x500, password);
 		} catch (ClassNotFoundException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		return myToken;
@@ -89,9 +89,9 @@ public class SCRSImpl implements SCRS {
 	private List<ArrayList<Object>> queryStudentPersonalData1(Token token, int studentID) throws SCRSException {
 
 		if (token.type == Token.RoleType.UNDEFINED) {
-			throw new SCRSException(ErrorMessages.invalidCredentials);
+			throw new SCRSException(ErrorMessages.INVILID_CREDENTIALS);
 		} else if (token.type == Token.RoleType.ADMIN) {
-			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
+			throw new SCRSException(ErrorMessages.INCORRECT_TYPE_ACCOUNT);
 		}
 		String sqlStr = SQLStrings.selectAllFromStudent(studentID);
 
@@ -101,13 +101,13 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
+			throw new SCRSException(ErrorMessages.MISSING_PERSONAL_DATA_FOR_USER);
 		}
 
 		return objList;
@@ -153,13 +153,13 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			throw new SCRSException(ErrorMessages.missingPersonalDataForUser);
+			throw new SCRSException(ErrorMessages.MISSING_PERSONAL_DATA_FOR_USER);
 		}
 
 		return objList;
@@ -167,9 +167,9 @@ public class SCRSImpl implements SCRS {
 
 	private void validateCredentials(Token token) throws SCRSException {
 		if (token.type == Token.RoleType.UNDEFINED) {
-			throw new SCRSException(ErrorMessages.invalidCredentials);
+			throw new SCRSException(ErrorMessages.INVILID_CREDENTIALS);
 		} else if (token.type == Token.RoleType.STUDENT) {
-			throw new SCRSException(ErrorMessages.incorrectTypeOfAccount);
+			throw new SCRSException(ErrorMessages.INCORRECT_TYPE_ACCOUNT);
 		}
 	}
 
@@ -290,7 +290,7 @@ public class SCRSImpl implements SCRS {
 		String instrID = null;
 
 		if (courseID <= 0 || location == null || term == null) {
-			throw new SCRSException(ErrorMessages.missingRequiredField);
+			throw new SCRSException(ErrorMessages.MISSING_REQUIRED_FIELD);
 		}
 
 		// if instructor name is given, need her ID
@@ -302,31 +302,31 @@ public class SCRSImpl implements SCRS {
 			try {
 				instrIDList = dbcoordinator.queryData(instrSQLStr);
 			} catch (SQLException e) {
-				throw new SCRSException(ErrorMessages.sqlException);
+				throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 			} catch (ClassNotFoundException e) {
-				throw new SCRSException(ErrorMessages.classNotFound);
+				throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 			}
 
 			if (instrIDList.isEmpty()) {
-				throw new SCRSException(ErrorMessages.missingInstructor);
+				throw new SCRSException(ErrorMessages.MISSING_INSTRUCTOR);
 			}
 
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
-			
 
-			String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID + ";";
+			String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID
+					+ ";";
 			List<ArrayList<Object>> instrCoursesList = null;
 			try {
 				instrCoursesList = dbcoordinator.queryData(instrCoursesSQLStr);
 			} catch (ClassNotFoundException e) {
-				throw new SCRSException(ErrorMessages.classNotFound);
+				throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 			} catch (SQLException e) {
-				throw new SCRSException(ErrorMessages.sqlException);
+				throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 			}
 			instrCoursesListStr = UtilMethods.convertObjListToStringList(instrCoursesList).get(0);
 
 			if (instrCoursesListStr.isEmpty()) {
-				throw new SCRSException(ErrorMessages.missingCourseData);
+				throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 			}
 		}
 		String sqlStr;
@@ -338,13 +338,13 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
+			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
@@ -378,7 +378,7 @@ public class SCRSImpl implements SCRS {
 	public List<ArrayList<String>> queryStudentRegistrationHistory2(Token token, int studentID) throws SCRSException {
 
 		if ((token == null || !(token.type == RoleType.ADMIN || token.id == studentID))) {
-			throw new SCRSException(ErrorMessages.accessNotAllowed);
+			throw new SCRSException(ErrorMessages.ACCESS_NOT_ALLOWED);
 		}
 		
 		if(studentID <= 0) {
@@ -394,13 +394,13 @@ public class SCRSImpl implements SCRS {
 		try {
 			objList = dbcoordinator.queryData(sqlStr);
 		} catch (ClassNotFoundException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		} catch (SQLException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 
 		if (objList == null || objList.isEmpty()) {
-			throw new SCRSException(ErrorMessages.missingStudentRegistrationData);
+			throw new SCRSException(ErrorMessages.MISSING_STUDENT_REGISTER_DATA);
 		}
 
 		List<ArrayList<String>> result = UtilMethods.convertObjListToStringList(objList);
@@ -431,13 +431,15 @@ public class SCRSImpl implements SCRS {
 	 * @return
 	 */
 	@Override
-	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int courseCapacity, String term, int instructorID, String firstDay,
-			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
-			String prerequisite, String description, String department) {
+	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+			int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
+			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
+			String department) {
+
 		try {
-			return adminAddClass1(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
-					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
-					department);
+			return adminAddClass1(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID,
+					firstDay, lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite,
+					description, department);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 
@@ -450,10 +452,15 @@ public class SCRSImpl implements SCRS {
 			String term, int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SQLException, Exception {
+
+		if (!UtilMethods.isString(courseName)) {
+			throw new SCRSException(ErrorMessages.notString);
+		}
 		Admin admin = new Admin();
 
-		return admin.adminAddClass(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
-				lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+		return admin.adminAddClass(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID,
+				firstDay, lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
+				department);
 
 	}
 
@@ -481,7 +488,7 @@ public class SCRSImpl implements SCRS {
 		try {
 			admin.adminDeleteClass(token, courseID);
 		} catch (SCRSException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		}
 
 		return true;
@@ -516,9 +523,9 @@ public class SCRSImpl implements SCRS {
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
 	@Override
-	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int instructorID, String firstDay,
-			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
-			String prerequisite, String description, String department) {
+	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
+			String weekDays, String location, String type, String prerequisite, String description, String department) {
 		try {
 			adminEditClass1(token, courseID, courseName, courseCredits, instructorID, firstDay, lastDay, classBeginTime,
 					classEndTime, weekDays, location, type, prerequisite, description, department);
@@ -538,7 +545,7 @@ public class SCRSImpl implements SCRS {
 			admin.adminEditClass(token, courseID, courseName, courseCredits, instructorID, firstDay, lastDay,
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (SCRSException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		}
 		return true;
 	}
@@ -571,7 +578,7 @@ public class SCRSImpl implements SCRS {
 		try {
 			admin.adminAddStudentToClass(token, studentID, courseID, grading, courseTerm);
 		} catch (SCRSException e) {
-			throw new SCRSException(ErrorMessages.classNotFound);
+			throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
 		}
 		return true;
 	}
@@ -606,7 +613,7 @@ public class SCRSImpl implements SCRS {
 		try {
 			admin.adminEditStudentRegisteredClass(token, studentID, courseID, grading, courseTerm);
 		} catch (SCRSException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 		return true;
 	}
@@ -654,7 +661,7 @@ public class SCRSImpl implements SCRS {
 		try {
 			admin.adminDropStudentRegisteredClass(token, studentID, courseID);
 		} catch (SCRSException e) {
-			throw new SCRSException(ErrorMessages.sqlException);
+			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
 		}
 		return true;
 

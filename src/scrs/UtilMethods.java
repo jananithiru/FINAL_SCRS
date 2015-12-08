@@ -72,4 +72,9 @@ public class UtilMethods { // TODO: Rename this class after checking with people
 		return (s.matches(pattern));
 	}
 
+	public static boolean isString(String s) {
+		String pattern = "^[a-zA-Z]*$";
+		return (s.matches(pattern));
+	}
+
 }
