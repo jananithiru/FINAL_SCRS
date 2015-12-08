@@ -9,7 +9,7 @@ import org.junit.Test;
 import scrs.ShibbolethAuth.Token;
 
 public class TestAdminFunctionality {
-
+	// test admin add class into course and instructorandcourse table
 	@Test
 	public void TestAdminAddClass() throws Exception {
 		SCRS testScrs = new SCRSImpl();
@@ -33,6 +33,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin delete class from course table and instructorandcourse table
 	@Test
 	public void TestAdminDeleteClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -49,6 +50,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can edit class info in course table
 	@Test
 	public void TestAdminEditClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -65,6 +67,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can add student to class in studentandcourse table
 	@Test
 	public void TestAdminAddStudentToClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -79,6 +82,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin edit studentandcourse info
 	@Test
 	public void TestAdminEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -92,6 +96,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can drop student in studentandcourse table
 	@Test
 	public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
