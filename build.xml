@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="FINAL_SCRS">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../Desktop/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="FINAL_SCRS.classpath">
+        <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/sqlite-jdbc-3.8.11.2.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="SelectFromShibboleThauth">
+        <java classname="dbbuilder.SelectFromShibboleThauth" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="InsertIntoAdminstrator">
+        <java classname="dbbuilder.InsertIntoAdminstrator" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestQueryPersonalInformation.testDisplayStudentDetails (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestQueryPersonalInformation" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="TestQueryPersonalInformation (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestQueryPersonalInformation" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="SelectFromCourse">
+        <java classname="dbbuilder.SelectFromCourse" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="InsertIntoStudent">
+        <java classname="dbbuilder.InsertIntoStudent" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestStudentFunctionality (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestStudentFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="SelectFromStuentANDCourse">
+        <java classname="dbbuilder.SelectFromStuentANDCourse" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="SetupDB (3)">
+        <java classname="dbbuilder.SetupDB" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="SelectFromAdministrator">
+        <java classname="dbbuilder.SelectFromAdministrator" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestStudentFunctionality.TestStudentAddClass">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestStudentFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="InsertQueries (2)">
+        <java classname="dbbuilder.InsertQueries" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestAdminFunctionality">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestAdminFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="TestAdminFunctionality.TestAdminAddClass">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestAdminFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="TestQueryPersonalInformation.testDisplayInvalidAdminDetails">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestQueryPersonalInformation" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="SQLiteJDBC">
+        <java classname="dbbuilder.SQLiteJDBC" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="SelectFromStudent">
+        <java classname="dbbuilder.SelectFromStudent" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestStudentFunctionality.throwsExceptionWhenNegativeNumbersAreGiven">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestStudentFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="TestStudentFunctionality.throwsExceptionWhenIncorrectID">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestStudentFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="InsertIntoInstructor">
+        <java classname="dbbuilder.InsertIntoInstructor" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="SelectFromInstructor">
+        <java classname="dbbuilder.SelectFromInstructor" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestStudentFunctionality.TestStudentDropClass">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestStudentFunctionality" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="OurSQLiteJDBC">
+        <java classname="dbbuilder.OurSQLiteJDBC" failonerror="true" fork="yes">
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </java>
+    </target>
+    <target name="TestQueryPersonalInformation.testDisplayValidAdminDetails">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestQueryPersonalInformation" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="TestQueryPersonalInformation.testDisplayInvalidLoginCredentials">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="scrs.TestQueryPersonalInformation" todir="${junit.output.dir}"/>
+            <classpath refid="FINAL_SCRS.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
