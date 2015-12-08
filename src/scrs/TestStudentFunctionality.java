@@ -42,7 +42,7 @@ public class TestStudentFunctionality {
 		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
-			assertEquals(true, testScrs.studentDropClass(myToken, 888));
+			assertEquals(true, testScrs.studentDropClass(myToken, 888)); // why course 888 is not in the course table
 			//thrown.expect(scrsexception.incorrectTypeOfAccountException.class);
 			//thrown.expect(SCRSException.class);
 			//thrown.expectMessage("SCRSException:There is no such record in database");
@@ -55,12 +55,12 @@ public class TestStudentFunctionality {
 	@Test
 	public void testStudentEditClass() {
 		SCRS testScrs = new SCRSImpl();
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
+		//ShibbolethAuth sbAuth = new ShibbolethAuth();
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
 
 			// boolean result = true;
-			assertEquals(true, testScrs.studentEditClass(myToken, 8735, "S/N", "Fall"));
+			assertEquals(true, testScrs.studentEditClass(myToken, 888, "A-F", "Fall2015"));
 			// boolean testResult = testScrs.studentEditClass(myToken, 8735,
 			// "S/N", "Fall");
 			// if (testResult == true) {

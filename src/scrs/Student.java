@@ -204,24 +204,36 @@ public class Student extends Person {
 	 * @return
 	 */
 	// why we need the parameter courseTerm
-	boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) {
+	boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm){
+		boolean result = false;
+		try {
+			result = studentAddClass2(token, courseID, grading, courseTerm);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	boolean studentEditClass2(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) throws SCRSException{
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "update StudentAndCourse set grading=? where courseId=?";
+		String sqlStr = "update StudentAndCourse set grading=? where courseId=? and studentID=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(grading);
 		dataList.add(Integer.toString(courseID));
+		dataList.add(Integer.toString(token.id));
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.STRING);
+		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 
 		try {
 			dbCoordinator.updateData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
