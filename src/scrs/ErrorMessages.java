@@ -15,4 +15,6 @@ public class ErrorMessages {
 	public static final String outTimeFrame = "Today is out of Time Frame";
 	public static final String ParseDataError = "The data could not be parsed";
 	public static final String NoRecordReturnFromDB = "There is no such record in database";
+	public static final String StudentAcoountTypeFailure = "This is not a student account";
+	public static final String MissingRequiredField ="Required fileds is missing";
 }
