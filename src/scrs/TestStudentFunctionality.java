@@ -12,39 +12,25 @@ public class TestStudentFunctionality {
 	@Test
 	public void TestStudentAddClass() {
 		SCRS testScrs = new SCRSImpl();
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
-
-		// Search Class
+		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 
 		// Add Class
-		Token myToken = ((SCRSImpl) testScrs).userLogin("Alice121", "mypassword");		
-		
-		// Search Class 
-		try {
-			testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
-		} catch (SCRSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John!196", "password");	
+		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		
 		// Add Class	
-		if (myToken != null) {
+		if (myTokenAdmin != null && myTokenStu != null) {
 			// where to judge the token type??? inside the function or in
 			// the test
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "Fall2015"));
-
-			// boolean testResult = testScrs.studentAddClass(myToken, 8735,
-			// "A/F", "FALL");
-			// if (testResult == true) {
-			// System.out.println("Adding class is done!");
-			// } else
-			// System.out.println("Adding class meet error.");
+			assertEquals(false, testScrs.studentAddClass(myTokenAdmin, 888, "A-F", "Fall2015"));
+			assertEquals(true, testScrs.studentAddClass(myTokenStu, 888, "A-F", "Fall2015")); 
+			assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, null, "Fall2015")); //did not fill out the grade basis
+			assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, "A-F", null)); // did not fill out coure term
+            
 		}
 	}
 
+	
 	@Test
 	public void TestStudentDropClass() {
 		SCRS testScrs = new SCRSImpl();

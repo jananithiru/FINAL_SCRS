@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.print.attribute.standard.RequestingUserName;
+
 import org.junit.internal.Throwables;
 
 import scrs.Constants.PrimitiveDataType;
@@ -45,7 +47,13 @@ public class Student extends Person {
 	boolean studentAddClass2(ShibbolethAuth.Token token, int courseId, String grading, String courseTerm)
 			throws SCRSException {
 
-		if (token.type == RoleType.ADMIN) {
+		if (token.type != RoleType.STUDENT) {
+			System.out.println(new scrsexception.incorrectTypeOfAccountException(ErrorMessages.StudentAcoountTypeFailure));
+			return false;
+		}
+		
+		if(grading == null | courseTerm == null){
+			System.out.println(new SCRSException(ErrorMessages.MissingRequiredField));
 			return false;
 		}
 
