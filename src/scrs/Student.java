@@ -135,7 +135,7 @@ public class Student extends Person {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
 
 		String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID ;
-		String sqlCmd2 = "SELECT FROM STUDENTANDCOURSE WHERE COURSEID" + courseID + " AND STUDENTID=" + token.id + ";";
+		String sqlCmd2 = "SELECT * FROM STUDENTANDCOURSE WHERE COURSEID=" + courseID + " AND STUDENTID=" + token.id ;
 		List<ArrayList<Object>> termList = null;
 		List<ArrayList<Object>> rs = null;
 

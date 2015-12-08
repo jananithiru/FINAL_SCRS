@@ -94,25 +94,9 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-
-//		sqlCmd = null;
-//		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
-//
-//		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
-//
-//		if (objectList.size() == 0) {
-//			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
-//		}
-//		if (objectList.size() > 0) {
-//			new SCRSException("MULTIPLE PERSON WITH THE SAME NAME");
-//		}
-//
-//		Integer instructorID = (Integer) objectList.get(0).get(0);
 
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
@@ -188,8 +172,6 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (SCRSException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
@@ -224,7 +206,7 @@ public class Admin extends Person {
 	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
 			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
-					throws SQLException, Exception {
+					throws SCRSException, Exception {
 
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
@@ -266,13 +248,10 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-		
-		
+
 		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
 
 		dataList = new ArrayList<String>();
@@ -292,8 +271,7 @@ public class Admin extends Person {
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-		
-		
+
 		return true;
 	}
 
@@ -410,7 +388,7 @@ public class Admin extends Person {
 	 * @param courseID
 	 * @return
 	 * @throws SCRSException
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
 			throws SCRSException, Exception {
