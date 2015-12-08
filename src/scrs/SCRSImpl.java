@@ -372,15 +372,12 @@ public class SCRSImpl implements SCRS {
 	public boolean adminAddClass1(Token token, int courseID, String courseName, int courseCredits, int capacity,
 			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
-					throws SCRSException {
+					throws SQLException, Exception {
 		Admin admin = new Admin();
-		try {
-			admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
-					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
-					department);
-		} catch (Exception e) {
-			throw new SCRSException(ErrorMessages.sqlException);
-		}
+
+		admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay, lastDay,
+				classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
+
 		return true;
 	}
 

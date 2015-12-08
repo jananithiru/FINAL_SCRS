@@ -9,7 +9,7 @@ import org.junit.Test;
 import scrs.ShibbolethAuth.Token;
 
 public class TestAdminFunctionality {
-
+	// test admin add class into course and instructorandcourse table
 	@Test
 	public void TestAdminAddClass() throws Exception {
 		SCRS testScrs = new SCRSImpl();
@@ -21,19 +21,19 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN ADD CLASS START");
 
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Mohamed",
+					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Bruce",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 1, 25, "Fall2015", "Mohamed",
+					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
-
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
 
 		}
 	}
 
+	// test admin delete class from course table and instructorandcourse table
 	@Test
 	public void TestAdminDeleteClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -50,6 +50,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can edit class info in course table
 	@Test
 	public void TestAdminEditClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -66,6 +67,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can add student to class in studentandcourse table
 	@Test
 	public void TestAdminAddStudentToClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -80,6 +82,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin edit studentandcourse info
 	@Test
 	public void TestAdminEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
@@ -93,6 +96,7 @@ public class TestAdminFunctionality {
 		}
 	}
 
+	// test admin can drop student in studentandcourse table
 	@Test
 	public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
 		SCRS testScrs = new SCRSImpl();
