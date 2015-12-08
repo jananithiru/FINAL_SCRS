@@ -94,8 +94,6 @@ public class Admin extends Person {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
@@ -174,8 +172,6 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (SCRSException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
@@ -210,7 +206,7 @@ public class Admin extends Person {
 	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
 			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
-					throws SQLException, Exception {
+					throws SCRSException, Exception {
 
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println(
@@ -252,8 +248,6 @@ public class Admin extends Person {
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
