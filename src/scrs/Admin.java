@@ -100,20 +100,6 @@ public class Admin extends Person {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
-//		sqlCmd = null;
-//		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
-//
-//		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
-//
-//		if (objectList.size() == 0) {
-//			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
-//		}
-//		if (objectList.size() > 0) {
-//			new SCRSException("MULTIPLE PERSON WITH THE SAME NAME");
-//		}
-//
-//		Integer instructorID = (Integer) objectList.get(0).get(0);
-
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
 		dataList = new ArrayList<String>();
@@ -271,8 +257,7 @@ public class Admin extends Person {
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-		
-		
+
 		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
 
 		dataList = new ArrayList<String>();
@@ -292,8 +277,7 @@ public class Admin extends Person {
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
-		
-		
+
 		return true;
 	}
 
@@ -410,7 +394,7 @@ public class Admin extends Person {
 	 * @param courseID
 	 * @return
 	 * @throws SCRSException
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
 			throws SCRSException, Exception {
