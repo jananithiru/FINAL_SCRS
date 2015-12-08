@@ -42,7 +42,7 @@ public class Admin extends Person {
 	 * @throws Exception
 	 */
 	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			int capacity, String term, String instructor, String firstDay, String lastDay, String classBeginTime,
+			int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
 			String department) throws SQLException, Exception {
 
@@ -64,7 +64,7 @@ public class Admin extends Person {
 		dataList.add(Integer.toString(courseID));
 		dataList.add(courseName);
 		dataList.add(Integer.toString(courseCredits));
-		dataList.add(Integer.toString(capacity));
+		dataList.add(Integer.toString(courseCapacity));
 		dataList.add(term);
 		dataList.add(firstDay);
 		dataList.add(lastDay);
@@ -100,19 +100,19 @@ public class Admin extends Person {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
-		sqlCmd = null;
-		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
-
-		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
-
-		if (objectList.size() == 0) {
-			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
-		}
-		if (objectList.size() > 0) {
-			new SCRSException("MULTIPLE PERSON WITH THE SAME NAME");
-		}
-
-		Integer instructorID = (Integer) objectList.get(0).get(0);
+//		sqlCmd = null;
+//		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
+//
+//		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
+//
+//		if (objectList.size() == 0) {
+//			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
+//		}
+//		if (objectList.size() > 0) {
+//			new SCRSException("MULTIPLE PERSON WITH THE SAME NAME");
+//		}
+//
+//		Integer instructorID = (Integer) objectList.get(0).get(0);
 
 		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
@@ -222,7 +222,7 @@ public class Admin extends Person {
 	 * @throws Exception
 	 */
 	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
+			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SQLException, Exception {
 
@@ -265,13 +265,35 @@ public class Admin extends Person {
 		// edit class in course table
 		try {
 			dbcoordinator.updateData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN EDIT CLASS SUCCESSFUL");
+			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
 		} catch (ClassNotFoundException e1) {
 			throw new SCRSException(ErrorMessages.missingCourseData);
 		} catch (SQLException e1) {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
+		
+		
+		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
 
+		dataList = new ArrayList<String>();
+		dataList.add(Integer.toString(instructorID));
+		dataList.add(Integer.toString(courseID));
+
+		typeList = new ArrayList<PrimitiveDataType>();
+		typeList.add(PrimitiveDataType.INT);
+		typeList.add(PrimitiveDataType.INT);
+		// insert into instructorandcourse table(need instructor already in
+		// database)
+		try {
+			dbcoordinator.insertData(sqlCmd, dataList, typeList);
+			System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+		} catch (ClassNotFoundException e1) {
+			throw new SCRSException(ErrorMessages.missingCourseData);
+		} catch (SQLException e1) {
+			throw new SCRSException(ErrorMessages.sqlException);
+		}
+		
+		
 		return true;
 	}
 

@@ -32,7 +32,7 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", null, 
+			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			
@@ -95,7 +95,7 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", null, 
+			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			
@@ -157,7 +157,7 @@ public class TestQueryClass {
 
 		if (myToken != null) {
 			
-			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", "Gu", 
+			boolean t = testScrs.adminAddClass(myToken, 777, "2011", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 			

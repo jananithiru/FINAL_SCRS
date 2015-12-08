@@ -14,17 +14,13 @@ public class TestMultipleTests {
 		fail("Not yet implemented");
 		SCRS testScrs = new SCRSImpl();
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		
+
 		Token myToken = ((SCRSImpl) testScrs).userLogin("John193", "password");
-		
 
 		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
 			// Search Class
 			try {
 				testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
-			} catch (SCRSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,9 +40,6 @@ public class TestMultipleTests {
 			// Search Class
 			try {
 				testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
-			} catch (SCRSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

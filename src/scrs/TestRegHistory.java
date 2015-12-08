@@ -28,7 +28,7 @@ public class TestRegHistory {
 		// LOGIN
 		Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John!196", "password");
 		if (myTokenAdmin != null) {
-			testScrs.adminAddClass(myTokenAdmin, 777, "2011", 4, 30, "Spring2015", null, 
+			testScrs.adminAddClass(myTokenAdmin, 777, "2011", 4, 30, "Spring2015", 206, 
 					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
 					"Lecture", "No", "Description", "CS");
 		}

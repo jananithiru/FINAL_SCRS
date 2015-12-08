@@ -22,19 +22,19 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN ADD CLASS START");
 
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Bruce",
+					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", 206,
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
+					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 2, 25, "Fall2015", 206,
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(false,
-					testScrs.adminAddClass(myTokenStu, 666, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
+					testScrs.adminAddClass(myTokenStu, 666, "Advanced Database1", 2, 25, "Fall2015", 206,
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(false,
-					testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database1", -1, 25, "Fall2015", "Bruce",
+					testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database1", -1, 25, "Fall2015", 206,
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
@@ -68,7 +68,7 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN EDIT CLASS START");
 
 			assertEquals(true,
-					testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, "Bruce", "09/01/2014",
+					testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database3", 3, 206, "09/01/2014",
 							"09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
 
 		}

@@ -391,11 +391,11 @@ public class SCRSImpl implements SCRS {
 	 * @return
 	 */
 	@Override
-	public boolean adminAddClass(Token token, int courseID, String courseName, int courseCredits, int capacity,
-			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department) {
+	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int courseCapacity, String term, int instructorID, String firstDay,
+			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
+			String prerequisite, String description, String department) {
 		try {
-			return adminAddClass1(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
+			return adminAddClass1(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
 					lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description,
 					department);
 		} catch (Exception e) {
@@ -406,13 +406,13 @@ public class SCRSImpl implements SCRS {
 		}
 	}
 
-	public boolean adminAddClass1(Token token, int courseID, String courseName, int courseCredits, int capacity,
-			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
+	public boolean adminAddClass1(Token token, int courseID, String courseName, int courseCredits, int courseCapacity,
+			String term, int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SQLException, Exception {
 		Admin admin = new Admin();
 
-		return admin.adminAddClass(token, courseID, courseName, courseCredits, capacity, term, instructor, firstDay,
+		return admin.adminAddClass(token, courseID, courseName, courseCredits, courseCapacity, term, instructorID, firstDay,
 				lastDay, classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 
 	}
@@ -476,11 +476,11 @@ public class SCRSImpl implements SCRS {
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
 	@Override
-	public boolean adminEditClass(Token token, int courseID, String courseName, int courseCredits, String instructor,
-			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
-			String location, String type, String prerequisite, String description, String department) {
+	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int instructorID, String firstDay,
+			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
+			String prerequisite, String description, String department) {
 		try {
-			adminEditClass1(token, courseID, courseName, courseCredits, instructor, firstDay, lastDay, classBeginTime,
+			adminEditClass1(token, courseID, courseName, courseCredits, instructorID, firstDay, lastDay, classBeginTime,
 					classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -488,14 +488,14 @@ public class SCRSImpl implements SCRS {
 		return true;
 	}
 
-	public boolean adminEditClass1(Token token, int courseID, String courseName, int courseCredits, String instructor,
+	public boolean adminEditClass1(Token token, int courseID, String courseName, int courseCredits, int instructorID,
 			String firstDay, String lastDay, String classBeginTime, String classEndTime, String weekDays,
 			String location, String type, String prerequisite, String description, String department) throws Exception {
 
 		Admin admin = new Admin();
 		validateCredentials(token);
 		try {
-			admin.adminEditClass(token, courseID, courseName, courseCredits, instructor, firstDay, lastDay,
+			admin.adminEditClass(token, courseID, courseName, courseCredits, instructorID, firstDay, lastDay,
 					classBeginTime, classEndTime, weekDays, location, type, prerequisite, description, department);
 		} catch (SCRSException e) {
 			throw new SCRSException(ErrorMessages.classNotFound);
