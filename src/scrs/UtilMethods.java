@@ -39,7 +39,6 @@ public class UtilMethods { // TODO: Rename this class after checking with people
 	 *            wish to check the time frame of.
 	 * @return a boolean value. True if it is within time frame, else false.
 	 */
-	@SuppressWarnings("deprecation")
 	public static boolean isInTimeFrame(Date currentDate, String courseTerm) {
 		int startYear, endYear;
 		int startMonth, endMonth;
@@ -69,6 +68,11 @@ public class UtilMethods { // TODO: Rename this class after checking with people
 
 	public static boolean isAlphaNumeric(String s) {
 		String pattern = "^[a-zA-Z0-9]*$";
+		return (s.matches(pattern));
+	}
+
+	public static boolean isString(String s) {
+		String pattern = "^[a-zA-Z]*$";
 		return (s.matches(pattern));
 	}
 
