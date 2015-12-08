@@ -46,7 +46,7 @@ public class Admin extends Person {
 			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
 			String department) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
 			System.out.println("THIS IS NOT ADMIN");
 
 			return false;
@@ -133,9 +133,8 @@ public class Admin extends Person {
 	 * @throws Exception
 	 */
 	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -208,9 +207,8 @@ public class Admin extends Person {
 			String weekDays, String location, String type, String prerequisite, String description, String department)
 					throws SCRSException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -291,9 +289,8 @@ public class Admin extends Person {
 	public boolean adminAddStudentToClass(ShibbolethAuth.Token token, int studentID, int courseID, String grading,
 			String courseTerm) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -344,9 +341,8 @@ public class Admin extends Person {
 	 */
 	public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
 			String grading, String courseTerm) throws SQLException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
@@ -392,9 +388,8 @@ public class Admin extends Person {
 	 */
 	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
 			throws SCRSException, Exception {
-		if (token.type != Token.RoleType.ADMIN) {
-			System.out.println(
-					new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+		if (token.type != Token.RoleType.ADMIN || token.type != Token.RoleType.BOTH) {
+			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
 			return false;
 		}
