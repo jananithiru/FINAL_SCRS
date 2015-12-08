@@ -21,14 +21,13 @@ public class TestAdminFunctionality {
 			System.out.println("ADMIN ADD CLASS START");
 
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Mohamed",
+					testScrs.adminAddClass(tokenGenerator, 888, "Advanced Database2", 1, 25, "Fall2015", "Bruce",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
 			assertEquals(true,
-					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 1, 25, "Fall2015", "Mohamed",
+					testScrs.adminAddClass(tokenGenerator, 777, "Advanced Database1", 2, 25, "Fall2015", "Bruce",
 							"09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
 							"Databases", "CS"));
-
 			System.out.println("ADMIN ADD CLASS SUCCESSFUL");
 
 		}

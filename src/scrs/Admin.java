@@ -49,8 +49,6 @@ public class Admin extends Person {
 		if (token.type != Token.RoleType.ADMIN) {
 			System.out.println("THIS IS NOT ADMIN");
 
-			System.out.println(
-					new scrsexception.incorrectTypeOfAccountException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 			return false;
 
 		}
@@ -106,6 +104,7 @@ public class Admin extends Person {
 		sqlCmd = "SELECT ID FROM INSTRUCTOR WHERE LASTNAME = '" + instructor + "'";
 
 		List<ArrayList<Object>> objectList = dbcoordinator.queryData(sqlCmd);
+
 		if (objectList.size() == 0) {
 			new scrsexception.missingPersonalDataForUserException("NO INSTRUCTOR IN DATABASE");
 		}
@@ -124,6 +123,7 @@ public class Admin extends Person {
 		typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
+
 		try {
 			dbcoordinator.insertData(sqlCmd, dataList, typeList);
 			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
