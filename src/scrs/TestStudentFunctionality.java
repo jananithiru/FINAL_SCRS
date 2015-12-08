@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import scrs.ShibbolethAuth.Token;
 import scrsexception.SCRSException;
@@ -37,8 +38,8 @@ public class TestStudentFunctionality {
 		ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
-
-			assertEquals(true, testScrs.studentDropClass(myToken, 666));
+			
+			assertEquals(true, testScrs.studentDropClass(myToken, 11111));
 
 			// boolean testResult = testScrs.studentDropClass(myToken,
 			// 8735);
