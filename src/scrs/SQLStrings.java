@@ -53,7 +53,15 @@ public class SQLStrings {
 		if (instructorID != null) {
 			sqlStr += " JOIN instructorandcourse ic on c.ID = ic.courseID";
 		}
-		sqlStr += " WHERE c.id = " + courseID + " AND c.location = '" + location + "'" + " AND c.term = '" + term + "'";
+		
+		sqlStr += " WHERE c.id = " + courseID;
+		
+		if (location != null) {
+			sqlStr += " AND c.location = '" + location + "'";
+		}
+		if (term != null) {
+			sqlStr += " AND c.term = '" + term + "'";
+		}
 		if (department != null) {
 			sqlStr += " AND c.department = '" + department + "'";
 		}

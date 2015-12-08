@@ -53,7 +53,7 @@ public class Student extends Person {
 		}
 		
 		if(grading == null | courseTerm == null){
-			System.out.println(new SCRSException(ErrorMessages.MissingRequiredField));
+			System.out.println(new SCRSException(ErrorMessages.missingRequiredField));
 			return false;
 		}
 

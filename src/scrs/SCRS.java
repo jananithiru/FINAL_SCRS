@@ -32,7 +32,7 @@ public interface SCRS {
 	 * @throws Exception 
 	 */
 	List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term, String department,
-			String classType, String instructorName) throws SCRSException, Exception;
+			String classType, String instructorName);
 
 	/**
 	 * This interface is used for querying student personal data.
@@ -71,7 +71,7 @@ public interface SCRS {
 	 * information
 	 * 
 	 * @param token
-	 * @param instructorID
+	 * @param instructorID	
 	 *            -1 if all instructors information need to be returned
 	 * @return Store a designated instructor's basic information in database
 	 *         table property order. Empty list will be returned if the query is
@@ -156,9 +156,9 @@ public interface SCRS {
 	 * @param department
 	 * @return
 	 */
-	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int capacity,
-			String term, String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department);
+	boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int courseCapacity, String term, int instructorID, String firstDay,
+			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
+			String prerequisite, String description, String department);
 
 	/**
 	 * This interface should allow the admin to delete a class from the database
@@ -198,9 +198,9 @@ public interface SCRS {
 	 * @param department
 	 * @return Return true if the operation is successfully, false otherwise
 	 */
-	boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			String instructor, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department);
+	boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits, int instructorID, String firstDay,
+			String lastDay, String classBeginTime, String classEndTime, String weekDays, String location, String type,
+			String prerequisite, String description, String department);
 
 	/**
 	 * This interface should allow the admin to add one student to one specific
