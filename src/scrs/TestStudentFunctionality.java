@@ -3,6 +3,8 @@ package scrs;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
+
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -32,33 +34,33 @@ public class TestStudentFunctionality {
 	}
 
 	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 	@Test
 	public void TestStudentDropClass() {
 		SCRS testScrs = new SCRSImpl();
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
+		//ShibbolethAuth sbAuth = new ShibbolethAuth();
 		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
+			assertEquals(true, testScrs.studentDropClass(myToken, 888)); // why course 888 is not in the course table
+			//thrown.expect(scrsexception.incorrectTypeOfAccountException.class);
+			//thrown.expect(SCRSException.class);
+			//thrown.expectMessage("SCRSException:There is no such record in database");
+			//testScrs.studentDropClass(myToken, 11111);
+			 // TODO: need to test out of time frame
 			
-			assertEquals(true, testScrs.studentDropClass(myToken, 11111));
-
-			// boolean testResult = testScrs.studentDropClass(myToken,
-			// 8735);
-			// if (testResult == true) {
-			// System.out.println("Dropping class is done!");
-			// } else
-			// System.out.println("Dropping class meet error.");
 		}
 	}
 
 	@Test
 	public void testStudentEditClass() {
 		SCRS testScrs = new SCRSImpl();
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
-		Token myToken = ((SCRSImpl) testScrs).userLogin("alice001", "mypassword");
+		//ShibbolethAuth sbAuth = new ShibbolethAuth();
+		Token myToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
 		if (myToken != null) {
 
 			// boolean result = true;
-			assertEquals(true, testScrs.studentEditClass(myToken, 8735, "S/N", "Fall"));
+			assertEquals(true, testScrs.studentEditClass(myToken, 888, "A-F", "Fall2015"));
 			// boolean testResult = testScrs.studentEditClass(myToken, 8735,
 			// "S/N", "Fall");
 			// if (testResult == true) {

@@ -134,11 +134,15 @@ public class Student extends Person {
 		java.util.Date utilDate = new java.util.Date();
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
 
-		String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID + ";";
+		String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID ;
+		String sqlCmd2 = "SELECT FROM STUDENTANDCOURSE WHERE COURSEID" + courseID + " AND STUDENTID=" + token.id + ";";
 		List<ArrayList<Object>> termList = null;
+		List<ArrayList<Object>> rs = null;
 
 		try {
 			termList = dbCoordinator.queryData(sqlCmd);
+			rs = dbCoordinator.queryData(sqlCmd2);
+			
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			throw new SCRSException(ErrorMessages.classNotFound);
@@ -147,22 +151,28 @@ public class Student extends Person {
 			throw new SCRSException(ErrorMessages.sqlException);
 		}
 
-		if (termList == null || termList.size() == 0) {
+		if (termList == null || termList.size() == 0  ) {
 
 			throw new SCRSException(ErrorMessages.NoRecordReturnFromDB);
 
+		}
+		if(rs == null || rs.size() == 0){
+			throw new SCRSException(ErrorMessages.NoRecordReturnFromDB);
 		}
 		String courseTerm = (String) termList.get(0).get(0);
 
 		if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
 			throw new SCRSException(ErrorMessages.outTimeFrame);
 			
+			
 		}
 
-		String sqlStr = "delete from StudentAndCourse where courseId=?";
+		String sqlStr = "delete from StudentAndCourse where courseId=? and studentID=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(Integer.toString(courseID));
+		dataList.add(Integer.toString(token.id));
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 
 		try {
@@ -194,24 +204,36 @@ public class Student extends Person {
 	 * @return
 	 */
 	// why we need the parameter courseTerm
-	boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) {
+	boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm){
+		boolean result = false;
+		try {
+			result = studentAddClass2(token, courseID, grading, courseTerm);
+		} catch (SCRSException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	boolean studentEditClass2(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) throws SCRSException{
 		if (token.type == RoleType.ADMIN) {
 			return false;
 		}
 		DBCoordinator dbCoordinator = new DBCoordinator();
-		String sqlStr = "update StudentAndCourse set grading=? where courseId=?";
+		String sqlStr = "update StudentAndCourse set grading=? where courseId=? and studentID=?";
 		ArrayList<String> dataList = new ArrayList<String>();
 		dataList.add(grading);
 		dataList.add(Integer.toString(courseID));
+		dataList.add(Integer.toString(token.id));
 		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
 		typeList.add(PrimitiveDataType.STRING);
+		typeList.add(PrimitiveDataType.INT);
 		typeList.add(PrimitiveDataType.INT);
 
 		try {
 			dbCoordinator.updateData(sqlStr, dataList, typeList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SCRSException(ErrorMessages.classNotFound);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
