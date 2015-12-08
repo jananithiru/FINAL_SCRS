@@ -85,7 +85,6 @@ public class TestQueryClass {
 	
 	@Test
 	public void testQueryClassReqFields() {
-		System.out.println("begin test");
 
 		// INITIALIZATION
 		SCRS testScrs = new SCRSImpl();
@@ -164,7 +163,7 @@ public class TestQueryClass {
 			List<ArrayList<String>> testResult = null;
 			try {
 				testResult = testScrs.queryClass(777, "2011", "KH2150", "Spring2015", null,
-						null, "Gu");
+						null, "Bruce2");
 			} catch (Exception e) {
 				System.out.println("Unexpected error");
 				assertEquals(0, 1);

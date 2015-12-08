@@ -263,6 +263,7 @@ public class SCRSImpl implements SCRS {
 			String department, String classType, String instructorName) throws SCRSException {
 
 		DBCoordinator dbcoordinator = new DBCoordinator();
+		List<String> instrCoursesListStr = null;
 		String instrID = null;
 
 		if (courseID <= 0 || location == null || term == null) {
@@ -273,7 +274,7 @@ public class SCRSImpl implements SCRS {
 		if (instructorName != null) {
 			List<ArrayList<Object>> instrIDList = null;
 
-			String instrSQLStr = "select instructorid FROM instructor WHERE lastname = " + instructorName + ";";
+			String instrSQLStr = "select id FROM instructor WHERE lastname = '" + instructorName + "';";
 
 			try {
 				instrIDList = dbcoordinator.queryData(instrSQLStr);
@@ -288,10 +289,26 @@ public class SCRSImpl implements SCRS {
 			}
 
 			instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
-		}
+			
 
-		String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, department, classType,
-				instrID);
+			String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID + ";";
+			List<ArrayList<Object>> instrCoursesList = null;
+			try {
+				instrCoursesList = dbcoordinator.queryData(instrCoursesSQLStr);
+			} catch (ClassNotFoundException e) {
+				throw new SCRSException(ErrorMessages.classNotFound);
+			} catch (SQLException e) {
+				throw new SCRSException(ErrorMessages.sqlException);
+			}
+			instrCoursesListStr = UtilMethods.convertObjListToStringList(instrCoursesList).get(0);
+
+			if (instrCoursesListStr.isEmpty()) {
+				throw new SCRSException(ErrorMessages.missingCourseData);
+			}
+		}
+		String sqlStr;
+		sqlStr = SQLStrings.selectAllFromCourse2(courseID, courseName, location, term, department, classType,
+				instrCoursesListStr);
 
 		List<ArrayList<Object>> objList = null;
 

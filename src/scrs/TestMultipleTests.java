@@ -13,24 +13,23 @@ public class TestMultipleTests {
 	public void testCompleteStudentSuite() {
 		fail("Not yet implemented");
 		SCRS testScrs = new SCRSImpl();
-		ShibbolethAuth sbAuth = new ShibbolethAuth();
-
-		Token myToken = ((SCRSImpl) testScrs).userLogin("John193", "password");
-
-		while (myToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
+		
+		//Admin Log in
+		Token adminToken = ((SCRSImpl) testScrs).userLogin("John193", "password");
+		Token studentToken = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+		while (adminToken.type != ShibbolethAuth.Token.RoleType.UNDEFINED) {
+			
 			// Search Class
 			try {
 				testScrs.queryClass(888, "Advanced Database2", "KHKH110", "Fall2015", "CS", null, null);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				fail("Unexpected Error");
 			}
 
 			// Add Class
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
-			assertEquals(true, testScrs.studentAddClass(myToken, 666, "A-F", "FALL"));
+			assertEquals(true, testScrs.adminAddClass(adminToken, 555, "Course 555", 4, 
+					25, "Spring2016", 206, "02/01/2016", "06/01/2016", "8:00", 
+					"9:15", "M,W,F", "KH2150", "Seminar", "No", "555 Description", "CS"));
 
 		}
 
