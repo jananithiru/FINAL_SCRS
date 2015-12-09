@@ -12,43 +12,39 @@ import java.util.List;
 
 import org.junit.Test;
 
-import scrs.SCRS;
-import scrs.SCRSImpl;
-import scrs.ShibbolethAuth;
 import scrs.ShibbolethAuth.Token;
 
 public class TestRegHistory {
 
-	@Test
-	public void testQueryRegHistory() {
+    @Test
+    public void testQueryRegHistory() {
 
-		// INITIALIZATION
-		SCRS testScrs = new SCRSImpl();
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
 
-		// LOGIN
-		Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");
-		if (myTokenAdmin != null) {
-			testScrs.adminAddClass(myTokenAdmin, 777, "Programming", 4, 30, "Spring2015", 206, 
-					"02/01/2015", "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", 
-					"Lecture", "No", "Description", "CS");
-		}
-		
-		Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
-		if (myTokenStu != null) {
-			
-			testScrs.studentAddClass(myTokenStu, 777, "A-F", "Spring2015");
-			
-			List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenStu, 1005);
-			
-			assertNotNull(testResult);
-			assertEquals(5, testResult.get(0).size());
-			
-			testScrs.studentDropClass(myTokenStu, 777);
-		}
-		
-		if (myTokenAdmin != null) {
-			testScrs.adminDeleteClass(myTokenAdmin, 777);
-		}
+        // LOGIN
+        Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");
+        if (myTokenAdmin != null) {
+            testScrs.adminAddClass(myTokenAdmin, 777, "Programming", 4, 30, "Spring2015", 206, "02/01/2015",
+                    "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", "Lecture", "No", "Description", "CS");
+        }
 
-	}
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        if (myTokenStu != null) {
+
+            testScrs.studentAddClass(myTokenStu, 777, "A-F", "Spring2015");
+
+            List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenStu, 1005);
+
+            assertNotNull(testResult);
+            assertEquals(5, testResult.get(0).size());
+
+            testScrs.studentDropClass(myTokenStu, 777);
+        }
+
+        if (myTokenAdmin != null) {
+            testScrs.adminDeleteClass(myTokenAdmin, 777);
+        }
+
+    }
 }

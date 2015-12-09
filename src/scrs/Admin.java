@@ -16,407 +16,407 @@ import scrsexception.SCRSException;
  *
  */
 public class Admin extends Person {
-	/**
-	 * admin add class method, create new class into course table and
-	 * instructorandcourse table
-	 * 
-	 * @param token
-	 * @param courseID
-	 * @param courseName
-	 * @param courseCredits
-	 * @param capacity
-	 * @param term
-	 * @param instructor
-	 * @param firstDay
-	 * @param lastDay
-	 * @param classBeginTime
-	 * @param classEndTime
-	 * @param weekDays
-	 * @param location
-	 * @param type
-	 * @param prerequisite
-	 * @param description
-	 * @param department
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
-			String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
-			String department) throws SQLException, Exception {
+    /**
+     * admin add class method, create new class into course table and
+     * instructorandcourse table
+     * 
+     * @param token
+     * @param courseID
+     * @param courseName
+     * @param courseCredits
+     * @param capacity
+     * @param term
+     * @param instructor
+     * @param firstDay
+     * @param lastDay
+     * @param classBeginTime
+     * @param classEndTime
+     * @param weekDays
+     * @param location
+     * @param type
+     * @param prerequisite
+     * @param description
+     * @param department
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean adminAddClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+            int courseCapacity, String term, int instructorID, String firstDay, String lastDay, String classBeginTime,
+            String classEndTime, String weekDays, String location, String type, String prerequisite, String description,
+            String department) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println("THIS IS NOT ADMIN");
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println("THIS IS NOT ADMIN");
 
-			return false;
+            return false;
 
-		}
-		System.out.println("THIS IS ADMIN");
+        }
+        System.out.println("THIS IS ADMIN");
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS,CAPACITY,TERM,FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sqlCmd = null;
+        sqlCmd = "INSERT INTO COURSE (ID, NAME, CREDITS,CAPACITY,TERM,FIRSTDAY, LASTDAY, CLASSBEGINTIME, CLASSENDTIME, ROUTINES, LOCATION, TYPE, PREREQUISITE, DESCRIPTION, DEPARTMENT) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-		ArrayList<String> dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(courseID));
-		dataList.add(courseName);
-		dataList.add(Integer.toString(courseCredits));
-		dataList.add(Integer.toString(courseCapacity));
-		dataList.add(term);
-		dataList.add(firstDay);
-		dataList.add(lastDay);
-		dataList.add(classBeginTime);
-		dataList.add(classEndTime);
-		dataList.add(weekDays);
-		dataList.add(location);
-		dataList.add(type);
-		dataList.add(prerequisite);
-		dataList.add(description);
-		dataList.add(department);
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(courseID));
+        dataList.add(courseName);
+        dataList.add(Integer.toString(courseCredits));
+        dataList.add(Integer.toString(courseCapacity));
+        dataList.add(term);
+        dataList.add(firstDay);
+        dataList.add(lastDay);
+        dataList.add(classBeginTime);
+        dataList.add(classEndTime);
+        dataList.add(weekDays);
+        dataList.add(location);
+        dataList.add(type);
+        dataList.add(prerequisite);
+        dataList.add(description);
+        dataList.add(department);
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.DATE);
-		typeList.add(PrimitiveDataType.DATE);
-		for (int i = 0; i < 8; i++) {
-			typeList.add(PrimitiveDataType.STRING);
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.DATE);
+        typeList.add(PrimitiveDataType.DATE);
+        for (int i = 0; i < 8; i++) {
+            typeList.add(PrimitiveDataType.STRING);
 
-		}
-		// insert into course table based on given attributes
-		try {
-			dbcoordinator.insertData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
+        }
+        // insert into course table based on given attributes
+        try {
+            dbcoordinator.insertData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
+        sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
-		dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(courseID));
-		dataList.add(Integer.toString(instructorID));
+        dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(courseID));
+        dataList.add(Integer.toString(instructorID));
 
-		typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.INT);
-		// insert into instructorandcourse table(need instructor already in
-		// database)
-		try {
-			dbcoordinator.insertData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.INT);
+        // insert into instructorandcourse table(need instructor already in
+        // database)
+        try {
+            dbcoordinator.insertData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * admin delete method, this will delete class from course table and
-	 * instructorandcourse table
-	 * 
-	 * @param token
-	 * @param courseID
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+    /**
+     * admin delete method, this will delete class from course table and
+     * instructorandcourse table
+     * 
+     * @param token
+     * @param courseID
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
-			return false;
-		}
+            return false;
+        }
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "DELETE FROM COURSE WHERE ID = ?";
-		ArrayList<String> dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(courseID));
+        String sqlCmd = null;
+        sqlCmd = "DELETE FROM COURSE WHERE ID = ?";
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(courseID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
 
-		// delete class from course table
-		try {
-			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
-		} catch (SCRSException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        // delete class from course table
+        try {
+            dbcoordinator.deleteData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
+        } catch (SCRSException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		sqlCmd = null;
-		sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
-		dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(courseID));
+        sqlCmd = null;
+        sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
+        dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(courseID));
 
-		typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
+        typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
 
-		// delete course from instructorandcourse table
-		try {
-			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        // delete course from instructorandcourse table
+        try {
+            dbcoordinator.deleteData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	/**
-	 * admin edit class, this will allow admin to edit classinformation in
-	 * course table
-	 * 
-	 * @param token
-	 * @param courseID
-	 * @param courseName
-	 * @param courseCredits
-	 * @param instructor
-	 * @param firstDay
-	 * @param lastDay
-	 * @param classBeginTime
-	 * @param classEndTime
-	 * @param weekDays
-	 * @param location
-	 * @param type
-	 * @param prerequisite
-	 * @param description
-	 * @param department
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
-			int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
-			String weekDays, String location, String type, String prerequisite, String description, String department)
-					throws SCRSException, Exception {
+    /**
+     * admin edit class, this will allow admin to edit classinformation in
+     * course table
+     * 
+     * @param token
+     * @param courseID
+     * @param courseName
+     * @param courseCredits
+     * @param instructor
+     * @param firstDay
+     * @param lastDay
+     * @param classBeginTime
+     * @param classEndTime
+     * @param weekDays
+     * @param location
+     * @param type
+     * @param prerequisite
+     * @param description
+     * @param department
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean adminEditClass(ShibbolethAuth.Token token, int courseID, String courseName, int courseCredits,
+            int instructorID, String firstDay, String lastDay, String classBeginTime, String classEndTime,
+            String weekDays, String location, String type, String prerequisite, String description, String department)
+                    throws SCRSException, Exception {
 
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
-			return false;
-		}
+            return false;
+        }
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "UPDATE COURSE SET NAME = ?, CREDITS = ?, FIRSTDAY = ?, LASTDAY = ?, CLASSBEGINTIME = ?, CLASSENDTIME = ?, ROUTINES = ?, LOCATION = ?, TYPE = ?, PREREQUISITE = ?, DESCRIPTION = ?, DEPARTMENT = ? WHERE ID = ?";
-		ArrayList<String> dataList = new ArrayList<String>();
-		dataList.add(courseName);
-		dataList.add(Integer.toString(courseCredits));
-		dataList.add(firstDay);
-		dataList.add(lastDay);
-		dataList.add(classBeginTime);
-		dataList.add(classEndTime);
-		dataList.add(weekDays);
-		dataList.add(location);
-		dataList.add(type);
-		dataList.add(prerequisite);
-		dataList.add(description);
-		dataList.add(department);
-		dataList.add(Integer.toString(courseID));
+        String sqlCmd = null;
+        sqlCmd = "UPDATE COURSE SET NAME = ?, CREDITS = ?, FIRSTDAY = ?, LASTDAY = ?, CLASSBEGINTIME = ?, CLASSENDTIME = ?, ROUTINES = ?, LOCATION = ?, TYPE = ?, PREREQUISITE = ?, DESCRIPTION = ?, DEPARTMENT = ? WHERE ID = ?";
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(courseName);
+        dataList.add(Integer.toString(courseCredits));
+        dataList.add(firstDay);
+        dataList.add(lastDay);
+        dataList.add(classBeginTime);
+        dataList.add(classEndTime);
+        dataList.add(weekDays);
+        dataList.add(location);
+        dataList.add(type);
+        dataList.add(prerequisite);
+        dataList.add(description);
+        dataList.add(department);
+        dataList.add(Integer.toString(courseID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.DATE);
-		typeList.add(PrimitiveDataType.DATE);
-		for (int i = 0; i < 8; i++) {
-			typeList.add(PrimitiveDataType.STRING);
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.DATE);
+        typeList.add(PrimitiveDataType.DATE);
+        for (int i = 0; i < 8; i++) {
+            typeList.add(PrimitiveDataType.STRING);
 
-		}
-		typeList.add(PrimitiveDataType.INT);
-		// edit class in course table
-		try {
-			dbcoordinator.updateData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        }
+        typeList.add(PrimitiveDataType.INT);
+        // edit class in course table
+        try {
+            dbcoordinator.updateData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
+        sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
 
-		dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(instructorID));
-		dataList.add(Integer.toString(courseID));
+        dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(instructorID));
+        dataList.add(Integer.toString(courseID));
 
-		typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.INT);
-		// insert into instructorandcourse table(need instructor already in
-		// database)
-		try {
-			dbcoordinator.insertData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.INT);
+        // insert into instructorandcourse table(need instructor already in
+        // database)
+        try {
+            dbcoordinator.insertData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * admin add student to specific class, create new one in studentandcourse
-	 * table
-	 * 
-	 * @param token
-	 * @param studentID
-	 * @param courseID
-	 * @param grading
-	 * @param courseTerm
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	public boolean adminAddStudentToClass(ShibbolethAuth.Token token, int studentID, int courseID, String grading,
-			String courseTerm) throws SQLException, Exception {
+    /**
+     * admin add student to specific class, create new one in studentandcourse
+     * table
+     * 
+     * @param token
+     * @param studentID
+     * @param courseID
+     * @param grading
+     * @param courseTerm
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean adminAddStudentToClass(ShibbolethAuth.Token token, int studentID, int courseID, String grading,
+            String courseTerm) throws SQLException, Exception {
 
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
-			return false;
-		}
+            return false;
+        }
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "INSERT INTO STUDENTANDCOURSE (COURSEID, GRADING, COURSETERM, STUDENTID)" + " VALUES (?,?,?,?)";
-		System.out.println("WE HAVE THE SQL CMD " + sqlCmd);
+        String sqlCmd = null;
+        sqlCmd = "INSERT INTO STUDENTANDCOURSE (COURSEID, GRADING, COURSETERM, STUDENTID)" + " VALUES (?,?,?,?)";
+        System.out.println("WE HAVE THE SQL CMD " + sqlCmd);
 
-		ArrayList<String> dataList = new ArrayList<String>();
+        ArrayList<String> dataList = new ArrayList<String>();
 
-		dataList.add(Integer.toString(courseID));
-		dataList.add(grading);
-		dataList.add(courseTerm);
-		dataList.add(Integer.toString(studentID));
+        dataList.add(Integer.toString(courseID));
+        dataList.add(grading);
+        dataList.add(courseTerm);
+        dataList.add(Integer.toString(studentID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.INT);
-		// add student into class
-		try {
-			dbcoordinator.insertData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.INT);
+        // add student into class
+        try {
+            dbcoordinator.insertData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * admin edit student class information in studentandcourse table
-	 * 
-	 * @param token
-	 * @param studentID
-	 * @param courseID
-	 * @param grading
-	 * @param courseTerm
-	 * @return
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
-			String grading, String courseTerm) throws SQLException, Exception {
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+    /**
+     * admin edit student class information in studentandcourse table
+     * 
+     * @param token
+     * @param studentID
+     * @param courseID
+     * @param grading
+     * @param courseTerm
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean adminEditStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID,
+            String grading, String courseTerm) throws SQLException, Exception {
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
-			return false;
-		}
+            return false;
+        }
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "UPDATE STUDENTANDCOURSE SET GRADING = ?,  COURSETERM = ? WHERE COURSEID = ? AND STUDENTID = ?";
-		ArrayList<String> dataList = new ArrayList<String>();
-		dataList.add(grading);
-		dataList.add(courseTerm);
-		dataList.add(Integer.toString(courseID));
-		dataList.add(Integer.toString(studentID));
+        String sqlCmd = null;
+        sqlCmd = "UPDATE STUDENTANDCOURSE SET GRADING = ?,  COURSETERM = ? WHERE COURSEID = ? AND STUDENTID = ?";
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(grading);
+        dataList.add(courseTerm);
+        dataList.add(Integer.toString(courseID));
+        dataList.add(Integer.toString(studentID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.STRING);
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.INT);
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.STRING);
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.INT);
 
-		try {
-			dbcoordinator.updateData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
+        try {
+            dbcoordinator.updateData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * admin drop student from studentandcourse table
-	 * 
-	 * @param token
-	 * @param studentID
-	 * @param courseID
-	 * @return
-	 * @throws SCRSException
-	 * @throws Exception
-	 */
-	public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
-			throws SCRSException, Exception {
-		if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
-			System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
+    /**
+     * admin drop student from studentandcourse table
+     * 
+     * @param token
+     * @param studentID
+     * @param courseID
+     * @return
+     * @throws SCRSException
+     * @throws Exception
+     */
+    public boolean adminDropStudentRegisteredClass(ShibbolethAuth.Token token, int studentID, int courseID)
+            throws SCRSException, Exception {
+        if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
+            System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
 
-			return false;
-		}
+            return false;
+        }
 
-		DBCoordinator dbcoordinator = new DBCoordinator();
+        DBCoordinator dbcoordinator = new DBCoordinator();
 
-		String sqlCmd = null;
-		sqlCmd = "DELETE FROM STUDENTANDCOURSE WHERE STUDENTID = ?  AND COURSEID = ?";
+        String sqlCmd = null;
+        sqlCmd = "DELETE FROM STUDENTANDCOURSE WHERE STUDENTID = ?  AND COURSEID = ?";
 
-		ArrayList<String> dataList = new ArrayList<String>();
-		dataList.add(Integer.toString(studentID));
-		dataList.add(Integer.toString(courseID));
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(Integer.toString(studentID));
+        dataList.add(Integer.toString(courseID));
 
-		ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
-		typeList.add(PrimitiveDataType.INT);
-		typeList.add(PrimitiveDataType.INT);
-		try {
+        ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
+        typeList.add(PrimitiveDataType.INT);
+        typeList.add(PrimitiveDataType.INT);
+        try {
 
-			dbcoordinator.deleteData(sqlCmd, dataList, typeList);
-			System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
-		} catch (ClassNotFoundException e1) {
-			throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-		} catch (SQLException e1) {
-			throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-		}
-		return true;
+            dbcoordinator.deleteData(sqlCmd, dataList, typeList);
+            System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
+        return true;
 
-	}
+    }
 
 }
