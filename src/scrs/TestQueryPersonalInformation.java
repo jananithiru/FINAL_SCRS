@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Test;
 import scrs.*;
 import scrs.ShibbolethAuth.Token;
-import scrsexception.SCRSException;
+import scrs.SCRSException;
 
 public class TestQueryPersonalInformation {
 

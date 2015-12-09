@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import scrs.*;
 import scrs.ShibbolethAuth.Token;
-import scrsexception.SCRSException;
+import scrs.SCRSException;
 
 public class TestStudentFunctionality {
     @Test
@@ -27,19 +27,8 @@ public class TestStudentFunctionality {
             // the test
             assertEquals(false, testScrs.studentAddClass(myTokenAdmin, 888, "A-F", "Fall2015"));
             assertEquals(true, testScrs.studentAddClass(myTokenStu, 888, "A-F", "Fall2015"));
-            assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, null, "Fall2015")); // did
-                                                                                              // not
-                                                                                              // fill
-                                                                                              // out
-                                                                                              // the
-                                                                                              // grade
-                                                                                              // basis
-            assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, "A-F", null)); // did
-                                                                                         // not
-                                                                                         // fill
-                                                                                         // out
-                                                                                         // coure
-                                                                                         // term
+            assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, null, "Fall2015"));
+            assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, "A-F", null));
 
         }
     }

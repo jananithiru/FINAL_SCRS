@@ -13,7 +13,6 @@ import javax.print.attribute.standard.RequestingUserName;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token.RoleType;
-import scrsexception.SCRSException;
 
 public class Student extends Person {
 

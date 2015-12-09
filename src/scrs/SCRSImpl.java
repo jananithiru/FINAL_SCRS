@@ -7,7 +7,6 @@ import java.util.List;
 
 import scrs.ShibbolethAuth.Token;
 import scrs.ShibbolethAuth.Token.RoleType;
-import scrsexception.SCRSException;
 
 public class SCRSImpl implements SCRS {
     /**

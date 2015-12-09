@@ -7,7 +7,6 @@ import java.util.List;
 
 import scrs.Constants.PrimitiveDataType;
 import scrs.ShibbolethAuth.Token;
-import scrsexception.SCRSException;
 
 /**
  * admin functions
