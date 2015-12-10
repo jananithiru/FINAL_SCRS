@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 
 import org.junit.Test;
-import scrs.*;
 import scrs.ShibbolethAuth.Token;
 
 public class TestAdminFunctionality {
@@ -16,7 +15,6 @@ public class TestAdminFunctionality {
         SCRS testScrs = new SCRSImpl();
         ShibbolethAuth sbAuth = new ShibbolethAuth();
         Token tokenGenerator = sbAuth.tokenGenerator("John196", "password");
-        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
         System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
 
         if (tokenGenerator != null) {
@@ -31,6 +29,18 @@ public class TestAdminFunctionality {
                     testScrs.adminAddClass(tokenGenerator, 777, "AdvancedDatabase", 2, 25, "Fall2015", 206,
                             "09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
                             "Databases", "CS"));
+
+        }
+    }
+
+    @Test
+    public void TestStudentCantAddClass() throws Exception {
+
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+
+        if (myTokenStu != null) {
+
             assertEquals(false,
                     testScrs.adminAddClass(myTokenStu, 666, "AdvancedDatabase", 2, 25, "Fall2015", 206, "09/01/2014",
                             "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
@@ -39,7 +49,7 @@ public class TestAdminFunctionality {
     }
 
     @Test
-    public void TestAdminAddClassAllString() throws Exception {
+    public void TestAdminCantAddClassNameNotWithAllString() throws Exception {
 
         SCRS testScrs = new SCRSImpl();
         ShibbolethAuth sbAuth = new ShibbolethAuth();
@@ -59,11 +69,9 @@ public class TestAdminFunctionality {
     }
 
     @Test
-    public void TestBOTHAddClass() throws Exception {
+    public void TestBOTHCanAddClass() throws Exception {
 
         SCRS testScrs = new SCRSImpl();
-        ShibbolethAuth sbAuth = new ShibbolethAuth();
-
         Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2000", "password");
         System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
 
@@ -81,6 +89,23 @@ public class TestAdminFunctionality {
         }
     }
 
+    @Test
+    public void TestUNDEFINEDCantAddClass() throws Exception {
+
+        SCRS testScrs = new SCRSImpl();
+        Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2001", "password");
+        System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
+
+        if (tokenGenerator != null) {
+
+            assertEquals(true,
+                    testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database", 3, 25, "Fall2015", 206,
+                            "09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
+                            "Databases", "CS"));
+
+        }
+    }
+
     // test admin delete class from course table and instructorandcourse table
     @Test
     public void TestAdminDeleteClass() throws ClassNotFoundException, SQLException {
@@ -92,6 +117,19 @@ public class TestAdminFunctionality {
         if (tokenGenerator != null) {
 
             assertEquals(true, testScrs.adminDeleteClass(tokenGenerator, 777));
+
+        }
+    }
+
+    @Test
+    public void TestStudentCantDeleteClass() throws ClassNotFoundException, SQLException {
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        System.out.println("usertype  " + myTokenStu.type);
+
+        if (myTokenStu != null) {
+
+            assertEquals(false, testScrs.adminDeleteClass(myTokenStu, 777));
 
         }
     }
@@ -112,6 +150,18 @@ public class TestAdminFunctionality {
         }
     }
 
+    @Test
+    public void TestStudentCantEditClass() throws ClassNotFoundException, SQLException {
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        if (myTokenStu != null) {
+
+            assertEquals(false, testScrs.adminEditClass(myTokenStu, 888, "Advanced Database", 3, 206, "09/01/2014",
+                    "09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
+
+        }
+    }
+
     // test admin can add student to class in studentandcourse table
     @Test
     public void TestAdminAddStudentToClass() throws ClassNotFoundException, SQLException {
@@ -123,6 +173,17 @@ public class TestAdminFunctionality {
             System.out.println("ADMIN ADD STDUENTCLASS START");
 
             assertEquals(true, testScrs.adminAddStudentToClass(tokenGenerator, 1006, 888, "A-F", "2014Fall"));
+
+        }
+    }
+
+    @Test
+    public void TestStudentCantAddStudentToClass() throws ClassNotFoundException, SQLException {
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        if (myTokenStu != null) {
+
+            assertEquals(false, testScrs.adminAddStudentToClass(myTokenStu, 1006, 888, "A-F", "2014Fall"));
 
         }
     }
@@ -141,6 +202,17 @@ public class TestAdminFunctionality {
         }
     }
 
+    @Test
+    public void TestStudentCantEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        if (myTokenStu != null) {
+
+            assertEquals(false, testScrs.adminEditStudentRegisteredClass(myTokenStu, 1006, 888, "S/N", "Spring 2015"));
+
+        }
+    }
+
     // test admin can drop student in studentandcourse table
     @Test
     public void TestAdminDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
@@ -151,6 +223,18 @@ public class TestAdminFunctionality {
         if (tokenGenerator != null) {
 
             assertEquals(true, testScrs.adminDropStudentRegisteredClass(tokenGenerator, 1006, 888));
+
+        }
+    }
+
+    @Test
+    public void TestStudentCantDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
+        SCRS testScrs = new SCRSImpl();
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+        System.out.println(myTokenStu.type);
+        if (myTokenStu != null) {
+
+            assertEquals(false, testScrs.adminDropStudentRegisteredClass(myTokenStu, 1006, 888));
 
         }
     }
