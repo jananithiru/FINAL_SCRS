@@ -207,14 +207,98 @@ public class TestQueryClass {
         Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
 
         if (myToken != null) {
-            List<ArrayList<String>> testResult = null;
+            List<ArrayList<String>> testResult = new ArrayList<>();
             try {
-                testResult = testScrs.queryClass(777, "Fake Class", "KH2150", "Spring2015", "CS", "Lecture", null);
+                testResult = testScrs.queryClass(777, "FakeClass", "KH2150", "Spring2015", "CS", "Lecture", null);
             } catch (Exception e) {
                 System.out.println("Unexpected error");
                 assertEquals(0, 1);
             }
-            assertNull(testResult);
+            assertEquals(0, testResult.size());
+        }
+    }
+
+    @Test
+    public void testQueryBadData() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
+
+        if (myToken != null) {
+            List<ArrayList<String>> testResult = new ArrayList<>();
+            try {
+                testResult = testScrs.queryClass(777, "$FakeClass", "KH2150", "Spring2015", "CS", "Lecture", null);
+            } catch (Exception e) {
+                System.out.println("Unexpected error");
+                assertEquals(0, 1);
+            }
+            assertEquals(0, testResult.size());
+        }
+    }
+
+    @Test
+    public void testQueryMissingReqFields() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
+
+        if (myToken != null) {
+            List<ArrayList<String>> testResult = new ArrayList<>();
+            try {
+                testResult = testScrs.queryClass(0, "Fake Class", "KH2150", null, "CS", "Lecture", null);
+            } catch (Exception e) {
+                System.out.println("Unexpected error");
+                assertEquals(0, 1);
+            }
+            assertEquals(0, testResult.size());
+        }
+    }
+
+    @Test
+    public void testQueryMissingInstructor() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
+
+        if (myToken != null) {
+            List<ArrayList<String>> testResult = new ArrayList<>();
+            try {
+                testResult = testScrs.queryClass(777, "Programming", "KH2150", "Spring2015", null, null, "Johnson");
+            } catch (Exception e) {
+                System.out.println("Unexpected error");
+                assertEquals(0, 1);
+            }
+            assertEquals(0, testResult.size());
+        }
+    }
+
+    @Test
+    public void testQueryMissingInstructorCourseData() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myToken = ((SCRSImpl) testScrs).userLogin("John196", "password");
+
+        if (myToken != null) {
+            List<ArrayList<String>> testResult = new ArrayList<>();
+            try {
+                testResult = testScrs.queryClass(999, "Programming", "KH2150", "Spring2015", null, null, "Bruce");
+            } catch (Exception e) {
+                System.out.println("Unexpected error");
+                assertEquals(0, 1);
+            }
+            assertEquals(0, testResult.size());
         }
     }
 

@@ -24,27 +24,67 @@ public class TestRegHistory {
 
         // LOGIN
         Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");
-        if (myTokenAdmin != null) {
-            testScrs.adminAddClass(myTokenAdmin, 777, "Programming", 4, 30, "Spring2015", 206, "02/01/2015",
-                    "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", "Lecture", "No", "Description", "CS");
-        }
-
+        testScrs.adminAddClass(myTokenAdmin, 777, "Programming", 4, 30, "Spring2015", 206, "02/01/2015",
+                "06/01/2015", "9:00", "10:30", "Tu,Th", "KH2150", "Lecture", "No", "Description", "CS");
         Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
-        if (myTokenStu != null) {
 
-            testScrs.studentAddClass(myTokenStu, 777, "A-F", "Spring2015");
+        //Add some registration history
+        testScrs.studentAddClass(myTokenStu, 777, "A-F", "Spring2015");
 
-            List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenStu, 1005);
+        List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenStu, 1005);
 
-            assertNotNull(testResult);
-            assertEquals(5, testResult.get(0).size());
+        assertNotNull(testResult);
+        assertEquals(5, testResult.get(0).size());
 
-            testScrs.studentDropClass(myTokenStu, 777);
-        }
+        //clean up
+        testScrs.studentDropClass(myTokenStu, 777);
+        testScrs.adminDeleteClass(myTokenAdmin, 777);
 
-        if (myTokenAdmin != null) {
-            testScrs.adminDeleteClass(myTokenAdmin, 777);
-        }
+    }
+
+    @Test
+    public void testQueryRegHistoryBadAccess() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
+
+        List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenStu, 999);
+
+        assertNotNull(testResult);
+        assertEquals(0, testResult.size());
+
+    }
+    
+    @Test
+    public void testQueryRegHistoryBadData() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");
+
+        List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenAdmin, 0);
+
+        assertNotNull(testResult);
+        assertEquals(0, testResult.size());
+    }
+
+    @Test
+    public void testQueryRegHistoryMissingStudent() {
+
+        // INITIALIZATION
+        SCRS testScrs = new SCRSImpl();
+
+        // LOGIN
+        Token myTokenAdmin = ((SCRSImpl) testScrs).userLogin("John196", "password");
+        List<ArrayList<String>> testResult = testScrs.queryStudentRegistrationHistory(myTokenAdmin, 100);
+
+        assertNotNull(testResult);
+        assertEquals(0, testResult.size());
 
     }
 }

@@ -249,45 +249,34 @@ public class SCRSImpl implements SCRS {
     public List<ArrayList<String>> queryClass(int courseID, String courseName, String location, String term,
             String department, String classType, String instructorName) {
 
-        List<ArrayList<String>> result = null;
+        List<ArrayList<String>> result = new ArrayList<>();
         try {
             result = queryClass2(courseID, courseName, location, term, department, classType, instructorName);
         } catch (SCRSException e) {
             System.out.println(e.getMessage());
-            return null;
         }
         return result;
     }
 
-    public List<ArrayList<String>> queryClass2(int courseID, String courseName, String location, String term,
+   public List<ArrayList<String>> queryClass2(int courseID, String courseName, String location, String term,
             String department, String classType, String instructorName) throws SCRSException {
 
-        if (courseID <= 0 || location == null || term == null) {
-            throw new SCRSException(ErrorMessages.missingRequiredField);
-        }
-        if (courseName != null && (courseName.length() > 50 || !(courseName.matches("[A-Za-z]+")))) {
-            throw new SCRSException(ErrorMessages.invalidData);
-        }
-        if (location != null && location.length() > 100) {
-            throw new SCRSException(ErrorMessages.invalidData);
-        }
-        if (department != null && department != "CS") {
-            throw new SCRSException(ErrorMessages.invalidData);
-        }
-        if (classType != null && !(classType == "Lecture" || classType == "Seminar")) {
-            throw new SCRSException(ErrorMessages.invalidData);
-        }
-        if (instructorName != null && !(instructorName.matches("[A-Za-z]+"))) {
-            throw new SCRSException(ErrorMessages.invalidData);
-        }
-
-        DBCoordinator dbcoordinator = new DBCoordinator();
-        List<String> instrCoursesListStr = null;
-        String instrID = null;
-
+        //Validate data
         if (courseID <= 0 || location == null || term == null) {
             throw new SCRSException(ErrorMessages.MISSING_REQUIRED_FIELD);
         }
+        if ((courseName != null && (courseName.length() > 50 || !(courseName.matches("[A-Za-z]+")))) ||
+                (location != null && location.length() > 100) || 
+                (department != null && department != "CS") || 
+                (classType != null && !(classType == "Lecture" || classType == "Seminar")) ||
+                (instructorName != null && !(instructorName.matches("[A-Za-z]+")))) {
+            throw new SCRSException(ErrorMessages.invalidData);
+        }
+
+        //data initialization
+        DBCoordinator dbcoordinator = new DBCoordinator();
+        List<ArrayList<String>> instrCoursesListStr = null;
+        List<String> instrCourses = null;
 
         // if instructor name is given, need her ID
         if (instructorName != null) {
@@ -303,11 +292,11 @@ public class SCRSImpl implements SCRS {
                 throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
             }
 
-            if (instrIDList.isEmpty()) {
+            if (instrIDList == null || instrIDList.isEmpty()) {
                 throw new SCRSException(ErrorMessages.MISSING_INSTRUCTOR);
             }
 
-            instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
+            String instrID = UtilMethods.convertObjListToStringList(instrIDList).get(0).get(0);
 
             String instrCoursesSQLStr = "select courseid FROM instructorandcourse WHERE instructorID = " + instrID
                     + ";";
@@ -319,15 +308,28 @@ public class SCRSImpl implements SCRS {
             } catch (SQLException e) {
                 throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
             }
-            instrCoursesListStr = UtilMethods.convertObjListToStringList(instrCoursesList).get(0);
-
-            if (instrCoursesListStr.isEmpty()) {
+            
+            if (instrCoursesList == null || instrCoursesList.isEmpty()) {
                 throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
             }
+            instrCoursesListStr = UtilMethods.convertObjListToStringList(instrCoursesList);
+
+            
+            //Format instructorCourses list
+            instrCourses = new ArrayList<>();
+            for(int i=0; i<instrCoursesListStr.size();i++) {
+                instrCourses.add(instrCoursesListStr.get(i).get(0));
+            }
+            
+            if (!instrCourses.contains(String.valueOf(courseID))) {
+                throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
+            }
+            
+            
         }
-        String sqlStr;
-        sqlStr = SQLStrings.selectAllFromCourse2(courseID, courseName, location, term, department, classType,
-                instrCoursesListStr);
+        //Get query String
+        String sqlStr = SQLStrings.selectAllFromCourse(courseID, courseName, location, term, 
+                department, classType);
 
         List<ArrayList<Object>> objList = null;
 
@@ -359,12 +361,11 @@ public class SCRSImpl implements SCRS {
     @Override
     public List<ArrayList<String>> queryStudentRegistrationHistory(Token token, int studentID) {
 
-        List<ArrayList<String>> result = null;
+        List<ArrayList<String>> result = new ArrayList<>();
         try {
             result = queryStudentRegistrationHistory2(token, studentID);
         } catch (SCRSException e) {
             System.out.println(e.getMessage());
-            return null;
         }
         ;
 
