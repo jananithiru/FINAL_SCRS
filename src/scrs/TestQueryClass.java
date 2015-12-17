@@ -17,7 +17,9 @@ import scrs.ShibbolethAuth.Token;
 import scrs.SCRSException;
 
 public class TestQueryClass {
-
+    // Description:test query class in correct
+    // Input:query the class when the admin add it
+    // output:assert the data are the same after query
     @Test
     public void testQueryClass() {
 
@@ -78,6 +80,9 @@ public class TestQueryClass {
 
     }
 
+    // Description:Test query the required fields
+    // Input:input of the required content
+    // output:the results are the same after query
     @Test
     public void testQueryClassReqFields() {
 
@@ -138,6 +143,9 @@ public class TestQueryClass {
 
     }
 
+    // Description: test query class with instructor
+    // Input:the class information as the admin add it
+    // output:return whether they are the same after the query
     @Test
     public void testQueryClassWithInstructor() {
 
@@ -197,6 +205,9 @@ public class TestQueryClass {
         testScrs.adminDeleteClass(myToken, 777);
     }
 
+    // Description:query not existing class
+    // Input:a class not in the db
+    // output:return not find the class
     @Test
     public void testQueryNonExistentClass() {
 
@@ -218,6 +229,9 @@ public class TestQueryClass {
         }
     }
 
+    // Description:test query bad data
+    // Input:some fake input data
+    // output:return not equal and return unexpected error
     @Test
     public void testQueryBadData() {
 
@@ -239,6 +253,9 @@ public class TestQueryClass {
         }
     }
 
+    // Description:test query missing required fields
+    // Input:input arguments with missing fields
+    // output:throw unexpected error
     @Test
     public void testQueryMissingReqFields() {
 
