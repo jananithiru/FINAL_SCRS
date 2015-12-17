@@ -475,6 +475,7 @@ public class SCRSImpl implements SCRS {
             adminDeleteClass1(token, courseID);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
@@ -528,6 +529,7 @@ public class SCRSImpl implements SCRS {
                     classEndTime, weekDays, location, type, prerequisite, description, department);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
@@ -564,6 +566,7 @@ public class SCRSImpl implements SCRS {
             adminAddStudentToClass1(token, studentID, courseID, grading, courseTerm);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
@@ -598,6 +601,7 @@ public class SCRSImpl implements SCRS {
             adminEditStudentRegisteredClass1(token, studentID, courseID, grading, courseTerm);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
@@ -647,6 +651,7 @@ public class SCRSImpl implements SCRS {
             adminDropStudentRegisteredClass1(token, studentID, courseID);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
