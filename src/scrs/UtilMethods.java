@@ -44,7 +44,7 @@ public class UtilMethods { // TODO: Rename this class after checking with people
         int startYear, endYear;
         int startMonth, endMonth;
         int startDay = 1;
-        int endDay = 8; 
+        int endDay = 29;//8; 
 
         // TODO init these
         int courseYear = Integer.valueOf((String) courseTerm.subSequence(courseTerm.length() - 4, courseTerm.length()));
@@ -52,12 +52,12 @@ public class UtilMethods { // TODO: Rename this class after checking with people
         if (courseTerm.contains("Spring")) {
             startMonth = 12;
             startYear = courseYear - 1;
-            endMonth = 2; 
+            endMonth = 12; //2; 
             endYear = courseYear;
         } else {
             startMonth = 7;
             startYear = courseYear;
-            endMonth = 9; 
+            endMonth = 12; //9; 
             endYear = courseYear;
         }
 

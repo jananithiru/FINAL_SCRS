@@ -33,6 +33,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't add class
     @Test
     public void TestStudentCantAddClass() throws Exception {
 
@@ -48,6 +49,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test admin can't add class which does not have all strings
     @Test
     public void TestAdminCantAddClassNameNotWithAllString() throws Exception {
 
@@ -68,6 +70,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test BOTH type can add class
     @Test
     public void TestBOTHCanAddClass() throws Exception {
 
@@ -89,6 +92,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test undefined type can't add class
     @Test
     public void TestUNDEFINEDCantAddClass() throws Exception {
 
@@ -121,6 +125,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't delete class
     @Test
     public void TestStudentCantDeleteClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
@@ -150,6 +155,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't edit class
     @Test
     public void TestStudentCantEditClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
@@ -178,6 +184,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't add student to class
     @Test
     public void TestStudentCantAddStudentToClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
@@ -204,6 +211,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't edits student registered class
     @Test
     public void TestStudentCantEditStudentRegisteredClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
@@ -229,6 +237,7 @@ public class TestAdminFunctionality {
         }
     }
 
+    // test student can't drop registered class
     @Test
     public void TestStudentCantDropStudentRegisteredClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();

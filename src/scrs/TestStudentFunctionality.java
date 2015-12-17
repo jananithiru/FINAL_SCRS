@@ -93,8 +93,7 @@ public class TestStudentFunctionality {
             assertEquals(false, testScrs.studentEditClass(myTokenAdmin, 888, "A-F", "Fall2015"));
             //the student tries to modify the course which is not in his record(StudentAndCourse TABLE)
             assertEquals(false, testScrs.studentEditClass(myTokenStu, 9990000, "A-F", "Fall2015"));
-            //The grade basis is not a good format
-            assertEquals(false, testScrs.studentEditClass(myTokenStu, 888, "A-P", "Fall2015"));
+            
            
         }
     }
