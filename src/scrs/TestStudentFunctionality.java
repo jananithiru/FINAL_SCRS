@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import scrs.*;
 import scrs.ShibbolethAuth.Token;
-import scrs.SCRSException;
 
 /**
  * @author Yuwei Wang
@@ -47,7 +46,7 @@ public class TestStudentFunctionality {
             // the function should return false
             assertEquals(true, testScrs.studentAddClass(myTokenStu, 5566, "A-F", "Fall2015"));
             //testcase: when out of timeframe, the student tries to add one class, the function should return false 
-            assertEquals(true, testScrs.studentAddClass(myTokenStu, 888, "A-F", "Fall2014"));
+            assertEquals(false, testScrs.studentAddClass(myTokenStu, 888, "A-F", "Fall2014"));
 
         }
     }
@@ -67,10 +66,10 @@ public class TestStudentFunctionality {
             //the function should return false
             assertEquals(false, testScrs.studentDropClass(myTokenStu, 88800));
             //testcase: the token type is admin, the function should return false 
-            assertEquals(true, testScrs.studentDropClass(myTokenAdmin, 888));
+            assertEquals(false, testScrs.studentDropClass(myTokenAdmin, 888));
             //testcase: student tries to drop course 666 which is 2014fall term, which is out of timeframe
             //the function should return false 
-            assertEquals(true, testScrs.studentDropClass(myTokenStu, 666));
+            assertEquals(false, testScrs.studentDropClass(myTokenStu, 666));
             
 
         }
@@ -85,15 +84,17 @@ public class TestStudentFunctionality {
             //testcase: good case: the studentmodify the grad basis into A-F for course 888, which is in his record  
             assertEquals(true, testScrs.studentEditClass(myTokenStu, 888, "A-F", "Fall2015"));
             //testcase: out of time frame: student tries to change the grade basis into A-F for course 666
-            assertEquals(false, testScrs.studentEditClass(myTokenStu, 666, "A-F", "Fall22014"));
+            assertEquals(false, testScrs.studentEditClass(myTokenStu, 666, "A-F", "Spring2014"));
             //testcase: the student did not give the course grade basis, the function should return false
-            assertEquals(false, testScrs.studentEditClass(myTokenStu, 888, null, "Fall2015"));
+            assertEquals(false, testScrs.studentEditClass(myTokenStu, 666, null, "Fall2015"));
             //test case: the student leave the course term null, the function should return false
-            assertEquals(true, testScrs.studentEditClass(myTokenStu, 888, "A-F", null));
+            assertEquals(false, testScrs.studentEditClass(myTokenStu, 888, "A-F", null));
             //testcase: the token type is admin, the function should return false
-            assertEquals(true, testScrs.studentEditClass(myTokenAdmin, 888, "A-F", "Fall2015"));
+            assertEquals(false, testScrs.studentEditClass(myTokenAdmin, 888, "A-F", "Fall2015"));
             //the student tries to modify the course which is not in his record(StudentAndCourse TABLE)
-            assertEquals(true, testScrs.studentEditClass(myTokenStu, 999, "A-F", "Fall2015"));
+            assertEquals(false, testScrs.studentEditClass(myTokenStu, 9990000, "A-F", "Fall2015"));
+            //The grade basis is not a good format
+            assertEquals(false, testScrs.studentEditClass(myTokenStu, 888, "A-P", "Fall2015"));
            
         }
     }

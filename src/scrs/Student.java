@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,10 +56,14 @@ public class Student extends Person {
         }
 
         // get current date time with Date()
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
 
-        if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
+        Date currentDate = new Date(year, month, day);
+
+        if (!UtilMethods.isInTimeFrame(currentDate, courseTerm)) {
             throw new SCRSException(ErrorMessages.OUT_TIME_FRAME);
         }
 
@@ -130,8 +135,12 @@ public class Student extends Person {
         DBCoordinator dbCoordinator = new DBCoordinator();
 
         // get current date time with Date()
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getYear(), utilDate.getMonth(), utilDate.getDay());
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+
+        Date currentDate = new Date(year, month, day);
 
         String sqlCmd = "SELECT TERM FROM COURSE WHERE ID = " + courseID;
         String sqlCmd2 = "SELECT * FROM STUDENTANDCOURSE WHERE COURSEID=" + courseID + " AND STUDENTID=" + token.id;
@@ -160,7 +169,7 @@ public class Student extends Person {
         }
         String courseTerm = (String) termList.get(0).get(0);
 
-        if (UtilMethods.isInTimeFrame(sqlDate, courseTerm)) {
+        if (!UtilMethods.isInTimeFrame(currentDate, courseTerm)) {
             throw new SCRSException(ErrorMessages.OUT_TIME_FRAME);
 
         }
@@ -205,7 +214,7 @@ public class Student extends Person {
     boolean studentEditClass(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm) {
         boolean result = false;
         try {
-            result = studentAddClass2(token, courseID, grading, courseTerm);
+            result = studentEditClass2(token, courseID, grading, courseTerm);
         } catch (SCRSException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
@@ -216,12 +225,45 @@ public class Student extends Person {
 
     boolean studentEditClass2(ShibbolethAuth.Token token, int courseID, String grading, String courseTerm)
             throws SCRSException {
-        if (token.type != RoleType.STUDENT) {
+        if (token.type == RoleType.ADMIN) {
             System.out.println(new SCRSException(ErrorMessages.STUDENTACCOUNT_FAILURE));
             return false;
         }
+        if (token.type == RoleType.BOTH) {
+            System.out.println(new SCRSException(ErrorMessages.STUDENTACCOUNT_FAILURE));
+            return false;
+        }
+        if (grading == null || courseTerm == null) {
+            System.out.println(new SCRSException(ErrorMessages.MISSING_REQUIRED_FIELD));
+            return false;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+
+        Date currentDate = new Date(year, month, day);
+        System.out.println("Time frame function value is" + UtilMethods.isInTimeFrame(currentDate, courseTerm));
+        if (!UtilMethods.isInTimeFrame(currentDate, courseTerm)) {
+
+            throw new SCRSException(ErrorMessages.OUT_TIME_FRAME);
+        }
         DBCoordinator dbCoordinator = new DBCoordinator();
+
         String sqlStr = "update StudentAndCourse set grading=? where courseId=? and studentID=?";
+        String sqlCmd2 = "SELECT * FROM STUDENTANDCOURSE WHERE COURSEID=" + courseID + " AND STUDENTID=" + token.id;
+        List<ArrayList<Object>> rs = null;
+        try {
+            rs = dbCoordinator.queryData(sqlCmd2);
+        } catch (ClassNotFoundException e1) {
+            throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
+        } catch (SQLException e1) {
+            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
+        }
+        if (rs == null || rs.size() == 0) {
+            throw new SCRSException(ErrorMessages.NO_RECORD_RETURN_FROM_DB);
+        }
+
         ArrayList<String> dataList = new ArrayList<String>();
         dataList.add(grading);
         dataList.add(Integer.toString(courseID));
@@ -232,7 +274,9 @@ public class Student extends Person {
         typeList.add(PrimitiveDataType.INT);
 
         try {
+
             dbCoordinator.updateData(sqlStr, dataList, typeList);
+
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             throw new SCRSException(ErrorMessages.CLASS_NOT_FOUND);
