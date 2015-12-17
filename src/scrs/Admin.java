@@ -89,13 +89,11 @@ public class Admin extends Person {
 
         }
         // insert into course table based on given attributes
-        try {
+        
             dbcoordinator.insertData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN ADD CLASS TO COURSE TABLE SUCCESSFUL");
 
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         sqlCmd = "INSERT INTO INSTRUCTORANDCOURSE (COURSEID, INSTRUCTORID) VALUES (?,?)";
 
@@ -111,10 +109,8 @@ public class Admin extends Person {
         try {
             dbcoordinator.insertData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-        } catch (ClassNotFoundException e1) {
+        } catch (Exception e) {
             throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
         }
 
         return true;
@@ -149,14 +145,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.INT);
 
         // delete class from course table
-        try {
+        
             dbcoordinator.deleteData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN DELETE CLASS FROM COURSE TABLE SUCCESSFUL");
-        } catch (SCRSException e1) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         sqlCmd = null;
         sqlCmd = "DELETE FROM INSTRUCTORANDCOURSE WHERE COURSEID = ?";
@@ -167,12 +159,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.INT);
 
         // delete course from instructorandcourse table
-        try {
+       
             dbcoordinator.deleteData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN DELETE CLASS FROM INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+       
 
         return false;
 
@@ -242,12 +232,10 @@ public class Admin extends Person {
         }
         typeList.add(PrimitiveDataType.INT);
         // edit class in course table
-        try {
+        
             dbcoordinator.updateData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN EDIT CLASS IN COURSE TABLE SUCCESSFUL");
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         sqlCmd = "UPDATE INSTRUCTORANDCOURSE SET INSTRUCTORID = ? WHERE COURSEID = ?";
 
@@ -260,14 +248,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.INT);
         // insert into instructorandcourse table(need instructor already in
         // database)
-        try {
-            dbcoordinator.insertData(sqlCmd, dataList, typeList);
+       
+            dbcoordinator.updateData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN EDIT CLASS IN INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-        } catch (ClassNotFoundException e1) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         return true;
     }
@@ -313,14 +297,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.STRING);
         typeList.add(PrimitiveDataType.INT);
         // add student into class
-        try {
+        
             dbcoordinator.insertData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN ADD STUDENT TO CLASS SUCCESSFUL");
-        } catch (ClassNotFoundException e1) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         return true;
 
@@ -362,14 +342,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.INT);
         typeList.add(PrimitiveDataType.INT);
 
-        try {
+      
             dbcoordinator.updateData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN EDIT STUDENT REGISTERED CLASS SUCCESSFUL");
-        } catch (ClassNotFoundException e1) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+        
 
         return true;
 
@@ -405,15 +381,10 @@ public class Admin extends Person {
         ArrayList<PrimitiveDataType> typeList = new ArrayList<PrimitiveDataType>();
         typeList.add(PrimitiveDataType.INT);
         typeList.add(PrimitiveDataType.INT);
-        try {
-
+       
             dbcoordinator.deleteData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN DROP STUDENT REGISTERED CLASS FROM STUDENTANDCOURSE TABLE SUCCESSFUL");
-        } catch (ClassNotFoundException e1) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        } catch (SQLException e1) {
-            throw new SCRSException(ErrorMessages.SQL_EXCEPTION);
-        }
+       
         return true;
 
     }

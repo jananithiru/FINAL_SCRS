@@ -98,7 +98,7 @@ public class TestAdminFunctionality {
 
         if (tokenGenerator != null) {
 
-            assertEquals(true,
+            assertEquals(false,
                     testScrs.adminAddClass(tokenGenerator, 555, "Advanced Database", 3, 25, "Fall2015", 206,
                             "09/01/2014", "12/20/2014", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No",
                             "Databases", "CS"));
@@ -124,12 +124,12 @@ public class TestAdminFunctionality {
     @Test
     public void TestStudentCantDeleteClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
-        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
-        System.out.println("usertype  " + myTokenStu.type);
+        Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2001", "password");
+        System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
 
-        if (myTokenStu != null) {
+        if (tokenGenerator != null) {
 
-            assertEquals(false, testScrs.adminDeleteClass(myTokenStu, 777));
+            assertEquals(false, testScrs.adminDeleteClass(tokenGenerator, 777));
 
         }
     }
@@ -153,10 +153,11 @@ public class TestAdminFunctionality {
     @Test
     public void TestStudentCantEditClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
-        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
-        if (myTokenStu != null) {
+        Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2001", "password");
+        System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
+        if (tokenGenerator != null) {
 
-            assertEquals(false, testScrs.adminEditClass(myTokenStu, 888, "Advanced Database", 3, 206, "09/01/2014",
+            assertEquals(false, testScrs.adminEditClass(tokenGenerator, 888, "Advanced Database", 3, 206, "09/01/2014",
                     "09/01/2015", "9:00", "10:30", "Tu,Th", "KHKH110", "Lecture", "No", "Databases", "CS"));
 
         }
@@ -180,10 +181,11 @@ public class TestAdminFunctionality {
     @Test
     public void TestStudentCantAddStudentToClass() throws ClassNotFoundException, SQLException {
         SCRS testScrs = new SCRSImpl();
-        Token myTokenStu = ((SCRSImpl) testScrs).userLogin("YUWEI1005", "mypassword");
-        if (myTokenStu != null) {
+        Token tokenGenerator = ((SCRSImpl) testScrs).userLogin("amy2001", "password");
+        System.out.println("CHECK FROM TESTS " + tokenGenerator.type);
+        if (tokenGenerator != null) {
 
-            assertEquals(false, testScrs.adminAddStudentToClass(myTokenStu, 1006, 888, "A-F", "2014Fall"));
+            assertEquals(false, testScrs.adminAddStudentToClass(tokenGenerator, 1006, 888, "A-F", "2014Fall"));
 
         }
     }
