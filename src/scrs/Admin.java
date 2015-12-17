@@ -106,12 +106,10 @@ public class Admin extends Person {
         typeList.add(PrimitiveDataType.INT);
         // insert into instructorandcourse table(need instructor already in
         // database)
-        try {
+        
             dbcoordinator.insertData(sqlCmd, dataList, typeList);
             System.out.println("ADMIN ADD CLASS TO INSTRUCTORANDCOURSE TABLE SUCCESSFUL");
-        } catch (Exception e) {
-            throw new SCRSException(ErrorMessages.MISSING_COURSE_DATA);
-        }
+       
 
         return true;
 
@@ -130,7 +128,6 @@ public class Admin extends Person {
     public boolean adminDeleteClass(ShibbolethAuth.Token token, int courseID) throws SCRSException, Exception {
         if (token.type != Token.RoleType.BOTH && token.type != Token.RoleType.ADMIN) {
             System.out.println(new SCRSException("ACCOUNT TYPE FAILURE:THIS IS NOT ADMIN"));
-
             return false;
         }
 
